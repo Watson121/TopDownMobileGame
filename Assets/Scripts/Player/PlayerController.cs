@@ -12,48 +12,57 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 playerPostion;
     private Vector3 playerRotation;
-    private float positionOffset = 2.0f;    
+    private bool move = false;
+    private float veritcalScreenOffset = 4.0f;
+    private float horizontalScreenOffset = 2.0f;
 
+    [Header("Player Settings")]
+    [SerializeField] private float playerSpeed = 5f;
+    [SerializeField] private float playerRotationSpeed = 3.0f;
+    [SerializeField] private float horitontalRotation = 15.0f;
+    [SerializeField] private float verticalRotation = 15.0f;
 
-    private float playerSpeed = 5f;
-    private float playerRotationSpeed = 10.0f;
-    private float horitontalRotation = 15.0f;
-    private float verticalRotation = 15.0f;
-
-
-    public bool move = false;
-
-    public float frustumHieght;
-    public float frustumWidth;
-    public float distance = 3.0f;
-    
-
-
-    public Vector3 screenBounds;
+    // Player Camera & Viewport Bounds
+    private Camera playerCamera;
+    private float frustumHeight;
+    private float frustumWidth;
+    private float cameraDistance = 3.0f;
+   
 
     private void Awake()
+    {
+        CalculatingViewportBounds();
+        ControlSetup();
+    }
+
+    // Setting up the controls
+    private void ControlSetup()
     {
         playerInput = new PlayerInput();
         playerControls = new PlayerControls();
         playerControls.Enable();
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width, Screen.height, 0));
-        screenBounds = ray.origin;
-        CalculateCamera();
+
+        playerControls.Player.Movement.performed += OnMovementAction;
+        playerControls.Player.Movement.canceled += OnMovementAction;
     }
 
-    private void CalculateCamera()
+
+    private void CalculatingViewportBounds()
     {
-        distance = Vector3.Distance(this.transform.position, Camera.main.transform.position);
-        frustumHieght = 2.0f * distance * Mathf.Tan(Camera.main.fieldOfView * 0.5f * Mathf.Deg2Rad);
-        frustumHieght /= 2;
+        playerCamera = Camera.main;
 
+        // Setting the Viewport Bounds
+        cameraDistance = Vector3.Distance(this.transform.position, Camera.main.transform.position);
+        frustumHeight = (2.0f * cameraDistance * Mathf.Tan(Camera.main.fieldOfView * 0.5f * Mathf.Deg2Rad)) / 2;
+        frustumWidth = (frustumHeight * Camera.main.aspect);
 
+        // Setting Camera Location
+        playerCamera.transform.position = new Vector3(0, frustumHeight / 2, playerCamera.transform.position.z);
     }
 
     private void OnEnable()
     {
-        playerControls.Player.Movement.performed += OnMovementAction;
-        playerControls.Player.Movement.canceled += OnMovementAction;
+       
    
     }
 
@@ -97,18 +106,13 @@ public class PlayerController : MonoBehaviour
         // Setting Player Position
         playerPostion = transform.position;
         playerPostion += new Vector3(inputVector.x * playerSpeed * Time.deltaTime, inputVector.y * playerSpeed * Time.deltaTime, 0);
-        //playerPostion.x = Mathf.Clamp(playerPostion.x , screenBounds.y, screenBounds.y * -1);
-        Debug.Log("Player y " + playerPostion.y);
-
-        playerPostion.y = Mathf.Clamp(playerPostion.y, -frustumHieght, frustumHieght);
-        //playerPostion.y = Mathf.Clamp(playerPostion.y, (screenBounds.y + positionOffset), (screenBounds.y + positionOffset) * -1);
-
-        Debug.Log("Screen Bounds Y: " + screenBounds.y);
+        playerPostion.x = Mathf.Clamp(playerPostion.x , -frustumWidth + horizontalScreenOffset, frustumWidth - horizontalScreenOffset);
+        playerPostion.y = Mathf.Clamp(playerPostion.y, -frustumHeight + veritcalScreenOffset, frustumHeight - veritcalScreenOffset);
 
         // Setting Player Rotation
-        playerRotation += new Vector3(0, inputVector.y * 10f * Time.deltaTime, inputVector.x * 10f * Time.deltaTime);
+        playerRotation += new Vector3(inputVector.y * 10f * Time.deltaTime, 0, inputVector.x * 10f * Time.deltaTime);
         playerRotation.z = Mathf.Clamp(playerRotation.z, -horitontalRotation, horitontalRotation);
-        playerRotation.y = Mathf.Clamp(playerRotation.y, -verticalRotation, verticalRotation);
+        playerRotation.x = Mathf.Clamp(playerRotation.x, -verticalRotation, verticalRotation);
 
         transform.position = playerPostion;
         transform.rotation = Quaternion.Euler(playerRotation);
