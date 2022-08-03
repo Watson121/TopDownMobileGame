@@ -21,24 +21,40 @@ public class PlayerController : MonoBehaviour
     private float verticalRotation = 15.0f;
 
 
-    private bool move = false;
+    public bool move = false;
 
+    public float frustumHieght;
+    public float frustumWidth;
+    public float distance = 3.0f;
     
 
 
-    private Vector2 screenBounds;
+    public Vector3 screenBounds;
 
     private void Awake()
     {
         playerInput = new PlayerInput();
         playerControls = new PlayerControls();
         playerControls.Enable();
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width, Screen.height, 0));
+        screenBounds = ray.origin;
+        CalculateCamera();
+    }
+
+    private void CalculateCamera()
+    {
+        distance = Vector3.Distance(this.transform.position, Camera.main.transform.position);
+        frustumHieght = 2.0f * distance * Mathf.Tan(Camera.main.fieldOfView * 0.5f * Mathf.Deg2Rad);
+        frustumHieght /= 2;
+
+
     }
 
     private void OnEnable()
     {
         playerControls.Player.Movement.performed += OnMovementAction;
+        playerControls.Player.Movement.canceled += OnMovementAction;
+   
     }
 
 
@@ -59,13 +75,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnMovementAction(InputAction.CallbackContext obj)
     {
+
+        Debug.Log(obj.phase);
+
         if (obj.performed)
         {
             move = true;
         }
-        else if (obj.canceled)
+        
+        if (obj.canceled)
         {
             move = false;
+           
         }
     }
 
@@ -74,12 +95,20 @@ public class PlayerController : MonoBehaviour
         Vector2 inputVector = playerControls.Player.Movement.ReadValue<Vector2>();
 
         // Setting Player Position
+        playerPostion = transform.position;
         playerPostion += new Vector3(inputVector.x * playerSpeed * Time.deltaTime, inputVector.y * playerSpeed * Time.deltaTime, 0);
-        playerPostion.x = Mathf.Clamp(playerPostion.x , (screenBounds.x + positionOffset), (screenBounds.x + positionOffset) * -1);
-        
+        //playerPostion.x = Mathf.Clamp(playerPostion.x , screenBounds.y, screenBounds.y * -1);
+        Debug.Log("Player y " + playerPostion.y);
+
+        playerPostion.y = Mathf.Clamp(playerPostion.y, -frustumHieght, frustumHieght);
+        //playerPostion.y = Mathf.Clamp(playerPostion.y, (screenBounds.y + positionOffset), (screenBounds.y + positionOffset) * -1);
+
+        Debug.Log("Screen Bounds Y: " + screenBounds.y);
+
         // Setting Player Rotation
         playerRotation += new Vector3(0, inputVector.y * 10f * Time.deltaTime, inputVector.x * 10f * Time.deltaTime);
-        
+        playerRotation.z = Mathf.Clamp(playerRotation.z, -horitontalRotation, horitontalRotation);
+        playerRotation.y = Mathf.Clamp(playerRotation.y, -verticalRotation, verticalRotation);
 
         transform.position = playerPostion;
         transform.rotation = Quaternion.Euler(playerRotation);
