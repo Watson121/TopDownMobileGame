@@ -7,11 +7,11 @@
             "actions": [
                 {
                     "name": "Movement",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "3e3cf0d0-35ef-413e-be56-c7534f29b033",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)"
                 },
                 {
                     "name": "Fire",
@@ -24,7 +24,7 @@
             ],
             "bindings": [
                 {
-                    "name": "Moving",
+                    "name": "Moving (PC)",
                     "id": "93972f68-7bf2-4347-aa16-037a153be809",
                     "path": "2DVector",
                     "interactions": "",
@@ -71,6 +71,39 @@
                     "name": "right",
                     "id": "21939522-1405-4050-ad19-e0234ab48231",
                     "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "TouchInput",
+                    "id": "0e795d86-8efe-4548-b658-2f582252b5d6",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "616e502f-ce46-42f7-9479-dddd1dc45914",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "f399f118-5ad8-4ef8-bbbe-dcf98c61bf9c",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
