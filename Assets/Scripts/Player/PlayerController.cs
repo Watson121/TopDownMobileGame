@@ -60,13 +60,6 @@ public class PlayerController : MonoBehaviour
         playerCamera.transform.position = new Vector3(0, frustumHeight / 2, playerCamera.transform.position.z);
     }
 
-    private void OnEnable()
-    {
-       
-   
-    }
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -107,7 +100,7 @@ public class PlayerController : MonoBehaviour
         playerPostion = transform.position;
         playerPostion += new Vector3(inputVector.x * playerSpeed * Time.deltaTime, inputVector.y * playerSpeed * Time.deltaTime, 0);
         playerPostion.x = Mathf.Clamp(playerPostion.x , -frustumWidth + horizontalScreenOffset, frustumWidth - horizontalScreenOffset);
-        playerPostion.y = Mathf.Clamp(playerPostion.y, -frustumHeight + veritcalScreenOffset, frustumHeight - veritcalScreenOffset);
+        playerPostion.y = Mathf.Clamp(playerPostion.y, -frustumHeight + 1.0f, frustumHeight - veritcalScreenOffset);
 
         // Setting Player Rotation
         playerRotation += new Vector3(inputVector.y * 10f * Time.deltaTime, 0, inputVector.x * 10f * Time.deltaTime);
@@ -117,7 +110,5 @@ public class PlayerController : MonoBehaviour
         transform.position = playerPostion;
         transform.rotation = Quaternion.Euler(playerRotation);
 
-        
-        
     }
 }

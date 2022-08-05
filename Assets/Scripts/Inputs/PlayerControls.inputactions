@@ -20,19 +20,11 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "9dd990c4-9265-45d5-93a6-8db6e6468505",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
                 }
             ],
             "bindings": [
                 {
-                    "name": "Moving",
+                    "name": "Moving (PC)",
                     "id": "93972f68-7bf2-4347-aa16-037a153be809",
                     "path": "2DVector",
                     "interactions": "",
@@ -87,6 +79,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "TouchInput",
+                    "id": "0e795d86-8efe-4548-b658-2f582252b5d6",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "616e502f-ce46-42f7-9479-dddd1dc45914",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "f399f118-5ad8-4ef8-bbbe-dcf98c61bf9c",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "b1ed5d3f-81ad-4ac3-9e56-8764849b21cb",
                     "path": "<Keyboard>/space",
@@ -94,17 +119,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0a97eae4-fe2b-4561-83ba-27c9274e9682",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
