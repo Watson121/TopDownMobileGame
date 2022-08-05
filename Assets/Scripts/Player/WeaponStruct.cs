@@ -8,7 +8,7 @@ public struct Weapon
     private float firingSpeed;
     private bool active;
 
-    Weapon(float damage, float speed, bool active)
+    public Weapon(float damage, float speed, bool active)
     {
         this.damage = damage;
         this.firingSpeed = speed;

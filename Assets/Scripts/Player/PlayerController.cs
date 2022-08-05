@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage
 {
 
     // Player Control Inputs
@@ -28,13 +28,20 @@ public class PlayerController : MonoBehaviour
     private float frustumWidth;
     private float cameraDistance = 3.0f;
 
+    // Weapons
+    private Weapon currentEquipedWeapon;
     private Weapon baseWeapon;
 
+    // Bullets
+    [SerializeField] private List<Bullet> bullets;
+    private static int index = 0;
+    [SerializeField] Transform bulletSpawnPoint;
 
     private void Awake()
     {
         CalculatingViewportBounds();
         ControlSetup();
+        FindBullets();
     }
 
     // Setting up the controls
@@ -46,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
         playerControls.Player.Movement.performed += OnMovementAction;
         playerControls.Player.Movement.canceled += OnMovementAction;
+        playerControls.Player.Fire.performed += WeaponFire;
     }
 
 
@@ -60,6 +68,28 @@ public class PlayerController : MonoBehaviour
 
         // Setting Camera Location
         playerCamera.transform.position = new Vector3(0, frustumHeight / 2, playerCamera.transform.position.z);
+    }
+
+    private void WeaponSetup()
+    {
+        baseWeapon = new Weapon(10.0f, 10.0f, true);
+        currentEquipedWeapon = baseWeapon;
+    }
+
+    private void ApplyBulletDamage()
+    {
+        Debug.Log("Apply Damaging");
+    }
+
+    private void FindBullets()
+    {
+        GameObject[] tempBullets = GameObject.FindGameObjectsWithTag("Bullet");
+
+        foreach(GameObject bullet in tempBullets)
+        {
+            bullets.Add(bullet.GetComponent<Bullet>());
+        }
+
     }
 
     // Start is called before the first frame update
@@ -79,8 +109,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnMovementAction(InputAction.CallbackContext obj)
     {
-
-        Debug.Log(obj.phase);
+    
 
         if (obj.performed)
         {
@@ -93,6 +122,21 @@ public class PlayerController : MonoBehaviour
            
         }
     }
+
+    private void WeaponFire(InputAction.CallbackContext obj)
+    {
+        Debug.Log("Test and index: " + index);
+
+        StartCoroutine(bullets[index].BulletFire(currentEquipedWeapon.FiringSpeed, bulletSpawnPoint.position));
+        index++;
+
+        if(index >= bullets.Count)
+        {
+            index = 0;
+        }
+    }
+
+    
 
     private void Movement()
     {
@@ -112,5 +156,10 @@ public class PlayerController : MonoBehaviour
         transform.position = playerPostion;
         transform.rotation = Quaternion.Euler(playerRotation);
 
+    }
+
+    public void ApplyDamage(float damage)
+    {
+        
     }
 }
