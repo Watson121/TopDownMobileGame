@@ -27,7 +27,9 @@ public class PlayerController : MonoBehaviour
     private float frustumHeight;
     private float frustumWidth;
     private float cameraDistance = 3.0f;
-   
+
+    private Weapon baseWeapon;
+
 
     private void Awake()
     {
