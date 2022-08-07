@@ -14,6 +14,7 @@ public class CroutonShip : Tree
         { 
             new Sequence(new List<Node>
             {
+                new CheckIfInView(transform),
                 new Task_MoveAndFire(transform),
             }),
         });
