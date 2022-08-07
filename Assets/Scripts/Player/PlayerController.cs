@@ -6,10 +6,22 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour, IDamage
 {
 
+    // Max Player Health 
+    private const float MAX_HEALTH = 100.0f;
+
+    // Returng the current health for the player
+    public float Health
+    {
+        get { return health; }
+    }
+
+    private float health;
+
     // Player Control Inputs
     private PlayerInput playerInput;
     private PlayerControls playerControls;
 
+    // Player Position and Rotation, along with the offsets
     private Vector3 playerPostion;
     private Vector3 playerRotation;
     private bool move = false;
@@ -37,15 +49,10 @@ public class PlayerController : MonoBehaviour, IDamage
     private static int index = 0;
     [SerializeField] Transform bulletSpawnPoint;
 
-    // Player Health
-    private const float MAX_HEALTH = 100.0f;
-    
-    public float Health
-    {
-        get { return health; }
-    }
+  
 
-    [SerializeField] private float health;
+
+  
 
     private void Awake()
     {
@@ -56,7 +63,9 @@ public class PlayerController : MonoBehaviour, IDamage
         WeaponSetup();
     }
 
-    // Setting up the controls
+    /// <summary>
+    /// Setting up the controls
+    /// </summary>
     private void ControlSetup()
     {
         playerInput = new PlayerInput();
@@ -68,7 +77,9 @@ public class PlayerController : MonoBehaviour, IDamage
         playerControls.Player.Fire.performed += WeaponFire;
     }
 
-
+    /// <summary>
+    /// Getting the camera bounds so that player is clamp to stay within the viewport
+    /// </summary>
     private void CalculatingViewportBounds()
     {
         playerCamera = Camera.main;
@@ -82,22 +93,26 @@ public class PlayerController : MonoBehaviour, IDamage
         playerCamera.transform.position = new Vector3(0, frustumHeight / 2, playerCamera.transform.position.z);
     }
 
+    /// <summary>
+    /// Setting up the weapons
+    /// </summary>
     private void WeaponSetup()
     {
         baseWeapon = new Weapon(10.0f, 10.0f, true);
         currentEquipedWeapon = baseWeapon;
     }
 
+    /// <summary>
+    /// Setting up the player
+    /// </summary>
     private void PlayerSetup()
     {
         health = MAX_HEALTH;
     }
 
-    private void ApplyBulletDamage()
-    {
-        Debug.Log("Apply Damaging");
-    }
-
+    /// <summary>
+    /// Finding all of the bullets from the pool of bullets
+    /// </summary>
     private void FindBullets()
     {
         GameObject[] tempBullets = GameObject.FindGameObjectsWithTag("Bullet");
@@ -109,12 +124,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -124,6 +133,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }   
     }
 
+    // Turning on or off the movement for the player
     private void OnMovementAction(InputAction.CallbackContext obj)
     {
     
@@ -135,22 +145,31 @@ public class PlayerController : MonoBehaviour, IDamage
         
         if (obj.canceled)
         {
-            move = false;
-           
+            move = false;       
         }
     }
 
+    /// <summary>
+    /// Firing the Weapon that the player has currently equiped
+    /// </summary>
+    /// <param name="obj"></param>
     private void WeaponFire(InputAction.CallbackContext obj)
     {
+
+#if UNITY_EDITOR
         Debug.Log("Test and index: " + index);
         Debug.Log("Weapon Damage: " + baseWeapon.Damage);
+#endif
 
+        // Getting the current bullet
+        Bullet currentBullet = bullets[index];
 
+        // If the bullet has not been preiously fired, then fire it. If it has been fired then move onto the bullet.
         if (!(bullets[index].BulletMoving))
         {
-            StopCoroutine(bullets[index].BulletFire(currentEquipedWeapon.FiringSpeed, bulletSpawnPoint.position, currentEquipedWeapon.Damage));
-            StartCoroutine(bullets[index].BulletFire(currentEquipedWeapon.FiringSpeed, bulletSpawnPoint.position, currentEquipedWeapon.Damage));
+            StartCoroutine(currentBullet.BulletFire(bulletSpawnPoint.position, currentEquipedWeapon));
         }
+
         index++;
 
         if (index >= bullets.Count)
@@ -160,7 +179,9 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
     
-
+    /// <summary>
+    /// Moving the player around the level
+    /// </summary>
     private void Movement()
     {
         Vector2 inputVector = playerControls.Player.Movement.ReadValue<Vector2>();
@@ -172,15 +193,17 @@ public class PlayerController : MonoBehaviour, IDamage
         playerPostion.y = Mathf.Clamp(playerPostion.y, -frustumHeight + 1.0f, frustumHeight - veritcalScreenOffset);
 
         // Setting Player Rotation
-        playerRotation += new Vector3(inputVector.y * 10f * Time.deltaTime, 0, inputVector.x * 10f * Time.deltaTime);
+        playerRotation += new Vector3(inputVector.y * playerRotationSpeed * Time.deltaTime, 0, inputVector.x * playerRotationSpeed * Time.deltaTime);
         playerRotation.z = Mathf.Clamp(playerRotation.z, -horitontalRotation, horitontalRotation);
         playerRotation.x = Mathf.Clamp(playerRotation.x, -verticalRotation, verticalRotation);                      
 
+        // Applying the position and rotation to the player
         transform.position = playerPostion;
         transform.rotation = Quaternion.Euler(playerRotation);
 
     }
 
+    // Interface - Applying Damage to the player
     public void ApplyDamage(float damage)
     {
         health -= damage;
