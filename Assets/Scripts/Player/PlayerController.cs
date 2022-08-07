@@ -37,11 +37,23 @@ public class PlayerController : MonoBehaviour, IDamage
     private static int index = 0;
     [SerializeField] Transform bulletSpawnPoint;
 
+    // Player Health
+    private const float MAX_HEALTH = 100.0f;
+    
+    public float Health
+    {
+        get { return health; }
+    }
+
+    [SerializeField] private float health;
+
     private void Awake()
     {
         CalculatingViewportBounds();
         ControlSetup();
         FindBullets();
+        PlayerSetup();
+        WeaponSetup();
     }
 
     // Setting up the controls
@@ -74,6 +86,11 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         baseWeapon = new Weapon(10.0f, 10.0f, true);
         currentEquipedWeapon = baseWeapon;
+    }
+
+    private void PlayerSetup()
+    {
+        health = MAX_HEALTH;
     }
 
     private void ApplyBulletDamage()
@@ -126,11 +143,17 @@ public class PlayerController : MonoBehaviour, IDamage
     private void WeaponFire(InputAction.CallbackContext obj)
     {
         Debug.Log("Test and index: " + index);
+        Debug.Log("Weapon Damage: " + baseWeapon.Damage);
 
-        StartCoroutine(bullets[index].BulletFire(currentEquipedWeapon.FiringSpeed, bulletSpawnPoint.position));
+
+        if (!(bullets[index].BulletMoving))
+        {
+            StopCoroutine(bullets[index].BulletFire(currentEquipedWeapon.FiringSpeed, bulletSpawnPoint.position, currentEquipedWeapon.Damage));
+            StartCoroutine(bullets[index].BulletFire(currentEquipedWeapon.FiringSpeed, bulletSpawnPoint.position, currentEquipedWeapon.Damage));
+        }
         index++;
 
-        if(index >= bullets.Count)
+        if (index >= bullets.Count)
         {
             index = 0;
         }
@@ -151,7 +174,7 @@ public class PlayerController : MonoBehaviour, IDamage
         // Setting Player Rotation
         playerRotation += new Vector3(inputVector.y * 10f * Time.deltaTime, 0, inputVector.x * 10f * Time.deltaTime);
         playerRotation.z = Mathf.Clamp(playerRotation.z, -horitontalRotation, horitontalRotation);
-        playerRotation.x = Mathf.Clamp(playerRotation.x, -verticalRotation, verticalRotation);
+        playerRotation.x = Mathf.Clamp(playerRotation.x, -verticalRotation, verticalRotation);                      
 
         transform.position = playerPostion;
         transform.rotation = Quaternion.Euler(playerRotation);
@@ -160,6 +183,13 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void ApplyDamage(float damage)
     {
+        health -= damage;
+        health = Mathf.Clamp(health, 0, MAX_HEALTH);
+
+        if(health == 0)
+        {
+            Debug.Log("Dead");
+        }
         
     }
 }

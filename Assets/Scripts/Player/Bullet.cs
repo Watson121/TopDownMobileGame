@@ -10,9 +10,15 @@ public class Bullet : MonoBehaviour
         set { bulletDamage = value; }
     }
 
+    public bool BulletMoving
+    {
+        get { return bulletMoving; }
+    }
+
     private Transform bullet;
     private Vector3 poolZone;
     private float bulletDamage;
+    private bool bulletMoving;
 
     private void Awake()
     {
@@ -20,17 +26,24 @@ public class Bullet : MonoBehaviour
         poolZone = bullet.position;
     }
 
-    public IEnumerator BulletFire(float bulletSpeed, Vector3 startPos)
+    public IEnumerator BulletFire(float bulletSpeed, Vector3 startPos, float bulletDamage)
     {
+        this.bulletDamage = bulletDamage;
+
         float elaspedTime = 0;
         bullet.position = startPos;
 
+        bulletMoving = true;
+
         while (elaspedTime < 3)
         {
-            bullet.position += Vector3.forward * 10.0f * Time.smoothDeltaTime;
+            bullet.position += Vector3.forward * bulletSpeed * Time.deltaTime;
             elaspedTime += Time.deltaTime;
+            Debug.Log(elaspedTime);
             yield return null;
         }
+
+        elaspedTime = 0;
 
         ResetBullet();
    
@@ -39,12 +52,17 @@ public class Bullet : MonoBehaviour
     private void ResetBullet()
     {
         bullet.position = poolZone;
+        bulletMoving = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var obj = other.gameObject.GetComponent<IDamage>();
-        Debug.Log(obj);
+
+        if (obj != null)
+        {
+            obj.ApplyDamage(bulletDamage);
+        }
         
     }
 

@@ -4,20 +4,28 @@ using UnityEngine;
 
 public struct Weapon
 {
-    private float damage;
+    private float weaponDamage;
     private float firingSpeed;
-    private bool active;
+    private bool gunActive;
 
     public Weapon(float damage, float speed, bool active)
     {
-        this.damage = damage;
-        this.firingSpeed = speed;
-        this.active = active;
+        weaponDamage = damage;
+        firingSpeed = speed;
+        gunActive = active;
+    }
+
+    public Weapon(Weapon other)
+    {
+         weaponDamage = other.Damage;
+         firingSpeed = other.FiringSpeed;
+         gunActive = other.Active;
+        
     }
 
     public float Damage
     {
-        get { return damage;  }
+        get { return weaponDamage;  }
     }
 
     public float FiringSpeed
@@ -27,7 +35,7 @@ public struct Weapon
 
     public bool Active
     {
-        get { return active; }
+        get { return gunActive; }
     }
 
 }
