@@ -14,7 +14,7 @@ public class CroutonShip : Tree
         { 
             new Sequence(new List<Node>
             {
-
+                new Task_MoveAndFire(transform),
             }),
         });
 
