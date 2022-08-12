@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Viewport;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
@@ -56,7 +57,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void Awake()
     {
-        CalculatingViewportBounds();
+        //CalculatingViewportBounds();
+        ViewportBoundaries.CalculatingViewportBounds(transform);
         ControlSetup();
         FindBullets();
         PlayerSetup();
@@ -189,8 +191,8 @@ public class PlayerController : MonoBehaviour, IDamage
         // Setting Player Position
         playerPostion = transform.position;
         playerPostion += new Vector3(inputVector.x * playerSpeed * Time.deltaTime, inputVector.y * playerSpeed * Time.deltaTime, 0);
-        playerPostion.x = Mathf.Clamp(playerPostion.x , -frustumWidth + horizontalScreenOffset, frustumWidth - horizontalScreenOffset);
-        playerPostion.y = Mathf.Clamp(playerPostion.y, -frustumHeight + 1.0f, frustumHeight - veritcalScreenOffset);
+        playerPostion.x = Mathf.Clamp(playerPostion.x , -ViewportBoundaries.frustumWidth + horizontalScreenOffset, ViewportBoundaries.frustumWidth - horizontalScreenOffset);
+        playerPostion.y = Mathf.Clamp(playerPostion.y, -ViewportBoundaries.frustumHeight + 1.0f, ViewportBoundaries.frustumHeight - veritcalScreenOffset);
 
         // Setting Player Rotation
         playerRotation += new Vector3(inputVector.y * playerRotationSpeed * Time.deltaTime, 0, inputVector.x * playerRotationSpeed * Time.deltaTime);

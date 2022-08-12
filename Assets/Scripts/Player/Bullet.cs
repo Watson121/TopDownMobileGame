@@ -51,7 +51,6 @@ public class Bullet : MonoBehaviour
         {
             bullet.position += Vector3.forward * weapon.FiringSpeed * Time.deltaTime;
             elaspedTime += Time.deltaTime;
-            Debug.Log(elaspedTime);
             yield return null;
         }
 
