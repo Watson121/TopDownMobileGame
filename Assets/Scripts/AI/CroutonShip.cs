@@ -8,9 +8,17 @@ public class CroutonShip : Tree, IDamage
     public static float fireSpeed = 3.0f;
     public static float damage = 5.0f;
 
+    private bool isActive = false;
+
     public float Health
     {
         get { return health; }
+    }
+
+    public bool IsActive
+    {
+        get { return isActive; }
+        set { isActive = value; }
     }
 
 
@@ -27,19 +35,32 @@ public class CroutonShip : Tree, IDamage
         health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);
     }
 
+    private new void Update()
+    {
+        if (isActive != false)
+        {
+            base.Update();
+            UnityEngine.Debug.Log("Working");
+        }
+    }
+
     protected override Node SetupTree()
     {
         health = MAX_HEALTH;
+        isActive = true;
 
-        Node root = new Selector(new List<Node> 
-        { 
+        Node root = new Selector(new List<Node>
+        {
             new Sequence(new List<Node>
             {
                 new CheckHealth(this),
                 new CheckIfInView(transform),
                 new Task_MoveAndFire(transform),
             }),
-        });
+
+            new Task_Reset(transform, new UnityEngine.Vector3(100, 100, 100), this)
+
+        }); ;
 
         return root;
     }
