@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour, IDamage
         get { return health; }
     }
 
-    private float health;
+    [SerializeField] private float health;
 
     // Player Control Inputs
     private PlayerInput playerInput;
@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour, IDamage
         // If the bullet has not been preiously fired, then fire it. If it has been fired then move onto the bullet.
         if (!(bullets[index].BulletMoving))
         {
-            StartCoroutine(currentBullet.BulletFire(bulletSpawnPoint.position, currentEquipedWeapon));
+            StartCoroutine(currentBullet.BulletFire(bulletSpawnPoint.position, currentEquipedWeapon, Vector3.forward, 3.0f));
         }
 
         index++;

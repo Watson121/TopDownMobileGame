@@ -16,19 +16,20 @@ public class Bullet : MonoBehaviour
     {
         set { bulletDamage = value; }
     }
+    private float bulletDamage;
 
     // Property to return if bullet is moving or not
     public bool BulletMoving
     {
         get { return bulletMoving; }
     }
+    private bool bulletMoving;
 
     #endregion
 
     private Transform bullet;
     private Vector3 poolZone;
-    private float bulletDamage;
-    private bool bulletMoving;
+   
 
     // Getting the bullet transform and pool zone
     private void Awake()
@@ -38,7 +39,7 @@ public class Bullet : MonoBehaviour
     }
 
     // Bullet Movement
-    public IEnumerator BulletFire(Vector3 startPos, Weapon weapon)
+    public IEnumerator BulletFire(Vector3 startPos, Weapon weapon, Vector3 direction, float bulletLifetime)
     {
         this.bulletDamage = weapon.Damage;
 
@@ -47,9 +48,9 @@ public class Bullet : MonoBehaviour
 
         bulletMoving = true;
 
-        while (elaspedTime < 3)
+        while (elaspedTime < bulletLifetime)
         {
-            bullet.position += Vector3.forward * weapon.FiringSpeed * Time.deltaTime;
+            bullet.position += direction * weapon.FiringSpeed * Time.deltaTime;
             elaspedTime += Time.deltaTime;
             yield return null;
         }

@@ -40,8 +40,8 @@ public class BaseEnemy : Tree, IDamage
     {
         get { return health; }
     }
-    [UnityEngine.SerializeField] private const float MAX_HEALTH = 10.0f;
-    [UnityEngine.SerializeField] private float health;
+    protected const float MAX_HEALTH = 10.0f;
+    [UnityEngine.SerializeField] protected float health;
 
     public UnityEngine.Transform FiringPosition
     {
@@ -64,12 +64,9 @@ public class BaseEnemy : Tree, IDamage
         get { return isActive; }
         set { isActive = value; }
     }
-
-    private bool isActive = false;
+    protected bool isActive = false;
 
     #endregion
-
-    
 
     /// <summary>
     /// Applies damage to the enemy
