@@ -7,9 +7,9 @@ public class Task_Reset : Node
 {
     private Transform _transform;
     private Vector3 _resetPosition;
-    private CroutonShip _croutonShip;
+    private BaseEnemy _croutonShip;
 
-    public Task_Reset(Transform transform, Vector3 resetPosition, CroutonShip croutonShip)
+    public Task_Reset(Transform transform, Vector3 resetPosition, BaseEnemy croutonShip)
     {
         this._transform = transform;
         this._resetPosition = resetPosition;
