@@ -7,9 +7,9 @@ using BehaviourTree;
 public class CheckHealth : Node
 {
 
-    private CroutonShip _controller;
+    private BaseEnemy _controller;
 
-    public CheckHealth(CroutonShip controller)
+    public CheckHealth(BaseEnemy controller)
     {
         _controller = controller;
     }
