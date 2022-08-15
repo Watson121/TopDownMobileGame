@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour, IDamage
     private float veritcalScreenOffset = 4.0f;
     private float horizontalScreenOffset = 2.0f;
 
+    [Header("Game Manager")]
+    [SerializeField] private GameManager gameManager;
+
     [Header("Player Settings")]
     [SerializeField] private float playerSpeed = 5f;
     [SerializeField] private float playerRotationSpeed = 3.0f;
@@ -117,13 +120,7 @@ public class PlayerController : MonoBehaviour, IDamage
     /// </summary>
     private void FindBullets()
     {
-        GameObject[] tempBullets = GameObject.FindGameObjectsWithTag("Bullet");
-
-        foreach(GameObject bullet in tempBullets)
-        {
-            bullets.Add(bullet.GetComponent<Bullet>());
-        }
-
+        bullets = gameManager.PlayerBulletPool;
     }
 
     // Update is called once per frame

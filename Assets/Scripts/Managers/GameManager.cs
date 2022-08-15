@@ -5,23 +5,45 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public List<Bullet> BulletPool
+
+    public List<Bullet> PlayerBulletPool
     {
-        get { return bulletPool; }
+        get { return playerBulletPool; }
     }
 
-    [SerializeField] private List<Bullet> bulletPool;
+    [Header("Bullet Pools")]
+    [SerializeField] private List<Bullet> playerBulletPool;
 
+    public List<Bullet> EnemyBulletPool
+    {
+        get { return enemyBulletPool; }
+    }
+
+    [SerializeField] private List<Bullet> enemyBulletPool;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject[] tempBullets = GameObject.FindGameObjectsWithTag("Bullet");
+        GetBullets();
+    }
 
-        foreach (GameObject bullet in tempBullets)
+    private void GetBullets()
+    {
+        // Finding the player pool
+        Transform playerPool = GameObject.FindGameObjectWithTag("PlayerBulletPool").transform;
+
+        foreach (Transform bullet in playerPool)
         {
-            bulletPool.Add(bullet.GetComponent<Bullet>());
+            playerBulletPool.Add(bullet.GetComponent<Bullet>());
+        }
+
+        Transform enemyPool = GameObject.FindGameObjectWithTag("EnemyBulletPool").transform;
+
+        foreach (Transform bullet in enemyPool)
+        {
+            enemyBulletPool.Add(bullet.GetComponent<Bullet>());
         }
     }
+
 
 }

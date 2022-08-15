@@ -20,7 +20,7 @@ public class Task_MoveAndFire : Node
         this._enemy = enemy;
 
         _enemyWeapon = new Weapon(10.0f, 3.0f, true);
-        bullets = _enemy.GameManager.BulletPool;
+        bullets = _enemy.GameManager.EnemyBulletPool;
      
     }
 
@@ -37,7 +37,7 @@ public class Task_MoveAndFire : Node
 
             if (!(currentBullet.BulletMoving))
             {
-                _enemy.StartCoroutine(currentBullet.BulletFire(_enemy.FiringPosition.position, _enemyWeapon, Vector3.back, 6.0f));
+                _enemy.GameManager.StartCoroutine(currentBullet.BulletFire(_enemy.FiringPosition.position, _enemyWeapon, Vector3.back, 6.0f));
                 _enemy.FiringSpeed = 1.0f;
             }
 
