@@ -12,8 +12,6 @@ public class Task_MoveAndFire : Node
     private List<Bullet> bullets;
     private static int index = 0;
 
-    
-
     public Task_MoveAndFire(Transform transform, BaseEnemy enemy)
     {
         this._transform = transform;
