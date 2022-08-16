@@ -6,6 +6,9 @@ using Viewport;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
+
+    #region Player Health
+
     // Max Player Health 
     private const float MAX_HEALTH = 100.0f;
 
@@ -19,6 +22,8 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         get { return health; }
     }
+
+    #endregion
 
     [SerializeField] private float health;
 
@@ -88,7 +93,6 @@ public class PlayerController : MonoBehaviour, IDamage
         playerControls.Player.Ketchup.performed += SwitchWeapon;
         playerControls.Player.Mustard.performed += SwitchWeapon;
         playerControls.Player.Mayo.performed += SwitchWeapon;
-
     }
 
     /// <summary>
@@ -118,6 +122,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
 
         currentEquipedWeapon = ketchupGun;
+        uiManager.UpdateCurrentWeapon(BulletType.Ketchup);
     }
 
     /// <summary>
@@ -198,16 +203,20 @@ public class PlayerController : MonoBehaviour, IDamage
             case "Ketchup":
                 Debug.Log("Ketchup Gun Equiped");
                 currentEquipedWeapon = ketchupGun;
+                uiManager.UpdateCurrentWeapon(BulletType.Ketchup);
                 break;
             case "Mustard":
                 Debug.Log("Mustard Gun Equiped");
                 currentEquipedWeapon = mustardGun;
+                uiManager.UpdateCurrentWeapon(BulletType.Musturd);
                 break;
             case "Mayo":
                 Debug.Log("Mayo Gun Equiped");
                 currentEquipedWeapon = mayoGun;
+                uiManager.UpdateCurrentWeapon(BulletType.Mayo);
                 break;
         }
+
 
     }
 
