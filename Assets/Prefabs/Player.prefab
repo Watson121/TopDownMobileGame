@@ -204,7 +204,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0d0e56d62ea1c42b1567d3e791a2d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  gameManager: {fileID: 0}
   playerSpeed: 5
   playerRotationSpeed: 6
   horitontalRotation: 20
   verticalRotation: 15
+  bullets: []
+  bulletSpawnPoint: {fileID: 0}
