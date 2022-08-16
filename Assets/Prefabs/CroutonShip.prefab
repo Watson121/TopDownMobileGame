@@ -79,6 +79,7 @@ MonoBehaviour:
   health: 10
   firingPosition: {fileID: 8441902376469824764}
   gameManager: {fileID: 0}
+  pointsValue: 10
 --- !u!1 &8441902376445024449
 GameObject:
   m_ObjectHideFlags: 0

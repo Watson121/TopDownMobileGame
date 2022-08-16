@@ -5,6 +5,31 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    private UIManager uiManager;
+
+    #region Points
+
+    private static uint highScore;
+    private uint points = 0;
+    public uint Points
+    {
+        set { 
+            points = value;
+            OnPointChange(points);
+        }
+        get { 
+            return points; 
+        }
+    }
+
+    // Events for when the points change
+    public delegate void OnPointChangeDelegate(uint newVal);
+    public event OnPointChangeDelegate OnPointChange;
+
+    #endregion
+
+    #region Bullet Pools
+
     public List<Bullet> PlayerBulletPool
     {
         get { return playerBulletPool; }
@@ -17,12 +42,27 @@ public class GameManager : MonoBehaviour
     }
     [SerializeField]private List<Bullet> enemyBulletPool;
 
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+       
         GetBullets();
+        FindManagers();
+
+        OnPointChange += PointUpdateHandler;
+
+        DontDestroyOnLoad(this);
     }
+
+    private void FindManagers()
+    {
+        // Finding UI Manager
+        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+    }
+
+   
 
     private void GetBullets()
     {
@@ -41,6 +81,22 @@ public class GameManager : MonoBehaviour
             enemyBulletPool.Add(bullet.GetComponent<Bullet>());
         }
     }
+
+    private void ResetPoints()
+    {
+        if(points > highScore)
+        {
+            highScore = points;
+        }
+
+        points = 0;
+    }
+
+    private void PointUpdateHandler(uint newVal)
+    {
+        uiManager.UpdatePoints(newVal);
+    }
+    
 
 
 }

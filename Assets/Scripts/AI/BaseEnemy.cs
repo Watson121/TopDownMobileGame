@@ -55,6 +55,11 @@ public class BaseEnemy : Tree, IDamage
     }
     [UnityEngine.SerializeField] private GameManager gameManager;
 
+    public int PointsValue
+    {
+        get { return pointsValue; }
+    }
+    [UnityEngine.SerializeField] protected int pointsValue;
 
     /// <summary>
     /// This is if the current Enemy is active or not
@@ -67,6 +72,8 @@ public class BaseEnemy : Tree, IDamage
     protected bool isActive = false;
 
     #endregion
+
+    
 
     /// <summary>
     /// Applies damage to the enemy
