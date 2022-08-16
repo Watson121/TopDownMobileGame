@@ -6,9 +6,13 @@ using Viewport;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
-
     // Max Player Health 
     private const float MAX_HEALTH = 100.0f;
+
+    public float MaxHealth
+    {
+        get { return MAX_HEALTH; }
+    }
 
     // Returng the current health for the player
     public float Health
@@ -29,8 +33,9 @@ public class PlayerController : MonoBehaviour, IDamage
     private float veritcalScreenOffset = 4.0f;
     private float horizontalScreenOffset = 2.0f;
 
-    [Header("Game Manager")]
+    [Header("Game Managers")]
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private UIManager uiManager;
 
     [Header("Player Settings")]
     [SerializeField] private float playerSpeed = 5f;
@@ -52,11 +57,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private List<Bullet> bullets;
     private static int index = 0;
     [SerializeField] Transform bulletSpawnPoint;
-
-  
-
-
-  
 
     private void Awake()
     {
@@ -207,10 +207,13 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         health -= damage;
         health = Mathf.Clamp(health, 0, MAX_HEALTH);
+        //uiManager.UpdatePlayerHealth_UI();
 
-        if(health == 0)
+        uiManager.StartCoroutine(uiManager.UpdatePlayerHealth_UI(health));
+
+        if (health == 0)
         {
-            Debug.Log("Dead");
+           
         }
         
     }
