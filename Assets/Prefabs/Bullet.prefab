@@ -108,3 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd415787dd30604097032e94756b061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ketchupBullet: {fileID: 2100000, guid: f49036557635ac646b31bfbe09a9f01b, type: 2}
+  mustardBullet: {fileID: 2100000, guid: df9779e03707afa4abe88b92ce20571c, type: 2}
+  mayoBullet: {fileID: 2100000, guid: 681c7c5685bcc2149ba2067af802436f, type: 2}

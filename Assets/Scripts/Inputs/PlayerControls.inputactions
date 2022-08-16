@@ -20,6 +20,30 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Ketchup",
+                    "type": "Button",
+                    "id": "a52db074-f1fa-4322-8307-aa5d91201f54",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mustard",
+                    "type": "Button",
+                    "id": "baabb57e-7604-4d9a-a6ee-ccc6ca27c6e3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mayo",
+                    "type": "Button",
+                    "id": "2f339341-1fd7-4e0c-9f50-4294652f92ce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -119,6 +143,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "05e8acda-84e6-4626-9ced-562b6c8e2f57",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ketchup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32be33d8-77a0-45ec-b2af-4480a9aed9c7",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mustard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be257311-c0e8-417e-83e1-45d77858791a",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mayo",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

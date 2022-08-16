@@ -51,7 +51,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
     // Weapons
     private Weapon currentEquipedWeapon;
-    private Weapon baseWeapon;
+    private Weapon ketchupGun;
+    private Weapon mustardGun;
+    private Weapon mayoGun;
 
     // Bullets
     [SerializeField] private List<Bullet> bullets;
@@ -77,9 +79,16 @@ public class PlayerController : MonoBehaviour, IDamage
         playerControls = new PlayerControls();
         playerControls.Enable();
 
+        // Movement
         playerControls.Player.Movement.performed += OnMovementAction;
         playerControls.Player.Movement.canceled += OnMovementAction;
+        
+        // Weapons
         playerControls.Player.Fire.performed += WeaponFire;
+        playerControls.Player.Ketchup.performed += SwitchWeapon;
+        playerControls.Player.Mustard.performed += SwitchWeapon;
+        playerControls.Player.Mayo.performed += SwitchWeapon;
+
     }
 
     /// <summary>
@@ -103,8 +112,12 @@ public class PlayerController : MonoBehaviour, IDamage
     /// </summary>
     private void WeaponSetup()
     {
-        baseWeapon = new Weapon(10.0f, 10.0f, true);
-        currentEquipedWeapon = baseWeapon;
+        ketchupGun = new Weapon(10.0f, 10.0f, true, BulletType.Ketchup);
+        mustardGun = new Weapon(10.0f, 10.0f, false, BulletType.Musturd);
+        mayoGun = new Weapon(10.0f, 10.0f, false, BulletType.Mayo);
+
+
+        currentEquipedWeapon = ketchupGun;
     }
 
     /// <summary>
@@ -135,8 +148,6 @@ public class PlayerController : MonoBehaviour, IDamage
     // Turning on or off the movement for the player
     private void OnMovementAction(InputAction.CallbackContext obj)
     {
-    
-
         if (obj.performed)
         {
             move = true;
@@ -157,7 +168,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
 #if UNITY_EDITOR
         Debug.Log("Test and index: " + index);
-        Debug.Log("Weapon Damage: " + baseWeapon.Damage);
+        Debug.Log("Weapon Damage: " + ketchupGun.Damage);
 #endif
 
         // Getting the current bullet
@@ -177,7 +188,30 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    
+    private void SwitchWeapon(InputAction.CallbackContext obj)
+    {
+
+        string currentAction = obj.action.name;
+
+        switch (currentAction)
+        {
+            case "Ketchup":
+                Debug.Log("Ketchup Gun Equiped");
+                currentEquipedWeapon = ketchupGun;
+                break;
+            case "Mustard":
+                Debug.Log("Mustard Gun Equiped");
+                currentEquipedWeapon = mustardGun;
+                break;
+            case "Mayo":
+                Debug.Log("Mayo Gun Equiped");
+                currentEquipedWeapon = mayoGun;
+                break;
+        }
+
+    }
+
+
     /// <summary>
     /// Moving the player around the level
     /// </summary>
