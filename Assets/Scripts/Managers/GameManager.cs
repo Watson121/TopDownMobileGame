@@ -9,22 +9,29 @@ public class GameManager : MonoBehaviour
 
     #region Points
 
+    // Current highscore
     private static uint highScore;
-    private uint points = 0;
+
+    // Current number of points that the player has
+    private uint currentPoints = 0;
+    
+    // Property to set and return points
     public uint Points
     {
         set { 
-            points = value;
-            OnPointChange(points);
+            currentPoints = value;
+            OnPointChange(currentPoints);
         }
         get { 
-            return points; 
+            return currentPoints; 
         }
     }
 
     // Events for when the points change
     public delegate void OnPointChangeDelegate(uint newVal);
     public event OnPointChangeDelegate OnPointChange;
+
+
 
     #endregion
 
@@ -52,6 +59,7 @@ public class GameManager : MonoBehaviour
         FindManagers();
 
         OnPointChange += PointUpdateHandler;
+
 
         DontDestroyOnLoad(this);
     }
@@ -84,17 +92,22 @@ public class GameManager : MonoBehaviour
 
     private void ResetPoints()
     {
-        if(points > highScore)
+        if(currentPoints > highScore)
         {
-            highScore = points;
+            highScore = currentPoints;
         }
 
-        points = 0;
+        currentPoints = 0;
     }
 
     private void PointUpdateHandler(uint newVal)
     {
-        uiManager.UpdatePoints(newVal);
+        uiManager.UpdaetCurrentPoints(newVal);
+    }
+
+    private void HighScoreUpdateHandler(uint newVal)
+    {
+        
     }
     
 

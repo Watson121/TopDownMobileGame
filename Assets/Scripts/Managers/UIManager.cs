@@ -7,10 +7,20 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
 
-    public Slider playerHealth_UI;
-    public PlayerController playerController;
+
+
+
+    // Game Managers
     public GameManager gameManager;
+    public PlayerController playerController;
+
+    // In Game UI
     public TextMeshProUGUI pointsUI;
+    public TextMeshProUGUI highScoreUI;
+
+    public Slider playerHealth_UI;
+
+
 
 
 
@@ -20,6 +30,8 @@ public class UIManager : MonoBehaviour
         ResetHealthBar();
         DontDestroyOnLoad(this);
     }
+
+
 
     private void ResetHealthBar()
     {
@@ -39,9 +51,15 @@ public class UIManager : MonoBehaviour
         playerHealth_UI.value = Mathf.Clamp(playerHealth_UI.value, newHealth, playerHealth_UI.maxValue);
     }
 
-    public void UpdatePoints(float newValue)
+    public void UpdaetCurrentPoints(float newValue)
     {
         pointsUI.text = "Score: " + newValue;
     }
+
+    public void UpdateHighScore(float newValue)
+    {
+        
+    }
+
 
 }
