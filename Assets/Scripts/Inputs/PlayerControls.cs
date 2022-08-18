@@ -33,6 +33,30 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Ketchup"",
+                    ""type"": ""Button"",
+                    ""id"": ""a52db074-f1fa-4322-8307-aa5d91201f54"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Mustard"",
+                    ""type"": ""Button"",
+                    ""id"": ""baabb57e-7604-4d9a-a6ee-ccc6ca27c6e3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Mayo"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f339341-1fd7-4e0c-9f50-4294652f92ce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -134,6 +158,39 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05e8acda-84e6-4626-9ced-562b6c8e2f57"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ketchup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32be33d8-77a0-45ec-b2af-4480a9aed9c7"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mustard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be257311-c0e8-417e-83e1-45d77858791a"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mayo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -150,6 +207,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_Ketchup = m_Player.FindAction("Ketchup", throwIfNotFound: true);
+        m_Player_Mustard = m_Player.FindAction("Mustard", throwIfNotFound: true);
+        m_Player_Mayo = m_Player.FindAction("Mayo", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -201,12 +261,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_Ketchup;
+    private readonly InputAction m_Player_Mustard;
+    private readonly InputAction m_Player_Mayo;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @Ketchup => m_Wrapper.m_Player_Ketchup;
+        public InputAction @Mustard => m_Wrapper.m_Player_Mustard;
+        public InputAction @Mayo => m_Wrapper.m_Player_Mayo;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -222,6 +288,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                @Ketchup.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnKetchup;
+                @Ketchup.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnKetchup;
+                @Ketchup.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnKetchup;
+                @Mustard.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMustard;
+                @Mustard.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMustard;
+                @Mustard.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMustard;
+                @Mayo.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMayo;
+                @Mayo.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMayo;
+                @Mayo.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMayo;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -232,6 +307,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
+                @Ketchup.started += instance.OnKetchup;
+                @Ketchup.performed += instance.OnKetchup;
+                @Ketchup.canceled += instance.OnKetchup;
+                @Mustard.started += instance.OnMustard;
+                @Mustard.performed += instance.OnMustard;
+                @Mustard.canceled += instance.OnMustard;
+                @Mayo.started += instance.OnMayo;
+                @Mayo.performed += instance.OnMayo;
+                @Mayo.canceled += instance.OnMayo;
             }
         }
     }
@@ -249,5 +333,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnKetchup(InputAction.CallbackContext context);
+        void OnMustard(InputAction.CallbackContext context);
+        void OnMayo(InputAction.CallbackContext context);
     }
 }

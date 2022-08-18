@@ -6,6 +6,17 @@ using UnityEngine;
 /// Main Class for the Bullet.
 /// It deals with movement and collision interaction
 /// </summary>
+/// 
+
+public enum BulletType
+{
+    Ketchup,
+    Musturd,
+    Mayo
+}
+
+
+
 public class Bullet : MonoBehaviour
 {
 
@@ -29,19 +40,40 @@ public class Bullet : MonoBehaviour
 
     private Transform bullet;
     private Vector3 poolZone;
-   
+    private BulletType _bulletType;
+
+    private MeshRenderer meshRenderer;
+    [SerializeField] private Material ketchupBullet;
+    [SerializeField] private Material mustardBullet;
+    [SerializeField] private Material mayoBullet;
 
     // Getting the bullet transform and pool zone
     private void Awake()
     {
         bullet = this.transform;
         poolZone = bullet.position;
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     // Bullet Movement
     public IEnumerator BulletFire(Vector3 startPos, Weapon weapon, Vector3 direction, float bulletLifetime)
     {
-        this.bulletDamage = weapon.Damage;
+        bulletDamage = weapon.Damage;
+        _bulletType = weapon.WeaponType;
+
+        switch (_bulletType)
+        {
+            case BulletType.Ketchup:
+                meshRenderer.material = ketchupBullet;
+                break;
+            case BulletType.Musturd:
+                meshRenderer.material = mustardBullet;
+                break;
+            case BulletType.Mayo:
+                meshRenderer.material = mayoBullet;
+                break;
+        }
+
 
         float elaspedTime = 0;
         bullet.position = startPos;
@@ -72,7 +104,14 @@ public class Bullet : MonoBehaviour
 
         if (obj != null)
         {
-            obj.ApplyDamage(bulletDamage);
+            if(other.tag == "Player")
+            {
+                obj.ApplyDamage(bulletDamage);
+            }
+            else if(other.tag == "Enemy")
+            {
+                obj.ApplyDamageEnemy(bulletDamage, _bulletType);
+            }
         }
         
     }

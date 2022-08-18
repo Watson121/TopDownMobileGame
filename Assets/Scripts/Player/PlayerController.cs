@@ -6,6 +6,9 @@ using Viewport;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
+
+    #region Player Health
+
     // Max Player Health 
     private const float MAX_HEALTH = 100.0f;
 
@@ -19,6 +22,8 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         get { return health; }
     }
+
+    #endregion
 
     [SerializeField] private float health;
 
@@ -51,7 +56,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
     // Weapons
     private Weapon currentEquipedWeapon;
-    private Weapon baseWeapon;
+    private Weapon ketchupGun;
+    private Weapon mustardGun;
+    private Weapon mayoGun;
 
     // Bullets
     [SerializeField] private List<Bullet> bullets;
@@ -77,9 +84,15 @@ public class PlayerController : MonoBehaviour, IDamage
         playerControls = new PlayerControls();
         playerControls.Enable();
 
+        // Movement
         playerControls.Player.Movement.performed += OnMovementAction;
         playerControls.Player.Movement.canceled += OnMovementAction;
+        
+        // Weapons
         playerControls.Player.Fire.performed += WeaponFire;
+        playerControls.Player.Ketchup.performed += SwitchWeapon;
+        playerControls.Player.Mustard.performed += SwitchWeapon;
+        playerControls.Player.Mayo.performed += SwitchWeapon;
     }
 
     /// <summary>
@@ -103,8 +116,13 @@ public class PlayerController : MonoBehaviour, IDamage
     /// </summary>
     private void WeaponSetup()
     {
-        baseWeapon = new Weapon(10.0f, 10.0f, true);
-        currentEquipedWeapon = baseWeapon;
+        ketchupGun = new Weapon(10.0f, 10.0f, true, BulletType.Ketchup);
+        mustardGun = new Weapon(10.0f, 10.0f, false, BulletType.Musturd);
+        mayoGun = new Weapon(10.0f, 10.0f, false, BulletType.Mayo);
+
+
+        currentEquipedWeapon = ketchupGun;
+        uiManager.UpdateCurrentWeapon(BulletType.Ketchup);
     }
 
     /// <summary>
@@ -135,8 +153,6 @@ public class PlayerController : MonoBehaviour, IDamage
     // Turning on or off the movement for the player
     private void OnMovementAction(InputAction.CallbackContext obj)
     {
-    
-
         if (obj.performed)
         {
             move = true;
@@ -157,7 +173,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
 #if UNITY_EDITOR
         Debug.Log("Test and index: " + index);
-        Debug.Log("Weapon Damage: " + baseWeapon.Damage);
+        Debug.Log("Weapon Damage: " + ketchupGun.Damage);
 #endif
 
         // Getting the current bullet
@@ -177,7 +193,34 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    
+    private void SwitchWeapon(InputAction.CallbackContext obj)
+    {
+
+        string currentAction = obj.action.name;
+
+        switch (currentAction)
+        {
+            case "Ketchup":
+                Debug.Log("Ketchup Gun Equiped");
+                currentEquipedWeapon = ketchupGun;
+                uiManager.UpdateCurrentWeapon(BulletType.Ketchup);
+                break;
+            case "Mustard":
+                Debug.Log("Mustard Gun Equiped");
+                currentEquipedWeapon = mustardGun;
+                uiManager.UpdateCurrentWeapon(BulletType.Musturd);
+                break;
+            case "Mayo":
+                Debug.Log("Mayo Gun Equiped");
+                currentEquipedWeapon = mayoGun;
+                uiManager.UpdateCurrentWeapon(BulletType.Mayo);
+                break;
+        }
+
+
+    }
+
+
     /// <summary>
     /// Moving the player around the level
     /// </summary>
@@ -216,5 +259,10 @@ public class PlayerController : MonoBehaviour, IDamage
            
         }
         
+    }
+
+    public void ApplyDamageEnemy(float damage, BulletType bullet)
+    {
+        throw new System.NotImplementedException();
     }
 }

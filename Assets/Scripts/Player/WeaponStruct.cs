@@ -10,13 +10,15 @@ public struct Weapon
     private float weaponDamage;
     private float firingSpeed;
     private bool gunActive;
+    private BulletType weaponType;
 
     // Base Constructor for the Weapon
-    public Weapon(float damage, float speed, bool active)
+    public Weapon(float damage, float speed, bool active, BulletType type)
     {
         weaponDamage = damage;
         firingSpeed = speed;
         gunActive = active;
+        weaponType = type;
     }
 
     // Copy Constructor for the weapon
@@ -25,7 +27,8 @@ public struct Weapon
          weaponDamage = other.Damage;
          firingSpeed = other.FiringSpeed;
          gunActive = other.Active;
-        
+        weaponType = other.weaponType;
+
     }
 
     // Returning the damage of this weapon
@@ -45,5 +48,11 @@ public struct Weapon
     {
         get { return gunActive; }
     }
+
+    public BulletType WeaponType 
+    {
+        get { return weaponType; }
+    }
+
 
 }

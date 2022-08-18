@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     // In Game UI
     public TextMeshProUGUI pointsUI;
     public TextMeshProUGUI highScoreUI;
+    public TextMeshProUGUI currentWeaponUI;
 
     public Slider playerHealth_UI;
 
@@ -59,6 +60,22 @@ public class UIManager : MonoBehaviour
     public void UpdateHighScore(float newValue)
     {
         
+    }
+
+    public void UpdateCurrentWeapon(BulletType type)
+    {
+        switch (type)
+        {
+            case BulletType.Ketchup:
+                currentWeaponUI.text = "KETCHUP GUN";
+                break;
+            case BulletType.Musturd:
+                currentWeaponUI.text = "MUSTURD GUN";
+                break;
+            case BulletType.Mayo:
+                currentWeaponUI.text = "MAYO GUN";
+                break;
+        }
     }
 
 
