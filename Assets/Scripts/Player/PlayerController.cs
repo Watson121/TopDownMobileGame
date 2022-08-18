@@ -260,4 +260,9 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         
     }
+
+    public void ApplyDamageEnemy(float damage, BulletType bullet)
+    {
+        throw new System.NotImplementedException();
+    }
 }

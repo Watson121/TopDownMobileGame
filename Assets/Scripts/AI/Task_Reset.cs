@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
 
-public enum Bullet_Type
-{
-    Ketchup,
-    Musturd,
-    Mayo
-}
 
 
 public class Task_Reset : Node

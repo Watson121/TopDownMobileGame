@@ -6,10 +6,11 @@ using BehaviourTree;
 // Make this Class much more of an abstract class
 // So that is can be used for more than one enemy
 
+
 public class BaseEnemy : Tree, IDamage
 {
 
-    #region PROPERTIES
+    #region Character Speed
 
     // The Movement Speed of the Enemy
     public float MoveSpeed
@@ -26,12 +27,26 @@ public class BaseEnemy : Tree, IDamage
     } 
     protected static float firingSpeed = 1.0f;
 
+    #endregion
+
+    #region Damage
+
     // Returning the damage of the enemy
     public float Damage
     {
         get { return damage; }
     }
     protected static float damage = 5.0f;
+
+    public UnityEngine.Transform FiringPosition
+    {
+        get { return firingPosition; }
+    }
+    [UnityEngine.SerializeField] private UnityEngine.Transform firingPosition;
+
+    #endregion
+
+    #region Health
 
     /// <summary>
     /// The health of current enemy
@@ -43,24 +58,6 @@ public class BaseEnemy : Tree, IDamage
     protected const float MAX_HEALTH = 10.0f;
     [UnityEngine.SerializeField] protected float health;
 
-    public UnityEngine.Transform FiringPosition
-    {
-        get { return firingPosition; }
-    }
-    [UnityEngine.SerializeField] private UnityEngine.Transform firingPosition;
-
-    public GameManager GameManager
-    {
-        get { return gameManager; }
-    }
-    [UnityEngine.SerializeField] private GameManager gameManager;
-
-    public int PointsValue
-    {
-        get { return pointsValue; }
-    }
-    [UnityEngine.SerializeField] protected int pointsValue;
-
     /// <summary>
     /// This is if the current Enemy is active or not
     /// </summary>
@@ -71,9 +68,29 @@ public class BaseEnemy : Tree, IDamage
     }
     protected bool isActive = false;
 
+    protected BulletType type;
+
     #endregion
 
-    
+    #region Managers
+
+    public GameManager GameManager
+    {
+        get { return gameManager; }
+    }
+    [UnityEngine.SerializeField] private GameManager gameManager;
+
+    #endregion
+
+    #region Points
+
+    public int PointsValue
+    {
+        get { return pointsValue; }
+    }
+    [UnityEngine.SerializeField] protected int pointsValue;
+
+    #endregion
 
     /// <summary>
     /// Applies damage to the enemy
@@ -124,5 +141,12 @@ public class BaseEnemy : Tree, IDamage
         return root;
     }
 
-    
+    public void ApplyDamageEnemy(float damage, BulletType bullet)
+    {
+        if(bullet == type)
+        {
+            health -= damage;
+            health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);
+        }
+    }
 }

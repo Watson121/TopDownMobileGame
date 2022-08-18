@@ -104,7 +104,14 @@ public class Bullet : MonoBehaviour
 
         if (obj != null)
         {
-            obj.ApplyDamage(bulletDamage);
+            if(other.tag == "Player")
+            {
+                obj.ApplyDamage(bulletDamage);
+            }
+            else if(other.tag == "Enemy")
+            {
+                obj.ApplyDamageEnemy(bulletDamage, _bulletType);
+            }
         }
         
     }

@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 2808823369759421764}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -206,6 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   gameManager: {fileID: 0}
+  uiManager: {fileID: 0}
   playerSpeed: 5
   playerRotationSpeed: 6
   horitontalRotation: 20
