@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
     {
         get { return bulletMoving; }
     }
-    private bool bulletMoving;
+    [SerializeField]private bool bulletMoving;
 
     #endregion
 
@@ -80,7 +80,7 @@ public class Bullet : MonoBehaviour
 
         bulletMoving = true;
 
-        while (elaspedTime < bulletLifetime)
+        while ((elaspedTime < bulletLifetime) && bulletMoving)
         {
             bullet.position += direction * weapon.FiringSpeed * Time.deltaTime;
             elaspedTime += Time.deltaTime;
@@ -95,6 +95,7 @@ public class Bullet : MonoBehaviour
     {
         bullet.position = poolZone;
         bulletMoving = false;
+        StopAllCoroutines();
     }
 
     // If the bullet collides with something then this will fire
@@ -112,6 +113,8 @@ public class Bullet : MonoBehaviour
             {
                 obj.ApplyDamageEnemy(bulletDamage, _bulletType);
             }
+
+            ResetBullet();
         }
         
     }
