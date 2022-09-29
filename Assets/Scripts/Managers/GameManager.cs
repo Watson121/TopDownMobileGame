@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
-   
+
 
     private void GetBullets()
     {

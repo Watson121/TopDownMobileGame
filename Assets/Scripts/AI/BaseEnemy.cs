@@ -92,28 +92,32 @@ public class BaseEnemy : Tree, IDamage
 
     #endregion
 
-    /// <summary>
-    /// Applies damage to the enemy
-    /// </summary>
-    /// <param name="damage">How much damage to apply</param>
-    public void ApplyDamage(float damage)
+    private new void Start()
     {
-        health -= damage;
-        health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);
+        // Finding the Game Manager
+        gameManager = UnityEngine.GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        // Finding hte firing position
+        firingPosition = gameObject.transform.GetChild(0).transform;
+
+        base.Start();
     }
+
 
     private new void Update()
     {
-        // If the ship is no longer active, then this should no longer run
-        if (isActive != false)
-        {
-            base.Update();
-            UnityEngine.Debug.Log("Working");
-        }
-        else if(isActive == false)
-        {
-            Destroy(this);
-        }
+       
+            // If the ship is no longer active, then this should no longer run
+            if (isActive != false)
+            {
+                base.Update();
+                UnityEngine.Debug.Log("Working");
+            }
+            else if (isActive == false)
+            {
+                Destroy(this);
+            }
+        
        
     }
 
@@ -139,6 +143,16 @@ public class BaseEnemy : Tree, IDamage
         }); ;
 
         return root;
+    }
+
+    /// <summary>
+    /// Applies damage to the enemy
+    /// </summary>
+    /// <param name="damage">How much damage to apply</param>
+    public void ApplyDamage(float damage)
+    {
+        health -= damage;
+        health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);
     }
 
     public void ApplyDamageEnemy(float damage, BulletType bullet)

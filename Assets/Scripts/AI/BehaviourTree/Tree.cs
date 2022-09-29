@@ -15,6 +15,7 @@ namespace BehaviourTree
 
         protected void Start()
         {
+            // Root Node has been called
             rootNode = SetupTree();
         }
 

@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour, IDamage
     // Max Player Health 
     private const float MAX_HEALTH = 100.0f;
 
+    [Header("Player Health")]
+    [SerializeField] private float health;
+
     public float MaxHealth
     {
         get { return MAX_HEALTH; }
@@ -25,7 +28,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #endregion
 
-    [SerializeField] private float health;
 
     // Player Control Inputs
     private PlayerInput playerInput;
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private Weapon mayoGun;
 
     // Bullets
+    [Header("Bullet Settings")]
     [SerializeField] private List<Bullet> bullets;
     private static int index = 0;
     [SerializeField] Transform bulletSpawnPoint;
@@ -70,6 +73,7 @@ public class PlayerController : MonoBehaviour, IDamage
         //CalculatingViewportBounds();
         ViewportBoundaries.CalculatingViewportBounds(transform);
         ControlSetup();
+        FindManagers();
         FindBullets();
         PlayerSetup();
         WeaponSetup();
@@ -131,6 +135,12 @@ public class PlayerController : MonoBehaviour, IDamage
     private void PlayerSetup()
     {
         health = MAX_HEALTH;
+    }
+    
+    private void FindManagers()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     /// <summary>
