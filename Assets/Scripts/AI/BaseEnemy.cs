@@ -97,7 +97,7 @@ public class BaseEnemy : Tree, IDamage
         // Finding the Game Manager
         gameManager = UnityEngine.GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        // Finding hte firing position
+        // Finding the firing position
         firingPosition = gameObject.transform.GetChild(0).transform;
 
         base.Start();
