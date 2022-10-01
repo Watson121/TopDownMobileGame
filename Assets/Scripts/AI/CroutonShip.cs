@@ -14,6 +14,7 @@ public class CroutonShip : BaseEnemy
 
         health = MAX_HEALTH;
         isActive = true;
+        pointsValue = 100;
 
         Node root = new Selector(new List<Node>
         {
