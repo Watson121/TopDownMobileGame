@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private static int index = 0;
     [SerializeField] Transform bulletSpawnPoint;
 
-    private void Awake()
+    private void Start()
     {
         //CalculatingViewportBounds();
         ViewportBoundaries.CalculatingViewportBounds(transform);
