@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 /// 
 
-public enum BulletType
+public enum SauceType
 {
     Ketchup,
     Musturd,
@@ -40,7 +40,7 @@ public class Bullet : MonoBehaviour
 
     private Transform bullet;
     private Vector3 poolZone;
-    private BulletType _bulletType;
+    private SauceType _bulletType;
 
     private MeshRenderer meshRenderer;
     [SerializeField] private Material ketchupBullet;
@@ -63,13 +63,13 @@ public class Bullet : MonoBehaviour
 
         switch (_bulletType)
         {
-            case BulletType.Ketchup:
+            case SauceType.Ketchup:
                 meshRenderer.material = ketchupBullet;
                 break;
-            case BulletType.Musturd:
+            case SauceType.Musturd:
                 meshRenderer.material = mustardBullet;
                 break;
-            case BulletType.Mayo:
+            case SauceType.Mayo:
                 meshRenderer.material = mayoBullet;
                 break;
         }

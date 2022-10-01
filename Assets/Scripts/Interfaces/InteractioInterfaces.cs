@@ -6,5 +6,5 @@ public interface IDamage
 {
     public void ApplyDamage(float damage);
 
-    public void ApplyDamageEnemy(float damage, BulletType bullet);
+    public void ApplyDamageEnemy(float damage, SauceType bullet);
 }

@@ -10,10 +10,10 @@ public struct Weapon
     private float weaponDamage;
     private float firingSpeed;
     private bool gunActive;
-    private BulletType weaponType;
+    private SauceType weaponType;
 
     // Base Constructor for the Weapon
-    public Weapon(float damage, float speed, bool active, BulletType type)
+    public Weapon(float damage, float speed, bool active, SauceType type)
     {
         weaponDamage = damage;
         firingSpeed = speed;
@@ -49,7 +49,7 @@ public struct Weapon
         get { return gunActive; }
     }
 
-    public BulletType WeaponType 
+    public SauceType WeaponType 
     {
         get { return weaponType; }
     }
