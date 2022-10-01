@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
         playerHealth_UI.value = Mathf.Clamp(playerHealth_UI.value, newHealth, playerHealth_UI.maxValue);
     }
 
-    public void UpdaetCurrentPoints(float newValue)
+    public void UpdateCurrentPoints(float newValue)
     {
         pointsUI.text = "Score: " + newValue;
     }

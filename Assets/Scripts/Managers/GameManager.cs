@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +15,7 @@ public class GameManager : MonoBehaviour
     private static uint highScore;
 
     // Current number of points that the player has
+    [SerializeField]
     private uint currentPoints = 0;
     
     // Property to set and return points
@@ -100,12 +103,13 @@ public class GameManager : MonoBehaviour
         currentPoints = 0;
     }
 
-    private void PointUpdateHandler(uint newVal)
+    public void PointUpdateHandler(uint newVal)
     {
-        uiManager.UpdaetCurrentPoints(newVal);
+        currentPoints += newVal;
+        uiManager.UpdateCurrentPoints(currentPoints);
     }
 
-    private void HighScoreUpdateHandler(uint newVal)
+    public void HighScoreUpdateHandler(uint newVal)
     {
         
     }
