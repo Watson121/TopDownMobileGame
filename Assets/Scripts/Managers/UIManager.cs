@@ -62,17 +62,17 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void UpdateCurrentWeapon(BulletType type)
+    public void UpdateCurrentWeapon(SauceType type)
     {
         switch (type)
         {
-            case BulletType.Ketchup:
+            case SauceType.Ketchup:
                 currentWeaponUI.text = "KETCHUP GUN";
                 break;
-            case BulletType.Musturd:
+            case SauceType.Musturd:
                 currentWeaponUI.text = "MUSTURD GUN";
                 break;
-            case BulletType.Mayo:
+            case SauceType.Mayo:
                 currentWeaponUI.text = "MAYO GUN";
                 break;
         }

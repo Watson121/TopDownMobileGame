@@ -120,13 +120,13 @@ public class PlayerController : MonoBehaviour, IDamage
     /// </summary>
     private void WeaponSetup()
     {
-        ketchupGun = new Weapon(10.0f, 10.0f, true, BulletType.Ketchup);
-        mustardGun = new Weapon(10.0f, 10.0f, false, BulletType.Musturd);
-        mayoGun = new Weapon(10.0f, 10.0f, false, BulletType.Mayo);
+        ketchupGun = new Weapon(10.0f, 10.0f, true, SauceType.Ketchup);
+        mustardGun = new Weapon(10.0f, 10.0f, false, SauceType.Musturd);
+        mayoGun = new Weapon(10.0f, 10.0f, false, SauceType.Mayo);
 
 
         currentEquipedWeapon = ketchupGun;
-        uiManager.UpdateCurrentWeapon(BulletType.Ketchup);
+        uiManager.UpdateCurrentWeapon(SauceType.Ketchup);
     }
 
     /// <summary>
@@ -213,17 +213,17 @@ public class PlayerController : MonoBehaviour, IDamage
             case "Ketchup":
                 Debug.Log("Ketchup Gun Equiped");
                 currentEquipedWeapon = ketchupGun;
-                uiManager.UpdateCurrentWeapon(BulletType.Ketchup);
+                uiManager.UpdateCurrentWeapon(SauceType.Ketchup);
                 break;
             case "Mustard":
                 Debug.Log("Mustard Gun Equiped");
                 currentEquipedWeapon = mustardGun;
-                uiManager.UpdateCurrentWeapon(BulletType.Musturd);
+                uiManager.UpdateCurrentWeapon(SauceType.Musturd);
                 break;
             case "Mayo":
                 Debug.Log("Mayo Gun Equiped");
                 currentEquipedWeapon = mayoGun;
-                uiManager.UpdateCurrentWeapon(BulletType.Mayo);
+                uiManager.UpdateCurrentWeapon(SauceType.Mayo);
                 break;
         }
 
@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour, IDamage
         
     }
 
-    public void ApplyDamageEnemy(float damage, BulletType bullet)
+    public void ApplyDamageEnemy(float damage, SauceType bullet)
     {
         throw new System.NotImplementedException();
     }

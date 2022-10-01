@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using BehaviourTree;
+using UnityEngine;
 
 // TODO
 // Make this Class much more of an abstract class
 // So that is can be used for more than one enemy
 
 
-public class BaseEnemy : Tree, IDamage
+public class BaseEnemy : BehaviourTree.Tree, IDamage
 {
 
     #region Character Speed
@@ -68,8 +70,6 @@ public class BaseEnemy : Tree, IDamage
     }
     protected bool isActive = false;
 
-    protected BulletType type;
-
     #endregion
 
     #region Managers
@@ -92,15 +92,63 @@ public class BaseEnemy : Tree, IDamage
 
     #endregion
 
+    [SerializeField]protected SauceType enemyType = SauceType.Ketchup;
+
+    [Header("Enemy Materials")]
+    [UnityEngine.SerializeField] protected Material ketchupMaterial;
+    [UnityEngine.SerializeField] protected Material mustardMaterial;
+    [UnityEngine.SerializeField] protected Material mayoMaterial;
+    protected MeshRenderer enemyRenderer;
+
     private new void Start()
     {
         // Finding the Game Manager
         gameManager = UnityEngine.GameObject.Find("GameManager").GetComponent<GameManager>();
 
         // Finding the firing position
-        firingPosition = gameObject.transform.GetChild(0).transform;
+        firingPosition = gameObject.transform.GetChild(0);
+
+        // Getting the mesh renderer
+        enemyRenderer = gameObject.transform.GetChild(1).GetComponent<MeshRenderer>();
+
+        FindMateirals();
+
+        // Setting the type of enemy
+        int rand = UnityEngine.Random.Range(0, 3);
+        enemyType = (SauceType)rand;
+
+        SettingTheEnemyMaterial();
+
+       
+
 
         base.Start();
+    }
+
+    // Finding and loading the materials
+    private void FindMateirals()
+    {
+        Debug.Log("Find Materials Function called");
+
+        ketchupMaterial = Resources.Load("Materials/Mat_Ketchup", typeof(Material)) as Material;
+        mustardMaterial = Resources.Load("Materials/Mat_Musturd", typeof(Material)) as Material;
+        mayoMaterial = Resources.Load("Materials/Mat_Mayo", typeof(Material)) as Material;
+    }
+
+    private void SettingTheEnemyMaterial()
+    {
+        switch (enemyType)
+        {
+            case SauceType.Ketchup:
+                enemyRenderer.material = ketchupMaterial;
+                break;
+            case SauceType.Musturd:
+                enemyRenderer.material = mustardMaterial;
+                break;
+            case SauceType.Mayo:
+                enemyRenderer.material = mayoMaterial;
+                break;
+        }
     }
 
 
@@ -155,9 +203,9 @@ public class BaseEnemy : Tree, IDamage
         health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);
     }
 
-    public void ApplyDamageEnemy(float damage, BulletType bullet)
+    public void ApplyDamageEnemy(float damage, SauceType bullet)
     {
-        if(bullet == type)
+        if(bullet == enemyType)
         {
             health -= damage;
             health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);

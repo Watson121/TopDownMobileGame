@@ -10,7 +10,7 @@ public class CroutonShip : BaseEnemy
 
     protected override Node SetupTree()
     {
-        type = BulletType.Ketchup;
+        
 
         health = MAX_HEALTH;
         isActive = true;

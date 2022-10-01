@@ -22,7 +22,7 @@ public class Task_MoveAndFire : Node
         this._transform = transform;
         this._enemy = enemy;
 
-        _enemyWeapon = new Weapon(10.0f, 3.0f, true, BulletType.Ketchup);
+        _enemyWeapon = new Weapon(10.0f, 3.0f, true, SauceType.Ketchup);
         bullets = _enemy.GameManager.EnemyBulletPool;
 
         int random = Random.Range(0, 10);
