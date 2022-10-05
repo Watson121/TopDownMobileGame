@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private const float MAX_HEALTH = 100.0f;
 
     [Header("Player Health")]
-    [SerializeField] private float health;
+    [SerializeField] private float health = MAX_HEALTH;
 
     public float MaxHealth
     {
@@ -77,6 +77,8 @@ public class PlayerController : MonoBehaviour, IDamage
         FindBullets();
         PlayerSetup();
         WeaponSetup();
+
+      
     }
 
     /// <summary>
@@ -97,6 +99,19 @@ public class PlayerController : MonoBehaviour, IDamage
         playerControls.Player.Ketchup.performed += SwitchWeapon;
         playerControls.Player.Mustard.performed += SwitchWeapon;
         playerControls.Player.Mayo.performed += SwitchWeapon;
+    }
+
+    private void OnDisable()
+    {
+        // Movement
+        playerControls.Player.Movement.performed -= OnMovementAction;
+        playerControls.Player.Movement.canceled -= OnMovementAction;
+
+        // Weapons
+        playerControls.Player.Fire.performed -= WeaponFire;
+        playerControls.Player.Ketchup.performed -= SwitchWeapon;
+        playerControls.Player.Mustard.performed -= SwitchWeapon;
+        playerControls.Player.Mayo.performed -= SwitchWeapon;
     }
 
     /// <summary>
@@ -255,6 +270,15 @@ public class PlayerController : MonoBehaviour, IDamage
 
     }
 
+    private void PlayerDeath()
+    {
+        Debug.Log("Player Has Died");
+        Time.timeScale = 0;
+        gameManager.HighScoreUpdateHandler();
+        uiManager.OpenDeathScreen();
+        
+    }
+
     // Interface - Applying Damage to the player
     public void ApplyDamage(float damage)
     {
@@ -262,11 +286,11 @@ public class PlayerController : MonoBehaviour, IDamage
         health = Mathf.Clamp(health, 0, MAX_HEALTH);
         //uiManager.UpdatePlayerHealth_UI();
 
-        uiManager.StartCoroutine(uiManager.UpdatePlayerHealth_UI(health));
+        uiManager.UpdatePlayerHealth_UI(health);
 
         if (health == 0)
         {
-           
+            PlayerDeath();
         }
         
     }
@@ -275,4 +299,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         throw new System.NotImplementedException();
     }
+
+
+
 }

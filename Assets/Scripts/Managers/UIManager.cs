@@ -13,34 +13,39 @@ public class UIManager : MonoBehaviour
 
     // Game Managers
     [Header("Game Managers")]
-    public GameManager gameManager;
-    public PlayerController playerController;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private PlayerController playerController;
 
     // In Game UI
     [Header("In Game UI")]
-    public TextMeshProUGUI pointsUI;
-    public TextMeshProUGUI highScoreUI;
-    public TextMeshProUGUI currentWeaponUI;
-    public Slider playerHealth_UI;
+    [SerializeField] private TextMeshProUGUI pointsUI;
+    [SerializeField] private TextMeshProUGUI highScoreUI;
+    [SerializeField] private TextMeshProUGUI currentWeaponUI;
+    [SerializeField] private Slider playerHealth_UI;
+
+    // Death Screen UI
+    [Header("Death Screen UI")]
+    [SerializeField] private GameObject deathScreen_UI;
+    [SerializeField] private Button playAgainBtn;
+    [SerializeField] private Button quitToMenuBtn;
 
     [Header("Debugging")]
-    public bool skipMainMenu = false;
+    [SerializeField] private bool skipMainMenu = false;
 
 
 
     // Start is called before the first frame update
     void Start()
-    {
-        /*ResetHealthBar();*/
-
+    { 
         DontDestroyOnLoad(this);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
+
+        // If skip menu is true, then just load the level straight away
         if (skipMainMenu)
         {
             SceneManager.LoadScene(1);
-            //FindingInGameUIElements();
         }
 
         
@@ -51,8 +56,7 @@ public class UIManager : MonoBehaviour
 
         if (scene.name == "MainScene")
         {
-            Debug.Log("On Scene Loaded: " + scene.name);
-            FindingInGameUIElements();
+            Debug.Log("On Scene Loaded: " + scene.name);            
             StartGame();
         }
 
@@ -69,8 +73,32 @@ public class UIManager : MonoBehaviour
         playerHealth_UI = GameObject.Find("PlayerHealth").GetComponent<Slider>();
     }
 
+    private void FindDeathScreenUIElements()
+    {
+        deathScreen_UI = GameObject.Find("DeathScreenUI");
+        
+
+        playAgainBtn = GameObject.Find("PlayAgainBtn").GetComponent<Button>();
+        playAgainBtn.onClick.AddListener(RestartGame);
+
+        quitToMenuBtn = GameObject.Find("QuitToMenu").GetComponent<Button>();
+        quitToMenuBtn.onClick.AddListener(QuitToMainMenu);
+
+        deathScreen_UI.SetActive(false);
+    }
+
+    private void FindManagers()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+    }
+
+
     private void StartGame()
     {
+        FindingInGameUIElements();
+        FindManagers();
+        FindDeathScreenUIElements();
         ResetHealthBar();
     }
 
@@ -83,14 +111,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public IEnumerator UpdatePlayerHealth_UI(float newHealth)
+    public void UpdatePlayerHealth_UI(float newHealth)
     {
-        while(playerHealth_UI.value >= newHealth)
-        {
-            playerHealth_UI.value -= 10 * Time.deltaTime;
+      
+       playerHealth_UI.value = playerController.Health;
           
-            yield return null; 
-        }
+     
+        
 
         playerHealth_UI.value = Mathf.Clamp(playerHealth_UI.value, newHealth, playerHealth_UI.maxValue);
     }
@@ -104,7 +131,7 @@ public class UIManager : MonoBehaviour
     // Updating the high score text
     public void UpdateHighScore(float newValue)
     {
-        
+        highScoreUI.text = newValue + ": High Score";
     }
 
     // Updating the current weapon text, to display what weapon is currently equiped
@@ -141,5 +168,27 @@ public class UIManager : MonoBehaviour
     }
 
     #endregion
+
+    #region Death Screen Functionality
+
+    public void RestartGame()
+    {
+        Debug.Log("Restarting Game!");
+        SceneManager.LoadScene(1);
+    }
+
+    public void QuitToMainMenu()
+    {
+        Debug.Log("Loading Main Menu");
+        SceneManager.LoadScene(0);
+    }
+
+    public void OpenDeathScreen()
+    {
+        deathScreen_UI.SetActive(true);
+    }
+
+    #endregion
+
 
 }
