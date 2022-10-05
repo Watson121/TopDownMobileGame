@@ -11,8 +11,14 @@ public class GameManager : MonoBehaviour
 
     #region Points
 
+    [Header("Player Points")]
     // Current highscore
-    private static uint highScore;
+    [SerializeField] private static uint highScore;
+
+    public uint HighScore
+    {
+        get { return highScore; }
+    }
 
     // Current number of points that the player has
     [SerializeField]
@@ -63,8 +69,9 @@ public class GameManager : MonoBehaviour
 
         OnPointChange += PointUpdateHandler;
 
+        Time.timeScale = 1.0f;
 
-        DontDestroyOnLoad(this);
+        // DontDestroyOnLoad(this);
     }
 
     private void FindManagers()
@@ -109,9 +116,15 @@ public class GameManager : MonoBehaviour
         uiManager.UpdateCurrentPoints(currentPoints);
     }
 
-    public void HighScoreUpdateHandler(uint newVal)
+    public void HighScoreUpdateHandler()
     {
-        
+        if(currentPoints > highScore)
+        {
+          
+            highScore = currentPoints;
+            uiManager.UpdateHighScore(highScore);
+        }
+
     }
     
 
