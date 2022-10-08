@@ -85,11 +85,6 @@ public class Bullet : MonoBehaviour
             bullet.position += direction * weapon.FiringSpeed * Time.deltaTime;
             elaspedTime += Time.deltaTime;
 
-            if(Time.timeScale == 0)
-            {
-                StopAllCoroutines();
-            }
-
             yield return null;
         }
 
