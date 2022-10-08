@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BehaviourTree;
 using UnityEngine;
+using UnityEngine.UI;
 
 // TODO
 // Make this Class much more of an abstract class
@@ -72,6 +73,14 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
 
     #endregion
 
+    #region Health Bar
+
+    protected bool displayHealthBar;
+    [SerializeField]private Transform healthBar;
+    [SerializeField]private List<Transform> healthBarElements = new List<Transform>(); 
+
+    #endregion
+
     #region Managers
 
     public GameManager GameManager
@@ -92,13 +101,23 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
 
     #endregion
 
+    #region Enemy Type
+
     [SerializeField]protected SauceType enemyType = SauceType.Ketchup;
+
+    #endregion
+
+    #region Enemy Mateirals
 
     [Header("Enemy Materials")]
     [UnityEngine.SerializeField] protected Material ketchupMaterial;
     [UnityEngine.SerializeField] protected Material mustardMaterial;
     [UnityEngine.SerializeField] protected Material mayoMaterial;
     protected MeshRenderer enemyRenderer;
+
+    #endregion
+
+
 
     private new void Start()
     {
@@ -119,7 +138,21 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
 
         SettingTheEnemyMaterial();
 
-       
+        healthBar = this.gameObject.transform.GetChild(2).GetChild(0);
+
+        foreach(Transform element in healthBar)
+        {
+            healthBarElements.Add(element);
+        }
+
+
+
+
+        if (displayHealthBar == true)
+        {
+            
+        }
+
 
 
         base.Start();
@@ -135,6 +168,7 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
         mayoMaterial = Resources.Load("Materials/Mat_Mayo", typeof(Material)) as Material;
     }
 
+    // Setting up the enemy material, depending on their type
     private void SettingTheEnemyMaterial()
     {
         switch (enemyType)
@@ -151,6 +185,23 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
         }
     }
 
+    // Updating the Health Bar of the enemy
+    protected void UpdateHealthBar()
+    {
+
+        for(int i = 0; i < healthBarElements.Count; i++)
+        {
+            if(health > i)
+            {
+                healthBarElements[i].transform.gameObject.SetActive(true);
+            }
+            else
+            {
+                healthBarElements[i].transform.gameObject.SetActive(false);
+            }
+        }
+
+    }
 
     private new void Update()
     {
@@ -209,6 +260,7 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
         {
             health -= damage;
             health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);
+            UpdateHealthBar();
         }
     }
 }

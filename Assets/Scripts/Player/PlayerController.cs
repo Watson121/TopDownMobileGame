@@ -135,9 +135,9 @@ public class PlayerController : MonoBehaviour, IDamage
     /// </summary>
     private void WeaponSetup()
     {
-        ketchupGun = new Weapon(10.0f, 10.0f, true, SauceType.Ketchup);
-        mustardGun = new Weapon(10.0f, 10.0f, false, SauceType.Musturd);
-        mayoGun = new Weapon(10.0f, 10.0f, false, SauceType.Mayo);
+        ketchupGun = new Weapon(1.0f, 10.0f, true, SauceType.Ketchup);
+        mustardGun = new Weapon(1.0f, 10.0f, false, SauceType.Musturd);
+        mayoGun = new Weapon(1.0f, 10.0f, false, SauceType.Mayo);
 
 
         currentEquipedWeapon = ketchupGun;
