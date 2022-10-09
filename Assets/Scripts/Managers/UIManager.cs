@@ -147,6 +147,7 @@ public class UIManager : MonoBehaviour
         ResetHealthBar();
     }
 
+    // Reseting the Health Bar
     private void ResetHealthBar()
     {
         if (playerHealth_UI && playerController)
@@ -156,15 +157,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Updating Player Health Radial
     public void UpdatePlayerHealth_UI(float newHealth)
-    {
-      
+    {   
        playerHealth_UI.value = playerController.Health;
-          
-     
-        
-
-        playerHealth_UI.value = Mathf.Clamp(playerHealth_UI.value, newHealth, playerHealth_UI.maxValue);
+       playerHealth_UI.value = Mathf.Clamp(playerHealth_UI.value, newHealth, playerHealth_UI.maxValue);
     }
 
     // Updating the current points text
@@ -176,7 +173,7 @@ public class UIManager : MonoBehaviour
     // Updating the high score text
     public void UpdateHighScore(float newValue)
     {
-        highScoreUI.text = newValue + ": High Score";
+        highScoreUI.text = "High Score : " + newValue;
     }
 
     // Updating the current weapon text, to display what weapon is currently equiped

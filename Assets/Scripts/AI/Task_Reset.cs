@@ -24,8 +24,6 @@ public class Task_Reset : Node
     {
         _transform.position = _resetPosition;
         _croutonShip.IsActive = false;
-        //_croutonShip.GameManager.Points += (uint)_croutonShip.PointsValue;
-        _croutonShip.GameManager.PointUpdateHandler((uint)_croutonShip.PointsValue);
 
         state = NodeState.SUCCESS;
         return state;
