@@ -22,21 +22,24 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreUI;
 
     [SerializeField] private Image currentWeaponUI;
-    [SerializeField] private Sprite kethcupBottle_Texture;
-    [SerializeField] private Sprite mustardBottle_Texture;
-    [SerializeField] private Sprite mayoBottle_Texture;
-
+    private Sprite kethcupBottle_Texture;
+    private Sprite mustardBottle_Texture;
+    private Sprite mayoBottle_Texture;
     [SerializeField] private Slider playerHealth_UI;
-
-
-
 
     // Death Screen UI
     [Header("Death Screen UI")]
     [SerializeField] private GameObject deathScreen_UI;
-    [SerializeField] private Button playAgainBtn;
-    [SerializeField] private Button quitToMenuBtn;
+    [SerializeField] private Button playAgainBtn_DeathScreen;
+    [SerializeField] private Button quitToMenuBtn_DeathScreen;
 
+    [Header("Pause Menu UI")]
+    [SerializeField] private GameObject pauseMenu_UI;
+    [SerializeField] private Button resumeGameBtn_PauseMenu;
+    [SerializeField] private Button restartBtn_PauseMenu;
+    [SerializeField] private Button quitToMenuBtn_PauseMenu;
+
+    // Debugging controls
     [Header("Debugging")]
     [SerializeField] private bool skipMainMenu = false;
 
@@ -76,7 +79,7 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Finding the In Game UI Elements, when the game loads into the main scene
     /// </summary>
-    private void FindingInGameUIElements()
+    private void SettingUpInGameUI()
     {
         pointsUI = GameObject.Find("PlayerScore").GetComponent<TextMeshProUGUI>();
         highScoreUI = GameObject.Find("HighScore").GetComponent<TextMeshProUGUI>();
@@ -85,19 +88,39 @@ public class UIManager : MonoBehaviour
     }
 
     // Find the Death Screen elements. 
-    private void FindDeathScreenUIElements()
+    private void SettingUpDeathScreenUI()
     {
         deathScreen_UI = GameObject.Find("DeathScreenUI");
 
         // Finding and adding functionality to the play again btn
-        playAgainBtn = GameObject.Find("PlayAgainBtn").GetComponent<Button>();
-        playAgainBtn.onClick.AddListener(RestartGame);
+        playAgainBtn_DeathScreen = GameObject.Find("PlayAgainBtn_DeathScreen").GetComponent<Button>();
+        playAgainBtn_DeathScreen.onClick.AddListener(RestartGame);
 
         // Finding and adding functionality to the quit to menu btn
-        quitToMenuBtn = GameObject.Find("QuitToMenu").GetComponent<Button>();
-        quitToMenuBtn.onClick.AddListener(QuitToMainMenu);
+        quitToMenuBtn_DeathScreen = GameObject.Find("QuitToMenu_DeathScreen").GetComponent<Button>();
+        quitToMenuBtn_DeathScreen.onClick.AddListener(QuitToMainMenu);
 
         deathScreen_UI.SetActive(false);
+    }
+
+    private void SettingUpPauseMenUI()
+    {
+        pauseMenu_UI = GameObject.Find("PauseMenuUI");
+
+        // Finding and setting up functionlity of the pause menu button
+        resumeGameBtn_PauseMenu = GameObject.Find("ResumeBtn_PauseMenu").GetComponent<Button>();
+        resumeGameBtn_PauseMenu.onClick.AddListener(ResumeGame);
+        resumeGameBtn_PauseMenu.onClick.AddListener(OpenPauseMenu);
+
+        // Finding and setting up functionality of the restart game btn
+        restartBtn_PauseMenu = GameObject.Find("RestartBtn_PauseMenu").GetComponent<Button>();
+        restartBtn_PauseMenu.onClick.AddListener(RestartGame);
+
+        // Finding and adding functionality to the quit to menu btn
+        quitToMenuBtn_PauseMenu = GameObject.Find("QuitToMenu_PauseMenu").GetComponent<Button>();
+        quitToMenuBtn_PauseMenu.onClick.AddListener(QuitToMainMenu);
+
+        pauseMenu_UI.SetActive(false);
     }
 
     // Find the in game managers
@@ -117,9 +140,10 @@ public class UIManager : MonoBehaviour
 
     private void StartGame()
     {
-        FindingInGameUIElements();
+        SettingUpInGameUI();
         FindManagers();
-        FindDeathScreenUIElements();
+        SettingUpDeathScreenUI();
+        SettingUpPauseMenUI();
         ResetHealthBar();
     }
 
@@ -193,7 +217,13 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    #region Death Screen Functionality
+    #region Death Screen & Pause Menu Functionality
+
+    public void ResumeGame()
+    {
+        Debug.Log("Resuming Game");
+        Time.timeScale = 1;
+    }
 
     public void RestartGame()
     {
@@ -212,7 +242,15 @@ public class UIManager : MonoBehaviour
         deathScreen_UI.SetActive(true);
     }
 
+    // Opening or closing the pause menu
+    public void OpenPauseMenu()
+    {
+        pauseMenu_UI.SetActive(!pauseMenu_UI.activeSelf);
+    }
+
     #endregion
+
+
 
 
 }

@@ -99,6 +99,9 @@ public class PlayerController : MonoBehaviour, IDamage
         playerControls.Player.Ketchup.performed += SwitchWeapon;
         playerControls.Player.Mustard.performed += SwitchWeapon;
         playerControls.Player.Mayo.performed += SwitchWeapon;
+
+        // Pausing Game
+        playerControls.Player.Pause.performed += PausingGame;
     }
 
     private void OnDisable()
@@ -112,6 +115,9 @@ public class PlayerController : MonoBehaviour, IDamage
         playerControls.Player.Ketchup.performed -= SwitchWeapon;
         playerControls.Player.Mustard.performed -= SwitchWeapon;
         playerControls.Player.Mayo.performed -= SwitchWeapon;
+
+        // Pausing Game
+        playerControls.Player.Pause.performed -= PausingGame;
     }
 
     /// <summary>
@@ -300,6 +306,20 @@ public class PlayerController : MonoBehaviour, IDamage
         throw new System.NotImplementedException();
     }
 
+    private void PausingGame(InputAction.CallbackContext obj)
+    {
+        if(Time.timeScale == 1)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
 
+     
+        uiManager.OpenPauseMenu();
+    }
+        
 
 }
