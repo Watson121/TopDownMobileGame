@@ -20,8 +20,16 @@ public class UIManager : MonoBehaviour
     [Header("In Game UI")]
     [SerializeField] private TextMeshProUGUI pointsUI;
     [SerializeField] private TextMeshProUGUI highScoreUI;
-    [SerializeField] private TextMeshProUGUI currentWeaponUI;
+
+    [SerializeField] private Image currentWeaponUI;
+    [SerializeField] private Sprite kethcupBottle_Texture;
+    [SerializeField] private Sprite mustardBottle_Texture;
+    [SerializeField] private Sprite mayoBottle_Texture;
+
     [SerializeField] private Slider playerHealth_UI;
+
+
+
 
     // Death Screen UI
     [Header("Death Screen UI")]
@@ -36,8 +44,10 @@ public class UIManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    { 
+    {
         DontDestroyOnLoad(this);
+
+        FindResources();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -48,15 +58,16 @@ public class UIManager : MonoBehaviour
             SceneManager.LoadScene(1);
         }
 
-        
+
     }
 
+    // When a scene is loaded, make sure that the approriate functions are called
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
 
         if (scene.name == "MainScene")
         {
-            Debug.Log("On Scene Loaded: " + scene.name);            
+            Debug.Log("On Scene Loaded: " + scene.name);
             StartGame();
         }
 
@@ -69,30 +80,40 @@ public class UIManager : MonoBehaviour
     {
         pointsUI = GameObject.Find("PlayerScore").GetComponent<TextMeshProUGUI>();
         highScoreUI = GameObject.Find("HighScore").GetComponent<TextMeshProUGUI>();
-        currentWeaponUI = GameObject.Find("CurrentWeapon").GetComponent<TextMeshProUGUI>();
+        currentWeaponUI = GameObject.Find("Current_Weapon_Image").GetComponent<Image>();
         playerHealth_UI = GameObject.Find("PlayerHealth").GetComponent<Slider>();
     }
 
+    // Find the Death Screen elements. 
     private void FindDeathScreenUIElements()
     {
         deathScreen_UI = GameObject.Find("DeathScreenUI");
-        
 
+        // Finding and adding functionality to the play again btn
         playAgainBtn = GameObject.Find("PlayAgainBtn").GetComponent<Button>();
         playAgainBtn.onClick.AddListener(RestartGame);
 
+        // Finding and adding functionality to the quit to menu btn
         quitToMenuBtn = GameObject.Find("QuitToMenu").GetComponent<Button>();
         quitToMenuBtn.onClick.AddListener(QuitToMainMenu);
 
         deathScreen_UI.SetActive(false);
     }
 
+    // Find the in game managers
     private void FindManagers()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
+    // Finding the textures within the resources folder
+    private void FindResources()
+    {
+        kethcupBottle_Texture = Resources.Load("Textures/Weapon Display/KetchupBottle", typeof(Sprite)) as Sprite;
+        mustardBottle_Texture = Resources.Load("Textures/Weapon Display/MustardBottle", typeof(Sprite)) as Sprite;
+        mayoBottle_Texture = Resources.Load("Textures/Weapon Display/MayoBottle", typeof(Sprite)) as Sprite;
+    }
 
     private void StartGame()
     {
@@ -142,13 +163,16 @@ public class UIManager : MonoBehaviour
             switch (type)
             {
                 case SauceType.Ketchup:
-                    currentWeaponUI.text = "KETCHUP GUN";
+                    Debug.Log("Ketchup Gun Equiped");
+                    currentWeaponUI.sprite = kethcupBottle_Texture;
                     break;
                 case SauceType.Musturd:
-                    currentWeaponUI.text = "MUSTURD GUN";
+                    Debug.Log("Mustard Gun Equiped");
+                    currentWeaponUI.sprite = mustardBottle_Texture;
                     break;
                 case SauceType.Mayo:
-                    currentWeaponUI.text = "MAYO GUN";
+                    Debug.Log("Mayo Gun Equiped");
+                    currentWeaponUI.sprite = mayoBottle_Texture;
                     break;
             }
         }

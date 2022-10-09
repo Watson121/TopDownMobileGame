@@ -130,7 +130,7 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
         // Getting the mesh renderer
         enemyRenderer = gameObject.transform.GetChild(1).GetComponent<MeshRenderer>();
 
-        FindMateirals();
+        FindResources();
 
         // Setting the type of enemy
         int rand = UnityEngine.Random.Range(0, 3);
@@ -159,7 +159,7 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
     }
 
     // Finding and loading the materials
-    private void FindMateirals()
+    private void FindResources()
     {
         Debug.Log("Find Materials Function called");
 
