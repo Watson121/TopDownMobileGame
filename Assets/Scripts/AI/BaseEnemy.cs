@@ -189,6 +189,8 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
     protected void UpdateHealthBar()
     {
 
+        Debug.Log(health);
+
         for(int i = 0; i < healthBarElements.Count; i++)
         {
             if(health > i)
