@@ -20,15 +20,26 @@ public class UIManager : MonoBehaviour
     [Header("In Game UI")]
     [SerializeField] private TextMeshProUGUI pointsUI;
     [SerializeField] private TextMeshProUGUI highScoreUI;
-    [SerializeField] private TextMeshProUGUI currentWeaponUI;
+
+    [SerializeField] private Image currentWeaponUI;
+    private Sprite kethcupBottle_Texture;
+    private Sprite mustardBottle_Texture;
+    private Sprite mayoBottle_Texture;
     [SerializeField] private Slider playerHealth_UI;
 
     // Death Screen UI
     [Header("Death Screen UI")]
     [SerializeField] private GameObject deathScreen_UI;
-    [SerializeField] private Button playAgainBtn;
-    [SerializeField] private Button quitToMenuBtn;
+    [SerializeField] private Button playAgainBtn_DeathScreen;
+    [SerializeField] private Button quitToMenuBtn_DeathScreen;
 
+    [Header("Pause Menu UI")]
+    [SerializeField] private GameObject pauseMenu_UI;
+    [SerializeField] private Button resumeGameBtn_PauseMenu;
+    [SerializeField] private Button restartBtn_PauseMenu;
+    [SerializeField] private Button quitToMenuBtn_PauseMenu;
+
+    // Debugging controls
     [Header("Debugging")]
     [SerializeField] private bool skipMainMenu = false;
 
@@ -36,8 +47,10 @@ public class UIManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    { 
+    {
         DontDestroyOnLoad(this);
+
+        FindResources();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -48,15 +61,16 @@ public class UIManager : MonoBehaviour
             SceneManager.LoadScene(1);
         }
 
-        
+
     }
 
+    // When a scene is loaded, make sure that the approriate functions are called
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
 
         if (scene.name == "MainScene")
         {
-            Debug.Log("On Scene Loaded: " + scene.name);            
+            Debug.Log("On Scene Loaded: " + scene.name);
             StartGame();
         }
 
@@ -65,40 +79,71 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Finding the In Game UI Elements, when the game loads into the main scene
     /// </summary>
-    private void FindingInGameUIElements()
+    private void SettingUpInGameUI()
     {
         pointsUI = GameObject.Find("PlayerScore").GetComponent<TextMeshProUGUI>();
         highScoreUI = GameObject.Find("HighScore").GetComponent<TextMeshProUGUI>();
-        currentWeaponUI = GameObject.Find("CurrentWeapon").GetComponent<TextMeshProUGUI>();
+        currentWeaponUI = GameObject.Find("Current_Weapon_Image").GetComponent<Image>();
         playerHealth_UI = GameObject.Find("PlayerHealth").GetComponent<Slider>();
     }
 
-    private void FindDeathScreenUIElements()
+    // Find the Death Screen elements. 
+    private void SettingUpDeathScreenUI()
     {
         deathScreen_UI = GameObject.Find("DeathScreenUI");
-        
 
-        playAgainBtn = GameObject.Find("PlayAgainBtn").GetComponent<Button>();
-        playAgainBtn.onClick.AddListener(RestartGame);
+        // Finding and adding functionality to the play again btn
+        playAgainBtn_DeathScreen = GameObject.Find("PlayAgainBtn_DeathScreen").GetComponent<Button>();
+        playAgainBtn_DeathScreen.onClick.AddListener(RestartGame);
 
-        quitToMenuBtn = GameObject.Find("QuitToMenu").GetComponent<Button>();
-        quitToMenuBtn.onClick.AddListener(QuitToMainMenu);
+        // Finding and adding functionality to the quit to menu btn
+        quitToMenuBtn_DeathScreen = GameObject.Find("QuitToMenu_DeathScreen").GetComponent<Button>();
+        quitToMenuBtn_DeathScreen.onClick.AddListener(QuitToMainMenu);
 
         deathScreen_UI.SetActive(false);
     }
 
+    private void SettingUpPauseMenUI()
+    {
+        pauseMenu_UI = GameObject.Find("PauseMenuUI");
+
+        // Finding and setting up functionlity of the pause menu button
+        resumeGameBtn_PauseMenu = GameObject.Find("ResumeBtn_PauseMenu").GetComponent<Button>();
+        resumeGameBtn_PauseMenu.onClick.AddListener(ResumeGame);
+        resumeGameBtn_PauseMenu.onClick.AddListener(OpenPauseMenu);
+
+        // Finding and setting up functionality of the restart game btn
+        restartBtn_PauseMenu = GameObject.Find("RestartBtn_PauseMenu").GetComponent<Button>();
+        restartBtn_PauseMenu.onClick.AddListener(RestartGame);
+
+        // Finding and adding functionality to the quit to menu btn
+        quitToMenuBtn_PauseMenu = GameObject.Find("QuitToMenu_PauseMenu").GetComponent<Button>();
+        quitToMenuBtn_PauseMenu.onClick.AddListener(QuitToMainMenu);
+
+        pauseMenu_UI.SetActive(false);
+    }
+
+    // Find the in game managers
     private void FindManagers()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
+    // Finding the textures within the resources folder
+    private void FindResources()
+    {
+        kethcupBottle_Texture = Resources.Load("Textures/Weapon Display/KetchupBottle", typeof(Sprite)) as Sprite;
+        mustardBottle_Texture = Resources.Load("Textures/Weapon Display/MustardBottle", typeof(Sprite)) as Sprite;
+        mayoBottle_Texture = Resources.Load("Textures/Weapon Display/MayoBottle", typeof(Sprite)) as Sprite;
+    }
 
     private void StartGame()
     {
-        FindingInGameUIElements();
+        SettingUpInGameUI();
         FindManagers();
-        FindDeathScreenUIElements();
+        SettingUpDeathScreenUI();
+        SettingUpPauseMenUI();
         ResetHealthBar();
     }
 
@@ -142,13 +187,16 @@ public class UIManager : MonoBehaviour
             switch (type)
             {
                 case SauceType.Ketchup:
-                    currentWeaponUI.text = "KETCHUP GUN";
+                    Debug.Log("Ketchup Gun Equiped");
+                    currentWeaponUI.sprite = kethcupBottle_Texture;
                     break;
                 case SauceType.Musturd:
-                    currentWeaponUI.text = "MUSTURD GUN";
+                    Debug.Log("Mustard Gun Equiped");
+                    currentWeaponUI.sprite = mustardBottle_Texture;
                     break;
                 case SauceType.Mayo:
-                    currentWeaponUI.text = "MAYO GUN";
+                    Debug.Log("Mayo Gun Equiped");
+                    currentWeaponUI.sprite = mayoBottle_Texture;
                     break;
             }
         }
@@ -169,7 +217,13 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    #region Death Screen Functionality
+    #region Death Screen & Pause Menu Functionality
+
+    public void ResumeGame()
+    {
+        Debug.Log("Resuming Game");
+        Time.timeScale = 1;
+    }
 
     public void RestartGame()
     {
@@ -188,7 +242,15 @@ public class UIManager : MonoBehaviour
         deathScreen_UI.SetActive(true);
     }
 
+    // Opening or closing the pause menu
+    public void OpenPauseMenu()
+    {
+        pauseMenu_UI.SetActive(!pauseMenu_UI.activeSelf);
+    }
+
     #endregion
+
+
 
 
 }

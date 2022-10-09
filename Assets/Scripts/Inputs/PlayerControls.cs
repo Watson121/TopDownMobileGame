@@ -57,6 +57,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e3da638-a497-4077-a4f3-35b8f43c62b8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -191,6 +199,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Mayo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75220f4e-0496-4e7d-b5f9-55ff9ab616e4"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""008d5f37-8d83-4d1b-84eb-15e2ddee702f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -210,6 +240,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_Ketchup = m_Player.FindAction("Ketchup", throwIfNotFound: true);
         m_Player_Mustard = m_Player.FindAction("Mustard", throwIfNotFound: true);
         m_Player_Mayo = m_Player.FindAction("Mayo", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -264,6 +295,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Ketchup;
     private readonly InputAction m_Player_Mustard;
     private readonly InputAction m_Player_Mayo;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -273,6 +305,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Ketchup => m_Wrapper.m_Player_Ketchup;
         public InputAction @Mustard => m_Wrapper.m_Player_Mustard;
         public InputAction @Mayo => m_Wrapper.m_Player_Mayo;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -297,6 +330,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Mayo.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMayo;
                 @Mayo.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMayo;
                 @Mayo.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMayo;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -316,6 +352,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Mayo.started += instance.OnMayo;
                 @Mayo.performed += instance.OnMayo;
                 @Mayo.canceled += instance.OnMayo;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -336,5 +375,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnKetchup(InputAction.CallbackContext context);
         void OnMustard(InputAction.CallbackContext context);
         void OnMayo(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
