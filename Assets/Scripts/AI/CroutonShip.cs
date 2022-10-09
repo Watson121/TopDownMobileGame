@@ -10,11 +10,13 @@ public class CroutonShip : BaseEnemy
 
     protected override Node SetupTree()
     {
-        
 
-        health = MAX_HEALTH;
+
+        displayHealthBar = true;
+        health = 3;
         isActive = true;
         pointsValue = 100;
+        UpdateHealthBar();
 
         Node root = new Selector(new List<Node>
         {
