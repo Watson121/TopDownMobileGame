@@ -68,6 +68,10 @@ public class PlayerController : MonoBehaviour, IDamage
     private static int index = 0;
     [SerializeField] Transform bulletSpawnPoint;
 
+    // Targetting Ray
+    private LineRenderer targettingRay;
+    private RaycastHit hit;
+
     private void Start()
     {
         //CalculatingViewportBounds();
@@ -78,8 +82,11 @@ public class PlayerController : MonoBehaviour, IDamage
         PlayerSetup();
         WeaponSetup();
 
+        targettingRay = GetComponent<LineRenderer>();
       
     }
+
+
 
     /// <summary>
     /// Setting up the controls
@@ -178,7 +185,20 @@ public class PlayerController : MonoBehaviour, IDamage
         if (move)
         {
             Movement();
-        }   
+        }
+
+        int layerMask = 1 << 6;
+
+        if (Physics.Raycast(transform.position, Vector3.forward * 20, 20, layerMask))
+        {
+            targettingRay.startColor = Color.green;
+            targettingRay.endColor = Color.green;
+        }
+        else
+        {
+            targettingRay.startColor = Color.red;
+            targettingRay.endColor = Color.red;
+        }
     }
 
     // Turning on or off the movement for the player
@@ -273,6 +293,10 @@ public class PlayerController : MonoBehaviour, IDamage
         // Applying the position and rotation to the player
         transform.position = playerPostion;
         transform.rotation = Quaternion.Euler(playerRotation);
+        
+        // Setting Targetting Ray Starting Location
+        targettingRay.SetPosition(0, transform.position);
+        targettingRay.SetPosition(1, transform.position + (Vector3.forward * 20));
 
     }
 
