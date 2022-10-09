@@ -20,6 +20,7 @@ public class CheckHealth : Node
             
             if(_controller.Health == 0)
             {
+                _controller.GameManager.PointUpdateHandler((uint)_controller.PointsValue);
                 state = NodeState.FAILURE;
                 return state;
             }
