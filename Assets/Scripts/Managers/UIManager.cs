@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
     [Header("Debugging")]
     [SerializeField] private bool skipMainMenu = false;
 
-
+    
 
     // Start is called before the first frame update
     void Start()
