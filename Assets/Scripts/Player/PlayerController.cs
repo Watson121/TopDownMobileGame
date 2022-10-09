@@ -188,12 +188,9 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         int layerMask = 1 << 6;
-        //layerMask = ~layerMask;
-        Debug.Log("Layer Mask Name: " + layerMask);
 
         if (Physics.Raycast(transform.position, Vector3.forward * 20, 20, layerMask))
         {
-            //Debug.Log(hit.collider.gameObject.name);
             targettingRay.startColor = Color.green;
             targettingRay.endColor = Color.green;
         }

@@ -13,7 +13,7 @@ public class CroutonShip : BaseEnemy
 
 
         displayHealthBar = true;
-        health = 3;
+        health = 1;
         isActive = true;
         pointsValue = 100;
         UpdateHealthBar();
