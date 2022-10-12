@@ -8,3 +8,8 @@ public interface IDamage
 
     public void ApplyDamageEnemy(float damage, SauceType bullet);
 }
+
+public interface ICollectable
+{
+    public void Collect(Collectable collectable);
+}

@@ -1,10 +1,11 @@
+using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Viewport;
 
-public class PlayerController : MonoBehaviour, IDamage
+public class PlayerController : MonoBehaviour, IDamage, ICollectable
 {
 
     #region Player Health
@@ -344,6 +345,39 @@ public class PlayerController : MonoBehaviour, IDamage
      
         uiManager.OpenPauseMenu();
     }
-        
+
+    public void Collect(Collectable collectable)
+    {
+        CollectableType collectableType = collectable.TypeOfCollectable;
+
+        switch (collectableType)
+        {
+            case CollectableType.EMoney:
+                IncreaseMoney(collectable as MoneyCoin);
+                break;
+            case CollectableType.EShield:
+                ActivateShield();
+                break;
+            case CollectableType.EHealth:
+                UseHealthKit();
+                break;
+        }
+
+    }
+
+    private void IncreaseMoney(MoneyCoin moneyCoin)
+    {
+        Debug.Log("Have Collected Money Coin, now increasing monies");
+    }
+
+    private void ActivateShield()
+    {
+        Debug.Log("Player has picked up Shield Pickup, Actiavated Shield");
+    }
+
+    private void UseHealthKit()
+    {
+        Debug.Log("Player has collected Health Kit, Using it to help player");
+    }
 
 }
