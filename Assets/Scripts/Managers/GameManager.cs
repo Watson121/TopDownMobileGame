@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
 
     private UIManager uiManager;
+  
 
     #region Points
 
@@ -114,6 +115,7 @@ public class GameManager : MonoBehaviour
     {
         currentPoints += newVal;
         uiManager.UpdateCurrentPoints(currentPoints);
+        
     }
 
     public void HighScoreUpdateHandler()
