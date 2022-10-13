@@ -99,7 +99,7 @@ public class SpawningManager : MonoBehaviour
     /// <param name="spawnPoint"> The Position that the collectable will spawn at </param>
     public void SpawnCollectable(Vector3 spawnPoint)
     {
-        collectableToSpawn = baseCollectables[collectableIndex].AddComponent<MoneyCoin>();
+        collectableToSpawn = baseCollectables[collectableIndex].AddComponent<Gear>();
 
         if(collectableToSpawn.IsActive != true)
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoneyCoin : Collectable
+public class Gear : Collectable
 {
     public uint Value
     {

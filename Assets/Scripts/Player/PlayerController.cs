@@ -305,7 +305,7 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     {
         Debug.Log("Player Has Died");
         Time.timeScale = 0;
-        gameManager.HighScoreUpdateHandler();
+        gameManager.HighScoreUpdateHandler(gameManager.HighScore);
         uiManager.OpenDeathScreen();
         
     }
@@ -353,7 +353,7 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         switch (collectableType)
         {
             case CollectableType.EMoney:
-                IncreaseMoney(collectable as MoneyCoin);
+                IncreaseGears(collectable as Gear);
                 break;
             case CollectableType.EShield:
                 ActivateShield();
@@ -365,9 +365,10 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     }
 
-    private void IncreaseMoney(MoneyCoin moneyCoin)
+    private void IncreaseGears(Gear moneyCoin)
     {
         Debug.Log("Have Collected Money Coin, now increasing monies");
+        gameManager.GearUpdateHandler(moneyCoin.Value);
     }
 
     private void ActivateShield()
