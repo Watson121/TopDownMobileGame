@@ -22,6 +22,8 @@ public class Task_Reset : Node
 
     public override NodeState Evaluate()
     {
+        Debug.Log("Reset task has been called!");
+
         _transform.position = _resetPosition;
         _croutonShip.IsActive = false;
 

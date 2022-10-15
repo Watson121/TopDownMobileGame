@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Schema;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -79,7 +80,7 @@ public class Collectable : MonoBehaviour
     /// <summary>
     /// Reseting the Collectable, so that it can be respawned
     /// </summary>
-    private void ResetCollectable()
+    public void ResetCollectable()
     {
         collectable.position = poolZone;
         collectableMoving = false;

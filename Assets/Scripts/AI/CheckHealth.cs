@@ -19,8 +19,10 @@ public class CheckHealth : Node
     public override NodeState Evaluate()
     {
         if(_controller != null){
-            
-            if(_controller.Health == 0)
+
+
+
+            if (_controller.Health == 0)
             {
                 _controller.GameManager.PointUpdateHandler((uint)_controller.PointsValue);
                 _spawningManager.SpawnCollectable(_controller.gameObject.transform.position);
@@ -28,6 +30,7 @@ public class CheckHealth : Node
                 return state;
             }
 
+         
         }
 
         state = NodeState.SUCCESS;

@@ -18,7 +18,6 @@ public class SpawningManager : MonoBehaviour
     [SerializeField] private Collectable collectableToSpawn;
     private static int collectableIndex = 0;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -93,6 +92,8 @@ public class SpawningManager : MonoBehaviour
 
     #endregion
 
+    #region Collectable Spawning
+
     /// <summary>
     /// Spawning a collectable into the world
     /// </summary>
@@ -114,5 +115,44 @@ public class SpawningManager : MonoBehaviour
             collectableIndex = 0;
         }
     }
+
+    #endregion
+
+    #region Level Reset
+
+    /// <summary>
+    /// Reseting the enemies
+    /// </summary>
+    public void ResetEnemies()
+    {
+        foreach(GameObject enemy in baseEnemies)
+        {
+            BaseEnemy e = enemy.GetComponent<BaseEnemy>();
+
+            if (e)
+            {
+                e.IsActive = false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Reseting the collectables within the world
+    /// </summary>
+    public void ResetCollectables()
+    {
+        foreach (GameObject collectable in baseCollectables)
+        {
+            Collectable c = collectable.GetComponent<Collectable>();
+
+            if (c)
+            {
+                c.ResetCollectable();
+            }
+        }
+    }
+
+
+    #endregion
 
 }

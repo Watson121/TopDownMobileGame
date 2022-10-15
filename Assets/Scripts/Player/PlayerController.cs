@@ -235,7 +235,8 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         // If the bullet has not been preiously fired, then fire it. If it has been fired then move onto the bullet.
         if (!(bullets[index].BulletMoving))
         {
-            StartCoroutine(currentBullet.BulletFire(bulletSpawnPoint.position, currentEquipedWeapon, Vector3.forward, 3.0f));
+            gameManager.AddActiveBullet(currentBullet);
+            StartCoroutine(currentBullet.BulletFire(bulletSpawnPoint.position, currentEquipedWeapon, Vector3.forward, 3.0f, gameManager));
         }
 
         index++;
@@ -327,7 +328,18 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
         // Setting Current Weapon back to ketchup gun
         currentEquipedWeapon = ketchupGun;
-       
+     
+        // Reseting player bullets
+        foreach(Bullet bullet in bullets)
+        {
+
+            // If the bullet is moving it needs to be reset
+            if(bullet.BulletMoving == true)
+            {
+                bullet.ResetBullet();
+            }
+        }
+
     }
 
     #region Damage 
