@@ -156,7 +156,7 @@ public class UIManager : MonoBehaviour
         }
 
 
-        ResetHealthBar();
+        ResetHUD();
     }
 
     // Making sure all Menus are closed
@@ -169,14 +169,18 @@ public class UIManager : MonoBehaviour
 
     #region Game HUD
 
-    // Reseting the Health Bar
-    private void ResetHealthBar()
+    // Reseting the Game HUD
+    private void ResetHUD()
     {
         if (playerHealth_UI && playerController)
         {
             playerHealth_UI.maxValue = playerController.Health;
             playerHealth_UI.value = playerHealth_UI.maxValue;
         }
+
+        UpdateCurrentPoints(0);
+        UpdateGearCollection(0);
+
     }
 
     // Updating Player Health Radial
@@ -199,7 +203,7 @@ public class UIManager : MonoBehaviour
     }
 
     // Updating the number of gears collected
-    public void UpadateGearsCollection(float newValue)
+    public void UpdateGearCollection(float newValue)
     {
         gearUI_GameUI.text = "Gear: " + newValue;
     }

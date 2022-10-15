@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour
     public void GearUpdateHandler(uint newVal)
     {
         numOfGearsCollected += newVal;
-        uiManager.UpadateGearsCollection(numOfGearsCollected); 
+        uiManager.UpdateGearCollection(numOfGearsCollected); 
     }
 
     #endregion
