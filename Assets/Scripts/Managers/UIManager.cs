@@ -141,13 +141,29 @@ public class UIManager : MonoBehaviour
         mayoBottle_Texture = Resources.Load("Textures/Weapon Display/MayoBottle", typeof(Sprite)) as Sprite;
     }
 
-    private void StartGame()
+    private void StartGame(bool restart = false)
     {
-        SettingUpInGameUI();
-        FindManagers();
-        SettingUpDeathScreenUI();
-        SettingUpPauseMenUI();
+        if (!restart)
+        {
+            SettingUpInGameUI();
+            FindManagers();
+            SettingUpDeathScreenUI();
+            SettingUpPauseMenUI();
+        }
+        else
+        {
+            CloseAllMenus();
+        }
+
+
         ResetHealthBar();
+    }
+
+    // Making sure all Menus are closed
+    private void CloseAllMenus()
+    {
+        pauseMenu_UI.SetActive(false);
+        deathScreen_UI.SetActive(false);
     }
 
 
@@ -239,7 +255,8 @@ public class UIManager : MonoBehaviour
     public void RestartGame()
     {
         Debug.Log("Restarting Game!");
-        SceneManager.LoadScene(1);
+        gameManager.ResetLevel();
+        StartGame(true);
     }
 
     public void QuitToMainMenu()

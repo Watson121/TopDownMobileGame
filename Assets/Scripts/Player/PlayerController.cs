@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     // Player Position and Rotation, along with the offsets
     private Vector3 playerPostion;
     private Vector3 playerRotation;
+    private Vector3 playerStartingPostion = new Vector3(0, 0, -2.8f);
     private bool move = false;
     private float veritcalScreenOffset = 4.0f;
     private float horizontalScreenOffset = 2.0f;
@@ -310,6 +311,27 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         
     }
 
+    /// <summary>
+    /// Reseting the player, including their health and position
+    /// </summary>
+    public void PlayerReset()
+    {
+        Debug.Log("The Player has been reset!");
+        
+        // Setting Health Back to MAX_HEALTH, and updating the UI
+        health = MAX_HEALTH;
+        uiManager.UpdatePlayerHealth_UI(health);
+
+        // Setting the player position back to start
+        transform.position = playerStartingPostion;
+
+        // Setting Current Weapon back to ketchup gun
+        currentEquipedWeapon = ketchupGun;
+       
+    }
+
+    #region Damage 
+
     // Interface - Applying Damage to the player
     public void ApplyDamage(float damage)
     {
@@ -331,6 +353,8 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         throw new System.NotImplementedException();
     }
 
+    #endregion
+
     private void PausingGame(InputAction.CallbackContext obj)
     {
         if(Time.timeScale == 1)
@@ -345,6 +369,8 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
      
         uiManager.OpenPauseMenu();
     }
+
+    #region Collectables
 
     public void Collect(Collectable collectable)
     {
@@ -380,5 +406,7 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     {
         Debug.Log("Player has collected Health Kit, Using it to help player");
     }
+
+    #endregion
 
 }

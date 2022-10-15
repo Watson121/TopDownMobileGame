@@ -7,8 +7,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    #region Managers
+
     private UIManager uiManager;
-  
+    private PlayerController player;
+
+    #endregion
 
     #region Points
 
@@ -93,6 +97,9 @@ public class GameManager : MonoBehaviour
     {
         // Finding UI Manager
         uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+
+        // Finding the player Controller
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     private void GetBullets()
@@ -112,6 +119,8 @@ public class GameManager : MonoBehaviour
             enemyBulletPool.Add(bullet.GetComponent<Bullet>());
         }
     }
+
+  
 
     #region Points System
 
@@ -151,6 +160,23 @@ public class GameManager : MonoBehaviour
     {
         numOfGearsCollected += newVal;
         uiManager.UpadateGearsCollection(numOfGearsCollected); 
+    }
+
+    #endregion
+
+    #region Reseting Level & Saving
+
+    /// <summary>
+    /// Reseting the level 
+    /// </summary>
+    public void ResetLevel()
+    {
+        // Setting the Time Scale back to normal speed
+        Time.timeScale = 1;
+
+        // Reseting the player
+        player.PlayerReset();
+
     }
 
     #endregion
