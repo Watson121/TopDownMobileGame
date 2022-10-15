@@ -18,8 +18,9 @@ public class UIManager : MonoBehaviour
 
     // In Game UI
     [Header("In Game UI")]
-    [SerializeField] private TextMeshProUGUI pointsUI;
-    [SerializeField] private TextMeshProUGUI highScoreUI;
+    [SerializeField] private TextMeshProUGUI pointsUI_GameUI;
+    [SerializeField] private TextMeshProUGUI highScoreUI_GameUI;
+    [SerializeField] private TextMeshProUGUI gearUI_GameUI;
 
     [SerializeField] private Image currentWeaponUI;
     private Sprite kethcupBottle_Texture;
@@ -81,8 +82,10 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void SettingUpInGameUI()
     {
-        pointsUI = GameObject.Find("PlayerScore").GetComponent<TextMeshProUGUI>();
-        highScoreUI = GameObject.Find("HighScore").GetComponent<TextMeshProUGUI>();
+        pointsUI_GameUI = GameObject.Find("PlayerScore_GameUI").GetComponent<TextMeshProUGUI>();
+        highScoreUI_GameUI = GameObject.Find("HighScore_GameUI").GetComponent<TextMeshProUGUI>();
+        gearUI_GameUI = GameObject.Find("GearAmount_GameUI").GetComponent<TextMeshProUGUI>();
+
         currentWeaponUI = GameObject.Find("Current_Weapon_Image").GetComponent<Image>();
         playerHealth_UI = GameObject.Find("PlayerHealth").GetComponent<Slider>();
     }
@@ -147,6 +150,9 @@ public class UIManager : MonoBehaviour
         ResetHealthBar();
     }
 
+
+    #region Game HUD
+
     // Reseting the Health Bar
     private void ResetHealthBar()
     {
@@ -167,13 +173,19 @@ public class UIManager : MonoBehaviour
     // Updating the current points text
     public void UpdateCurrentPoints(float newValue)
     {
-        pointsUI.text = "Score: " + newValue;
+        pointsUI_GameUI.text = "Score: " + newValue;
     }
 
     // Updating the high score text
     public void UpdateHighScore(float newValue)
     {
-        highScoreUI.text = "High Score : " + newValue;
+        highScoreUI_GameUI.text = "High Score : " + newValue;
+    }
+
+    // Updating the number of gears collected
+    public void UpadateGearsCollection(float newValue)
+    {
+        gearUI_GameUI.text = "Gear: " + newValue;
     }
 
     // Updating the current weapon text, to display what weapon is currently equiped
@@ -198,6 +210,8 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
+    #endregion
 
     #region Main Menu Functionality
 

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
 
     private UIManager uiManager;
+  
 
     #region Points
 
@@ -40,7 +41,20 @@ public class GameManager : MonoBehaviour
     public delegate void OnPointChangeDelegate(uint newVal);
     public event OnPointChangeDelegate OnPointChange;
 
+    #endregion
 
+    #region Upgrade System
+
+    // These are the number of gears that the player has currently collected, these will be used to upgrade their weapons and ship.
+    public uint NumberOfGearsCollected
+    {
+        get { return NumberOfGearsCollected; }
+    }
+    private uint numOfGearsCollected = 0;
+
+    // Events for when gears have been collected
+    public delegate void OnGearCollectedDelegate(uint newVal);
+    public event OnGearCollectedDelegate OnGearCollection;
 
     #endregion
 
@@ -68,6 +82,7 @@ public class GameManager : MonoBehaviour
         FindManagers();
 
         OnPointChange += PointUpdateHandler;
+        OnGearCollection += GearUpdateHandler;
 
         Time.timeScale = 1.0f;
 
@@ -79,8 +94,6 @@ public class GameManager : MonoBehaviour
         // Finding UI Manager
         uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
-
-
 
     private void GetBullets()
     {
@@ -100,6 +113,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #region Points System
+
     private void ResetPoints()
     {
         if(currentPoints > highScore)
@@ -114,9 +129,10 @@ public class GameManager : MonoBehaviour
     {
         currentPoints += newVal;
         uiManager.UpdateCurrentPoints(currentPoints);
+        
     }
 
-    public void HighScoreUpdateHandler()
+    public void HighScoreUpdateHandler(uint newVal)
     {
         if(currentPoints > highScore)
         {
@@ -126,7 +142,16 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    
 
+    #endregion
 
+    #region Upgrade System
+
+    public void GearUpdateHandler(uint newVal)
+    {
+        numOfGearsCollected += newVal;
+        uiManager.UpadateGearsCollection(numOfGearsCollected); 
+    }
+
+    #endregion
 }

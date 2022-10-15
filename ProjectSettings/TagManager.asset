@@ -9,6 +9,7 @@ TagManager:
   - EnemyBulletPool
   - Enemy
   - EnemyPool
+  - CollectablePool
   layers:
   - Default
   - TransparentFX
