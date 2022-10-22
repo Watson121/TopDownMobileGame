@@ -41,6 +41,7 @@ public class Bullet : MonoBehaviour
     private Transform bullet;
     private Vector3 poolZone;
     private SauceType _bulletType;
+    private GameManager gameManager;
 
     private MeshRenderer meshRenderer;
     [SerializeField] private Material ketchupBullet;
@@ -56,10 +57,11 @@ public class Bullet : MonoBehaviour
     }
 
     // Bullet Movement
-    public IEnumerator BulletFire(Vector3 startPos, Weapon weapon, Vector3 direction, float bulletLifetime)
+    public IEnumerator BulletFire(Vector3 startPos, Weapon weapon, Vector3 direction, float bulletLifetime, GameManager manager)
     {
         bulletDamage = weapon.Damage;
         _bulletType = weapon.WeaponType;
+        gameManager = manager;
 
         switch (_bulletType)
         {
@@ -92,10 +94,12 @@ public class Bullet : MonoBehaviour
     }
 
     // Reseting bullet back to it's start position
-    private void ResetBullet()
+    public void ResetBullet()
     {
+        gameManager.RemoveActiveBullet(this);
         bullet.position = poolZone;
         bulletMoving = false;
+        
         StopAllCoroutines();
     }
 

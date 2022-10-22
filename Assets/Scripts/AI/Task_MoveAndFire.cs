@@ -70,7 +70,8 @@ public class Task_MoveAndFire : Node
 
             if (!(currentBullet.BulletMoving))
             {
-                _enemy.GameManager.StartCoroutine(currentBullet.BulletFire(_enemy.FiringPosition.position, _enemyWeapon, Vector3.back, 6.0f));
+                _enemy.GameManager.AddActiveBullet(currentBullet);
+                _enemy.GameManager.StartCoroutine(currentBullet.BulletFire(_enemy.FiringPosition.position, _enemyWeapon, Vector3.back, 6.0f, _enemy.GameManager));
                 _enemy.FiringSpeed = 1.0f;
             }
 

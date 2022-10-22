@@ -216,6 +216,7 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
             }
             else if (isActive == false)
             {
+                transform.position = new Vector3(100, 100, 100);
                 Destroy(this);
             }
         

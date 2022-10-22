@@ -141,26 +141,46 @@ public class UIManager : MonoBehaviour
         mayoBottle_Texture = Resources.Load("Textures/Weapon Display/MayoBottle", typeof(Sprite)) as Sprite;
     }
 
-    private void StartGame()
+    private void StartGame(bool restart = false)
     {
-        SettingUpInGameUI();
-        FindManagers();
-        SettingUpDeathScreenUI();
-        SettingUpPauseMenUI();
-        ResetHealthBar();
+        if (!restart)
+        {
+            SettingUpInGameUI();
+            FindManagers();
+            SettingUpDeathScreenUI();
+            SettingUpPauseMenUI();
+        }
+        else
+        {
+            CloseAllMenus();
+        }
+
+
+        ResetHUD();
+    }
+
+    // Making sure all Menus are closed
+    private void CloseAllMenus()
+    {
+        pauseMenu_UI.SetActive(false);
+        deathScreen_UI.SetActive(false);
     }
 
 
     #region Game HUD
 
-    // Reseting the Health Bar
-    private void ResetHealthBar()
+    // Reseting the Game HUD
+    private void ResetHUD()
     {
         if (playerHealth_UI && playerController)
         {
             playerHealth_UI.maxValue = playerController.Health;
             playerHealth_UI.value = playerHealth_UI.maxValue;
         }
+
+        UpdateCurrentPoints(0);
+        UpdateGearCollection(0);
+
     }
 
     // Updating Player Health Radial
@@ -183,7 +203,7 @@ public class UIManager : MonoBehaviour
     }
 
     // Updating the number of gears collected
-    public void UpadateGearsCollection(float newValue)
+    public void UpdateGearCollection(float newValue)
     {
         gearUI_GameUI.text = "Gear: " + newValue;
     }
@@ -239,7 +259,8 @@ public class UIManager : MonoBehaviour
     public void RestartGame()
     {
         Debug.Log("Restarting Game!");
-        SceneManager.LoadScene(1);
+        gameManager.ResetLevel();
+        StartGame(true);
     }
 
     public void QuitToMainMenu()

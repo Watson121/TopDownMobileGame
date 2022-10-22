@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
 
+    #region Managers
+
     private UIManager uiManager;
-  
+    private PlayerController player;
+    private SpawningManager spawningManager;
+
+    #endregion
 
     #region Points
 
@@ -72,6 +78,9 @@ public class GameManager : MonoBehaviour
     }
     [SerializeField]private List<Bullet> enemyBulletPool;
 
+    // Current Active Bullets in the level
+    [SerializeField] private List<Bullet> activeBullets;
+
     #endregion
 
     // Start is called before the first frame update
@@ -93,6 +102,13 @@ public class GameManager : MonoBehaviour
     {
         // Finding UI Manager
         uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+
+        // Finding the player Controller
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        // Finding the spawning manager
+        spawningManager = GameObject.Find("SpawningManager").GetComponent<SpawningManager>();
+
     }
 
     private void GetBullets()
@@ -112,6 +128,34 @@ public class GameManager : MonoBehaviour
             enemyBulletPool.Add(bullet.GetComponent<Bullet>());
         }
     }
+
+
+    #region Active Bullets
+
+    /// <summary>
+    ///  Adding an active bullet to the pool
+    /// </summary>
+    /// <param name="bullet"> Bullet to be added </param>
+    public void AddActiveBullet(Bullet bullet)
+    {
+        Debug.Log("Bullet Added to the active pool");
+
+        activeBullets.Add(bullet); 
+    }
+
+    /// <summary>
+    /// Removing a bullet from the active pool
+    /// </summary>
+    /// <param name="bullet"></param>
+    public void RemoveActiveBullet(Bullet bullet)
+    {
+        Debug.Log("Bullet removed from the active pool");
+
+        activeBullets.Remove(bullet);
+    }
+
+
+    #endregion
 
     #region Points System
 
@@ -150,8 +194,41 @@ public class GameManager : MonoBehaviour
     public void GearUpdateHandler(uint newVal)
     {
         numOfGearsCollected += newVal;
-        uiManager.UpadateGearsCollection(numOfGearsCollected); 
+        uiManager.UpdateGearCollection(numOfGearsCollected); 
     }
+
+    #endregion
+
+    #region Reseting Level & Saving
+
+    /// <summary>
+    /// Reseting the level 
+    /// </summary>
+    public void ResetLevel()
+    {
+        // Setting the Time Scale back to normal speed
+        Time.timeScale = 1;
+
+        // Reseting the player
+        player.PlayerReset();
+
+        // Reseting the enemies
+        spawningManager.ResetEnemies();
+
+        // Reseting the colletables
+        spawningManager.ResetCollectables();
+
+        // Reseting the active bullets
+        foreach (Bullet bullet in activeBullets.ToList())
+        {
+            // If the bullet is moving it needs to be reset
+            if (bullet.BulletMoving == true)
+            {
+                bullet.ResetBullet();
+            }
+        }
+    }
+
 
     #endregion
 }
