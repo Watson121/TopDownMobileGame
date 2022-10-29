@@ -86,16 +86,18 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
-        GetBullets();
-        FindManagers();
-
         OnPointChange += PointUpdateHandler;
         OnGearCollection += GearUpdateHandler;
 
         Time.timeScale = 1.0f;
 
         // DontDestroyOnLoad(this);
+    }
+
+    public void SetupGame()
+    {
+        GetBullets();
+        FindManagers();
     }
 
     private void FindManagers()

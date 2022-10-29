@@ -88,7 +88,10 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
       
     }
 
+    public void SetupGame()
+    {
 
+    }
 
     /// <summary>
     /// Setting up the controls

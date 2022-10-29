@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class UIManager : MonoBehaviour
 {
@@ -59,13 +60,16 @@ public class UIManager : MonoBehaviour
 
         FindResources();
 
+       
         SceneManager.sceneLoaded += OnSceneLoaded;
-
-
+        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+     
         // If skip menu is true, then just load the level straight away
         if (skipMainMenu)
         {
-            SceneManager.LoadScene(1);
+
+            //SceneManager.LoadSceneAsync(1);
+            
         }
 
 
@@ -74,11 +78,13 @@ public class UIManager : MonoBehaviour
     // When a scene is loaded, make sure that the approriate functions are called
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
+        Debug.Log("On Scene Loaded: " + scene.name);
         if (scene.name == "MainScene")
         {
-            Debug.Log("On Scene Loaded: " + scene.name);
             StartGame();
+        }else if(scene.name == "UpgradeScreen")
+        {
+            SettingUpUpgradeMenuUI();
         }
 
     }
@@ -141,7 +147,7 @@ public class UIManager : MonoBehaviour
         doneBtn_UpgradeScreen = GameObject.Find("DoneBtn_UpgradeScreen").GetComponent<Button>();
         doneBtn_UpgradeScreen.onClick.AddListener(() => ToggleMenu(upgradeScreen_UI));
 
-        upgradeScreen_UI.SetActive(true);
+        upgradeScreen_UI.SetActive(false);
     }
 
     // Find the in game managers
@@ -163,11 +169,12 @@ public class UIManager : MonoBehaviour
     {
         if (!restart)
         {
+            gameManager.SetupGame();
             SettingUpInGameUI();
             FindManagers();
             SettingUpDeathScreenUI();
             SettingUpPauseMenUI();
-            SettingUpUpgradeMenuUI();
+            
         }
         else
         {
