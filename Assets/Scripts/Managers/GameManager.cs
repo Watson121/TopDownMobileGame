@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     // These are the number of gears that the player has currently collected, these will be used to upgrade their weapons and ship.
     public uint NumberOfGearsCollected
     {
-        get { return NumberOfGearsCollected; }
+        get { return numOfGearsCollected; }
     }
     private uint numOfGearsCollected = 0;
 
