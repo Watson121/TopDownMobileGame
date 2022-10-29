@@ -27,7 +27,7 @@ public struct Weapon
          weaponDamage = other.Damage;
          firingSpeed = other.FiringSpeed;
          gunActive = other.Active;
-        weaponType = other.weaponType;
+            weaponType = other.weaponType;
 
     }
 

@@ -40,6 +40,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button restartBtn_PauseMenu;
     [SerializeField] private Button quitToMenuBtn_PauseMenu;
 
+    // Upgrade Screen UI
+    [Header("Upgrade Screen")]
+    [SerializeField] private GameObject upgradeScreen_UI;
+    [SerializeField] private Button doneBtn_UpgradeScreen;
+
+
     // Debugging controls
     [Header("Debugging")]
     [SerializeField] private bool skipMainMenu = false;
@@ -106,6 +112,7 @@ public class UIManager : MonoBehaviour
         deathScreen_UI.SetActive(false);
     }
 
+    // Finding the and Setting up the Pause Menu UI Elements
     private void SettingUpPauseMenUI()
     {
         pauseMenu_UI = GameObject.Find("PauseMenuUI");
@@ -124,6 +131,17 @@ public class UIManager : MonoBehaviour
         quitToMenuBtn_PauseMenu.onClick.AddListener(QuitToMainMenu);
 
         pauseMenu_UI.SetActive(false);
+    }
+
+    private void SettingUpUpgradeMenuUI()
+    {
+        upgradeScreen_UI = GameObject.Find("UpgradeMenuUI");
+
+        // Finding the setting up button so that the menu can be closed
+        doneBtn_UpgradeScreen = GameObject.Find("DoneBtn_UpgradeScreen").GetComponent<Button>();
+        doneBtn_UpgradeScreen.onClick.AddListener(() => ToggleMenu(upgradeScreen_UI));
+
+        upgradeScreen_UI.SetActive(true);
     }
 
     // Find the in game managers
@@ -149,6 +167,7 @@ public class UIManager : MonoBehaviour
             FindManagers();
             SettingUpDeathScreenUI();
             SettingUpPauseMenUI();
+            SettingUpUpgradeMenuUI();
         }
         else
         {
@@ -282,7 +301,19 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
+    /// <summary>
+    /// A Function that will toggle the menu on or off.
+    /// </summary>
+    /// <param name="menuToClose"></param>
+    public void ToggleMenu(GameObject menuToClose)
+    {
+        menuToClose.SetActive(!menuToClose.activeSelf);
+    }
 
+    private void Update()
+    {
+        
+    }
 
 
 }
