@@ -9,27 +9,26 @@ using UnityEditor;
 public class UIManager : MonoBehaviour
 {
 
-
-
-
-    // Game Managers
     [Header("Game Managers")]
     [SerializeField] private GameManager gameManager;
     [SerializeField] private PlayerController playerController;
 
-    // In Game UI
+    [Header("Main Menu")]
+    [SerializeField] private GameObject mainMenu_UI;
+    [SerializeField] private Button startGameBtn_MainMenu;
+    [SerializeField] private Button upgradeBtn_MainMenu;
+    [SerializeField] private Button quitBtn_MainMenu;
+
     [Header("In Game UI")]
     [SerializeField] private TextMeshProUGUI pointsUI_GameUI;
     [SerializeField] private TextMeshProUGUI highScoreUI_GameUI;
     [SerializeField] private TextMeshProUGUI gearUI_GameUI;
-
     [SerializeField] private Image currentWeaponUI;
     private Sprite kethcupBottle_Texture;
     private Sprite mustardBottle_Texture;
     private Sprite mayoBottle_Texture;
     [SerializeField] private Slider playerHealth_UI;
 
-    // Death Screen UI
     [Header("Death Screen UI")]
     [SerializeField] private GameObject deathScreen_UI;
     [SerializeField] private Button playAgainBtn_DeathScreen;
@@ -41,7 +40,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button restartBtn_PauseMenu;
     [SerializeField] private Button quitToMenuBtn_PauseMenu;
 
-    // Upgrade Screen UI
     [Header("Upgrade Screen")]
     [SerializeField] private GameObject upgradeScreen_UI;
     [SerializeField] private Button doneBtn_UpgradeScreen;
@@ -78,12 +76,16 @@ public class UIManager : MonoBehaviour
     // When a scene is loaded, make sure that the approriate functions are called
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
+       
+
         Debug.Log("On Scene Loaded: " + scene.name);
         if (scene.name == "MainScene")
         {
             StartGame();
         }else if(scene.name == "UpgradeScreen")
         {
+            SettingUpMainMenu();
             SettingUpUpgradeMenuUI();
         }
 
@@ -139,6 +141,7 @@ public class UIManager : MonoBehaviour
         pauseMenu_UI.SetActive(false);
     }
 
+    // Finding and setting up Upgrade Screen UI Elements
     private void SettingUpUpgradeMenuUI()
     {
         upgradeScreen_UI = GameObject.Find("UpgradeMenuUI");
@@ -148,6 +151,22 @@ public class UIManager : MonoBehaviour
         doneBtn_UpgradeScreen.onClick.AddListener(() => ToggleMenu(upgradeScreen_UI));
 
         upgradeScreen_UI.SetActive(false);
+    }
+
+    // Finding and setting up Main Menu
+    private void SettingUpMainMenu()
+    {
+        // Getting the Main Menu Object
+        mainMenu_UI = GameObject.Find("MainMenu_UI");
+
+        // Setting up the Play Button in the main menu
+        startGameBtn_MainMenu = GameObject.Find("PlayBtn_MainMenu").GetComponent<Button>();
+        startGameBtn_MainMenu.onClick.AddListener(PlayGame);
+
+        // Setting up the upgrade button in the main menu, so that it can open the upgrade menu
+        upgradeBtn_MainMenu = GameObject.Find("UpgradeBtn_MainMenu").GetComponent<Button>();
+        upgradeBtn_MainMenu.onClick.AddListener(() => ToggleMenu(upgradeScreen_UI));
+
     }
 
     // Find the in game managers
@@ -169,12 +188,12 @@ public class UIManager : MonoBehaviour
     {
         if (!restart)
         {
-            gameManager.SetupGame();
+         
             SettingUpInGameUI();
             FindManagers();
             SettingUpDeathScreenUI();
             SettingUpPauseMenUI();
-            
+            gameManager.SetupGame();
         }
         else
         {
@@ -314,6 +333,7 @@ public class UIManager : MonoBehaviour
     /// <param name="menuToClose"></param>
     public void ToggleMenu(GameObject menuToClose)
     {
+        Debug.Log("Pressed Toggle Menu");
         menuToClose.SetActive(!menuToClose.activeSelf);
     }
 
