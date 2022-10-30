@@ -167,6 +167,10 @@ public class UIManager : MonoBehaviour
         upgradeBtn_MainMenu = GameObject.Find("UpgradeBtn_MainMenu").GetComponent<Button>();
         upgradeBtn_MainMenu.onClick.AddListener(() => ToggleMenu(upgradeScreen_UI));
 
+        // Setting up the Quit Button in the main menu
+        quitBtn_MainMenu = GameObject.Find("ExitBtn_MainMenu").GetComponent<Button>();
+        quitBtn_MainMenu.onClick.AddListener(ExitGame);
+
     }
 
     // Find the in game managers
@@ -193,7 +197,7 @@ public class UIManager : MonoBehaviour
             FindManagers();
             SettingUpDeathScreenUI();
             SettingUpPauseMenUI();
-            gameManager.SetupGame();
+            //gameManager.SetupGame();
         }
         else
         {
