@@ -97,6 +97,7 @@ public class UpgradeManager : MonoBehaviour
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        DontDestroyOnLoad(this);
     }
 
 

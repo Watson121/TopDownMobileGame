@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -86,16 +87,28 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
-        GetBullets();
-        FindManagers();
-
         OnPointChange += PointUpdateHandler;
         OnGearCollection += GearUpdateHandler;
 
         Time.timeScale = 1.0f;
 
-        // DontDestroyOnLoad(this);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        DontDestroyOnLoad(this);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainScene")
+        {
+            SetupGame();
+        }
+    }
+
+    public void SetupGame()
+    {
+        GetBullets();
+        FindManagers();
     }
 
     private void FindManagers()
@@ -113,6 +126,12 @@ public class GameManager : MonoBehaviour
 
     private void GetBullets()
     {
+
+        // Clearing the pools
+        playerBulletPool.Clear();
+        enemyBulletPool.Clear();
+        activeBullets.Clear();
+
         // Finding the player pool
         Transform playerPool = GameObject.FindGameObjectWithTag("PlayerBulletPool").transform;
 
