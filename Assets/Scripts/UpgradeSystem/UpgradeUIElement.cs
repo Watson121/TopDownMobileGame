@@ -17,7 +17,7 @@ public class UpgradeUIElement : MonoBehaviour
         upgradeManager = GameObject.Find("UpgradeManager").GetComponent<UpgradeManager>();
 
         if(UIButton.interactable == true) { 
-            UIButton.onClick.AddListener(() => upgradeManager.SetAnUpgradeToResearched(upgradeLevel, upgradeType, UIButton));
+            UIButton.onClick.AddListener(() => upgradeManager.ResearchAnUpgrade(upgradeLevel, upgradeType, UIButton));
         }
     }
 

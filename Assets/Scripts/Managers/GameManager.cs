@@ -50,18 +50,54 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region Upgrade System
-
+    #region Gears
     // These are the number of gears that the player has currently collected, these will be used to upgrade their weapons and ship.
     public uint NumberOfGearsCollected
     {
-        get { return numOfGearsCollected; }
+        get 
+        {
+
+            if (unlimitedMoney)
+            {
+                return 100000;
+            }else
+            {
+                return numOfGearsCollected;
+            }
+            
+        }
     }
-    private uint numOfGearsCollected = 0;
+    [SerializeField]private uint numOfGearsCollected = 0;
 
     // Events for when gears have been collected
     public delegate void OnGearCollectedDelegate(uint newVal);
     public event OnGearCollectedDelegate OnGearCollection;
+
+    #endregion
+
+    #region Upgrade System
+
+    public int HealthLevel
+    {
+        set { healthLevel = value; }
+        get { return healthLevel; }
+    }
+
+    public int WeaponLevel 
+    {
+        set { weaponLevel = value; }
+        get { return weaponLevel; }
+    }
+
+    public int ShieldLevel
+    {
+        set { shieldLevel = value; }
+        get { return shieldLevel; }
+    }
+
+    [SerializeField] private int healthLevel;
+    [SerializeField] private int weaponLevel;
+    [SerializeField] private int shieldLevel;
 
     #endregion
 
@@ -81,6 +117,17 @@ public class GameManager : MonoBehaviour
 
     // Current Active Bullets in the level
     [SerializeField] private List<Bullet> activeBullets;
+
+    #endregion
+
+    #region Debugging
+
+    public bool UnlimitedMoney
+    {
+        get { return unlimitedMoney; }
+    }
+
+    [SerializeField] private bool unlimitedMoney = false;
 
     #endregion
 

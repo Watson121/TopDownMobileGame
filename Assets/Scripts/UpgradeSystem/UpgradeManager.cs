@@ -92,6 +92,9 @@ public class UpgradeManager : MonoBehaviour
                                          new Upgrade(EUpgradeType.Shield, EUpgradeLevel.Level_2, 1200),
                                          new Upgrade(EUpgradeType.Shield, EUpgradeLevel.Level_3, 1800)};
 
+    /// <summary>
+    ///  The Game Manager, where which level the player is currently on is going to be stored
+    /// </summary>
     private GameManager gameManager;
 
     private void Start()
@@ -100,7 +103,12 @@ public class UpgradeManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-
+    /// <summary>
+    /// Getting an upgrade from the upgrade arrays. 
+    /// </summary>
+    /// <param name="index"> Which element to get from the upgrade array </param>
+    /// <param name="type"> Which upgrade array to search </param>
+    /// <returns></returns>
     private Upgrade GetAnUpgrade(int index, EUpgradeType type)
     {
         Upgrade upgradeToReturn = healthUpgrades[0];
@@ -110,19 +118,30 @@ public class UpgradeManager : MonoBehaviour
             case EUpgradeType.Health:
                 Debug.Log("Health Upgrade Retuned: " + healthUpgrades[index].Level);
                 upgradeToReturn = healthUpgrades[index];
+                gameManager.HealthLevel = ++index;
                 break;
             case EUpgradeType.Shield:
+                Debug.Log("Shield Upgrade Retuned: " + healthUpgrades[index].Level);
                 upgradeToReturn = shieldUpgrades[index];
+                gameManager.ShieldLevel = ++index;
                 break;
             case EUpgradeType.Weapons:
+                Debug.Log("Weapon Upgrade Retuned: " + healthUpgrades[index].Level);
                 upgradeToReturn = weaponUpgrades[index];
+                gameManager.WeaponLevel = ++index;
                 break;
         }
 
         return upgradeToReturn;
     }
 
-    public void SetAnUpgradeToResearched(EUpgradeLevel index, EUpgradeType type, Button btnUsed)
+    /// <summary>
+    /// Researched an upgrade that the player wants. This also where it will heck if the player has enough resources to research an upgrade or not
+    /// </summary>
+    /// <param name="index"> The Level that this upgrade is at </param>
+    /// <param name="type"> Type of upgrade </param>
+    /// <param name="btnUsed"> Upgrade Button Pressed </param>
+    public void ResearchAnUpgrade(EUpgradeLevel index, EUpgradeType type, Button btnUsed)
     {
         Upgrade upgrade = GetAnUpgrade((int)index, type);
 
