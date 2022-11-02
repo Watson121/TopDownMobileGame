@@ -132,18 +132,13 @@ public class UpgradeManager : MonoBehaviour
         {
             case EUpgradeType.Health:
                 Debug.Log("Health Upgrade Retuned: " + healthUpgrades[index].Level);
-                upgradeToReturn = healthUpgrades[index];
-               
-                break;
+                return upgradeToReturn = healthUpgrades[index];             
             case EUpgradeType.Shield:
                 Debug.Log("Shield Upgrade Retuned: " + healthUpgrades[index].Level);
-                upgradeToReturn = shieldUpgrades[index];
-                
-                break;
+                return upgradeToReturn = shieldUpgrades[index];
             case EUpgradeType.Weapons:
                 Debug.Log("Weapon Upgrade Retuned: " + healthUpgrades[index].Level);
-                upgradeToReturn = weaponUpgrades[index];
-                break;
+                return upgradeToReturn = weaponUpgrades[index];
         }
 
         return upgradeToReturn;
@@ -155,68 +150,34 @@ public class UpgradeManager : MonoBehaviour
     /// <param name="upgradeIndex"> The Level that this upgrade is at </param>
     /// <param name="type"> Type of upgrade </param>
     /// <param name="btnUsed"> Upgrade Button Pressed </param>
-    public void ResearchAnUpgrade(int upgradeIndex, EUpgradeType type, Button btnUsed)
+    public Upgrade ResearchAnUpgrade(Upgrade upgradeToResearch)
     {
-        
+    
 
-        // TO DO - This needs refactoring down
-        Upgrade upgrade = GetAnUpgrade(upgradeIndex, type);
-
-        if(gameManager.NumberOfGearsCollected >= upgrade.UpgradeCost)
+        if(gameManager.NumberOfGearsCollected >= upgradeToResearch.UpgradeCost)
         {
-            Debug.Log("Player can afford upgrade");
-            upgrade.Researched = true;
-            upgrade.Unlocked = false;
-            btnUsed.interactable = false;
+            upgradeToResearch.Researched = true;
+            upgradeToResearch.Unlocked = false;
 
-            switch (type)
+            switch (upgradeToResearch.Type)
             {
                 case EUpgradeType.Health:
-                    healthUpgrades[upgradeIndex] = upgrade;
                     gameManager.HealthLevel++;
                     break;
-                case EUpgradeType.Shield:
-                    shieldUpgrades[upgradeIndex] = upgrade;
-                    gameManager.ShieldLevel++;
-                    break;
                 case EUpgradeType.Weapons:
-                    weaponUpgrades[upgradeIndex] = upgrade;
                     gameManager.WeaponLevel++;
                     break;
+                case EUpgradeType.Shield:
+                    gameManager.ShieldLevel++;
+                    break;
             }
 
-
-            if (!upgrade.FinalUpgradeInTree)
-            {
-
-                int nextUpgradeIndex = (int)(upgrade.Level + 1);
-                Upgrade nextUpgrade = GetAnUpgrade(nextUpgradeIndex, type);
-                nextUpgrade.Unlocked = true;
-
-                switch (type)
-                {
-                    case EUpgradeType.Health:
-                        healthUpgrades[nextUpgradeIndex] = nextUpgrade;
-                        break;
-                    case EUpgradeType.Shield:
-                        shieldUpgrades[nextUpgradeIndex] = nextUpgrade;
-                        break;
-                    case EUpgradeType.Weapons:
-                        weaponUpgrades[nextUpgradeIndex] = nextUpgrade;
-                        break;
-                }
-            }
-
-
-            return;
+            return upgradeToResearch;
         }
-        else
-        {
-            Debug.Log("Player cannot afford upgrade!");
-            return;
-        }
-
        
+        Debug.Log("Player cannot afford upgrade!");
+        return upgradeToResearch;
+
     }
 
 
