@@ -1,6 +1,8 @@
 using Newtonsoft.Json.Bson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Viewport;
@@ -11,10 +13,10 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     #region Player Health
 
     // Max Player Health 
-    private const float MAX_HEALTH = 100.0f;
+    [SerializeField] private float MAX_HEALTH;
 
     [Header("Player Health")]
-    [SerializeField] private float health = MAX_HEALTH;
+    [SerializeField] private float health;
 
     public float MaxHealth
     {
@@ -29,6 +31,15 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     #endregion
 
+    #region Managers
+
+    [Header("Game Managers")]
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private UIManager uiManager;
+
+    #endregion
+
+    #region Player Movement
 
     // Player Control Inputs
     private PlayerInput playerInput;
@@ -42,15 +53,15 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     private float veritcalScreenOffset = 4.0f;
     private float horizontalScreenOffset = 2.0f;
 
-    [Header("Game Managers")]
-    [SerializeField] private GameManager gameManager;
-    [SerializeField] private UIManager uiManager;
-
     [Header("Player Settings")]
     [SerializeField] private float playerSpeed = 5f;
     [SerializeField] private float playerRotationSpeed = 3.0f;
     [SerializeField] private float horitontalRotation = 15.0f;
     [SerializeField] private float verticalRotation = 15.0f;
+
+    #endregion
+
+    #region Player Camera 
 
     // Player Camera & Viewport Bounds
     private Camera playerCamera;
@@ -58,11 +69,16 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     private float frustumWidth;
     private float cameraDistance = 3.0f;
 
+    #endregion
+
+    #region Weapons
+
     // Weapons
     private Weapon currentEquipedWeapon;
     private Weapon ketchupGun;
     private Weapon mustardGun;
     private Weapon mayoGun;
+    [SerializeField] private float weaponDamage;
 
     // Bullets
     [Header("Bullet Settings")]
@@ -73,6 +89,8 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     // Targetting Ray
     private LineRenderer targettingRay;
     private RaycastHit hit;
+
+    #endregion
 
     private void Start()
     {
@@ -150,9 +168,25 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     /// </summary>
     private void WeaponSetup()
     {
-        ketchupGun = new Weapon(1.0f, 10.0f, true, SauceType.Ketchup);
-        mustardGun = new Weapon(1.0f, 10.0f, false, SauceType.Musturd);
-        mayoGun = new Weapon(1.0f, 10.0f, false, SauceType.Mayo);
+        int weaponLevel = gameManager.WeaponLevel;
+
+        switch (weaponLevel)
+        {
+            case 1:
+                weaponDamage = 2.0f;
+                break;
+            case 2:
+                weaponDamage = 3.0f;
+                break;
+            case 0:
+                weaponDamage = 1.0f;
+                break;
+        }
+
+
+        ketchupGun = new Weapon(weaponDamage, 10.0f, true, SauceType.Ketchup);
+        mustardGun = new Weapon(weaponDamage, 10.0f, false, SauceType.Musturd);
+        mayoGun = new Weapon(weaponDamage, 10.0f, false, SauceType.Mayo);
 
 
         currentEquipedWeapon = ketchupGun;
@@ -164,6 +198,28 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     /// </summary>
     private void PlayerSetup()
     {
+        int healthLevel = gameManager.HealthLevel;
+
+        // Checking what the health level is in the game manager, and setting the MAX HEALTH to the corrct health amount
+        switch(healthLevel){
+            case 1:
+                MAX_HEALTH = 125;
+                break;
+            case 2:
+                MAX_HEALTH = 150;
+                break;
+            case 3:
+                MAX_HEALTH = 175;
+                break;
+            case 4:
+                MAX_HEALTH = 200;
+                break;
+            case 0:
+                MAX_HEALTH = 100;
+                break;
+        }
+
+
         health = MAX_HEALTH;
     }
     

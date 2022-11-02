@@ -862,9 +862,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPoints: 0
+  numOfGearsCollected: 0
+  healthLevel: 0
+  weaponLevel: 0
+  shieldLevel: 0
   playerBulletPool: []
   enemyBulletPool: []
   activeBullets: []
+  unlimitedMoney: 1
 --- !u!4 &1598510408
 Transform:
   m_ObjectHideFlags: 0
