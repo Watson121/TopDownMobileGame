@@ -1350,6 +1350,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
+      propertyPath: unlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: nextButton
+      value: 
+      objectReference: {fileID: 6985749364480984490}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: upgradeCost
+      value: 750
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
       propertyPath: upgradeType
       value: 1
       objectReference: {fileID: 0}
@@ -1490,6 +1505,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
+      propertyPath: upgradeCost
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
       propertyPath: upgradeType
       value: 2
       objectReference: {fileID: 0}
@@ -1497,6 +1517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: upgradeLevel
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: finalUpgradeInTree
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
@@ -1621,6 +1646,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 328055733255905891}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6985749364257875008 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 328055733255905891}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &328055733309604745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1635,12 +1672,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
+      propertyPath: upgradeCost
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
       propertyPath: upgradeType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
       propertyPath: upgradeLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: finalUpgradeInTree
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
@@ -1766,6 +1813,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 328055733309604745}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6985749364480984490 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 328055733309604745}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &328055733607696017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1776,6 +1835,16 @@ PrefabInstance:
     - target: {fileID: 7241545188766829216, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
       propertyPath: m_text
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: nextButton
+      value: 
+      objectReference: {fileID: 6985749362812249488}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: upgradeCost
       value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
@@ -1900,6 +1969,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f91fd7796024dc24f8734419c02ceb3a, type: 3}
+--- !u!114 &6985749364644266162 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 328055733607696017}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6985749364644266164 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7241545188974249509, guid: f91fd7796024dc24f8734419c02ceb3a,
@@ -1920,8 +2001,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
+      propertyPath: unlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: nextButton
+      value: 
+      objectReference: {fileID: 6985749363033836692}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: upgradeCost
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
       propertyPath: upgradeType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: finalUpgradeInTree
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
@@ -2060,8 +2161,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
+      propertyPath: upgradeCost
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
       propertyPath: upgradeLevel
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: finalUpgradeInTree
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
@@ -2180,6 +2291,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f91fd7796024dc24f8734419c02ceb3a, type: 3}
+--- !u!114 &6985749363923935794 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 328055733858280465}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6985749363923935796 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7241545188974249509, guid: f91fd7796024dc24f8734419c02ceb3a,
@@ -2196,6 +2319,16 @@ PrefabInstance:
     - target: {fileID: 7241545188766829216, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
       propertyPath: m_text
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: nextButton
+      value: 
+      objectReference: {fileID: 6985749363923935794}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: upgradeCost
       value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
@@ -2320,6 +2453,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f91fd7796024dc24f8734419c02ceb3a, type: 3}
+--- !u!114 &6985749362812249488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 328055734911247283}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6985749362812249494 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7241545188974249509, guid: f91fd7796024dc24f8734419c02ceb3a,
@@ -2336,6 +2481,16 @@ PrefabInstance:
     - target: {fileID: 7241545188766829216, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
       propertyPath: m_text
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: nextButton
+      value: 
+      objectReference: {fileID: 6985749364257875008}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: upgradeCost
       value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
@@ -2471,6 +2626,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 328055735218129591}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6985749363033836692 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 328055735218129591}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6985749362737977681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2478,6 +2645,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 328055734605264610}
     m_Modifications:
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: unlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: nextButton
+      value: 
+      objectReference: {fileID: 6985749364644266162}
+    - target: {fileID: 7241545188974249506, guid: f91fd7796024dc24f8734419c02ceb3a,
+        type: 3}
+      propertyPath: upgradeCost
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 7241545188974249507, guid: f91fd7796024dc24f8734419c02ceb3a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
