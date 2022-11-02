@@ -82,8 +82,7 @@ public class UpgradeManager : MonoBehaviour
     /// Weapon Upgrades
     /// </summary>
     private Upgrade[] weaponUpgrades = { new Upgrade(EUpgradeType.Weapons, EUpgradeLevel.Level_1, 500),
-                                         new Upgrade(EUpgradeType.Weapons, EUpgradeLevel.Level_2, 1500),
-                                         new Upgrade(EUpgradeType.Weapons, EUpgradeLevel.Level_3, 2250)};
+                                         new Upgrade(EUpgradeType.Weapons, EUpgradeLevel.Level_2, 1500)};
 
     /// <summary>
     /// Sheild Upgrades
