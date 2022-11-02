@@ -44,11 +44,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject upgradeScreen_UI;
     [SerializeField] private Button doneBtn_UpgradeScreen;
 
-
-    // Debugging controls
     [Header("Debugging")]
     [SerializeField] private bool skipMainMenu = false;
 
+   
     
 
     // Start is called before the first frame update
@@ -83,7 +82,7 @@ public class UIManager : MonoBehaviour
         if (scene.name == "MainScene")
         {
             StartGame();
-        }else if(scene.name == "UpgradeScreen")
+        }else if(scene.name == "UpgradeScreen" && mainMenu_UI == null)
         {
             SettingUpMainMenu();
             SettingUpUpgradeMenuUI();
@@ -197,7 +196,6 @@ public class UIManager : MonoBehaviour
             FindManagers();
             SettingUpDeathScreenUI();
             SettingUpPauseMenUI();
-            //gameManager.SetupGame();
         }
         else
         {

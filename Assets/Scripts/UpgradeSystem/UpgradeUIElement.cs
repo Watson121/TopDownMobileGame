@@ -8,6 +8,7 @@ public class UpgradeUIElement : MonoBehaviour
 
     [SerializeField] private EUpgradeType upgradeType;
     [SerializeField] private EUpgradeLevel upgradeLevel;
+    [SerializeField] private Upgrade upgrade;
     [SerializeField] private Button UIButton;
     [SerializeField] private UpgradeManager upgradeManager;
 
@@ -16,12 +17,14 @@ public class UpgradeUIElement : MonoBehaviour
         UIButton = GetComponent<Button>();
         upgradeManager = GameObject.Find("UpgradeManager").GetComponent<UpgradeManager>();
 
-        if(UIButton.interactable == true) { 
-            UIButton.onClick.AddListener(() => upgradeManager.ResearchAnUpgrade(upgradeLevel, upgradeType, UIButton));
-        }
+        upgrade = upgradeManager.GetAnUpgrade((int)upgradeLevel, upgradeType);
+
+        UIButton.onClick.AddListener(() => upgradeManager.ResearchAnUpgrade((int)upgradeLevel, upgradeType, UIButton));
+        
     }
 
-
-
-
+    private void Update()
+    {
+        UIButton.interactable = upgradeManager.GetAnUpgrade((int)upgradeLevel, upgradeType).Unlocked;
+    }
 }
