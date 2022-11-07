@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UpgradeUIElement : MonoBehaviour
+public class UpgradeUIElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
     [Header("Upgrade Settings")]
@@ -15,12 +16,17 @@ public class UpgradeUIElement : MonoBehaviour
     [SerializeField] private bool finalUpgradeInTree;
     [SerializeField] private Button nextButton;
 
+    [SerializeField] private UpgradeUIElement_Stat upgradeStat;
+    [SerializeField] private float upgradeValue;
+
     private Upgrade upgrade;
     
     private Button UIButton;
     private TextMeshProUGUI UI_ButtonText;
 
     private UpgradeManager upgradeManager;
+
+
 
     private void Awake()
     {
@@ -44,6 +50,7 @@ public class UpgradeUIElement : MonoBehaviour
         // Setting up button clicks
         UIButton.onClick.AddListener(() => upgrade = upgradeManager.ResearchAnUpgrade(upgrade));
         UIButton.onClick.AddListener(InteractionUpdate);
+        UIButton.onClick.AddListener(() => upgradeStat.ConfirmUpgade(upgradeValue));
 
         // Updating Button Text
         UI_ButtonText.text = upgradeCost.ToString();
@@ -60,5 +67,13 @@ public class UpgradeUIElement : MonoBehaviour
         }
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        upgradeStat.ShowUpgrade(upgradeValue);
+    }
 
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        upgradeStat.HideUpgrade();
+    }
 }
