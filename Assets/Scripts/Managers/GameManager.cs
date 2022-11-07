@@ -52,8 +52,19 @@ public class GameManager : MonoBehaviour
 
     #region Gears
     // These are the number of gears that the player has currently collected, these will be used to upgrade their weapons and ship.
-    public uint NumberOfGearsCollected
+    public int NumberOfGearsCollected
     {
+
+
+        set
+        {
+            numOfGearsCollected = value;
+
+           
+                
+                uiManager.SetGearsUpgradeScreen();
+
+        }
         get 
         {
 
@@ -67,10 +78,10 @@ public class GameManager : MonoBehaviour
             
         }
     }
-    [SerializeField]private uint numOfGearsCollected = 0;
+    [SerializeField]private int numOfGearsCollected = 0;
 
     // Events for when gears have been collected
-    public delegate void OnGearCollectedDelegate(uint newVal);
+    public delegate void OnGearCollectedDelegate(int newVal);
     public event OnGearCollectedDelegate OnGearCollection;
 
     #endregion
@@ -141,6 +152,8 @@ public class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
+        
+
         DontDestroyOnLoad(this);
     }
 
@@ -149,6 +162,11 @@ public class GameManager : MonoBehaviour
         if (scene.name == "MainScene")
         {
             SetupGame();
+        }
+        else
+        {
+            // Finding UI Manager
+            uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         }
     }
 
@@ -160,8 +178,6 @@ public class GameManager : MonoBehaviour
 
     private void FindManagers()
     {
-        // Finding UI Manager
-        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
         // Finding the player Controller
         player = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -257,11 +273,13 @@ public class GameManager : MonoBehaviour
 
     #region Upgrade System
 
-    public void GearUpdateHandler(uint newVal)
+    public void GearUpdateHandler(int newVal)
     {
-        numOfGearsCollected += newVal;
-        uiManager.UpdateGearCollection(numOfGearsCollected); 
+        NumberOfGearsCollected += newVal;
+        uiManager.UpdateGearCollection(NumberOfGearsCollected);
     }
+
+ 
 
     #endregion
 

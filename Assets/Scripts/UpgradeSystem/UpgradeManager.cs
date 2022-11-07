@@ -87,27 +87,6 @@ public class UpgradeManager : MonoBehaviour
 {
 
     /// <summary>
-    /// Health Upgrades
-    /// </summary>
-    private Upgrade[] healthUpgrades = { new Upgrade(EUpgradeType.Health, EUpgradeLevel.Level_1, 1000, true),
-                                         new Upgrade(EUpgradeType.Health, EUpgradeLevel.Level_2, 2000),
-                                         new Upgrade(EUpgradeType.Health, EUpgradeLevel.Level_3, 3000),
-                                         new Upgrade(EUpgradeType.Health, EUpgradeLevel.Level_4, 4000, false, true)};
-
-    /// <summary>
-    /// Weapon Upgrades
-    /// </summary>
-    private Upgrade[] weaponUpgrades = { new Upgrade(EUpgradeType.Weapons, EUpgradeLevel.Level_1, 500, true),
-                                         new Upgrade(EUpgradeType.Weapons, EUpgradeLevel.Level_2, 1500, false, true)};
-
-    /// <summary>
-    /// Sheild Upgrades
-    /// </summary>
-    private Upgrade[] shieldUpgrades = { new Upgrade(EUpgradeType.Shield, EUpgradeLevel.Level_1, 600, true),
-                                         new Upgrade(EUpgradeType.Shield, EUpgradeLevel.Level_2, 1200),
-                                         new Upgrade(EUpgradeType.Shield, EUpgradeLevel.Level_3, 1800, false, true)};
-
-    /// <summary>
     ///  The Game Manager, where which level the player is currently on is going to be stored
     /// </summary>
     private GameManager gameManager;
@@ -118,31 +97,7 @@ public class UpgradeManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    /// <summary>
-    /// Getting an upgrade from the upgrade arrays. 
-    /// </summary>
-    /// <param name="index"> Which element to get from the upgrade array </param>
-    /// <param name="type"> Which upgrade array to search </param>
-    /// <returns></returns>
-    public Upgrade GetAnUpgrade(int index, EUpgradeType type)
-    {
-        Upgrade upgradeToReturn = healthUpgrades[0];
-
-        switch (type)
-        {
-            case EUpgradeType.Health:
-                Debug.Log("Health Upgrade Retuned: " + healthUpgrades[index].Level);
-                return upgradeToReturn = healthUpgrades[index];             
-            case EUpgradeType.Shield:
-                Debug.Log("Shield Upgrade Retuned: " + healthUpgrades[index].Level);
-                return upgradeToReturn = shieldUpgrades[index];
-            case EUpgradeType.Weapons:
-                Debug.Log("Weapon Upgrade Retuned: " + healthUpgrades[index].Level);
-                return upgradeToReturn = weaponUpgrades[index];
-        }
-
-        return upgradeToReturn;
-    }
+   
 
     /// <summary>
     /// Researched an upgrade that the player wants. This also where it will heck if the player has enough resources to research an upgrade or not
@@ -156,8 +111,11 @@ public class UpgradeManager : MonoBehaviour
 
         if(gameManager.NumberOfGearsCollected >= upgradeToResearch.UpgradeCost)
         {
+            gameManager.NumberOfGearsCollected -= upgradeToResearch.UpgradeCost;
+
             upgradeToResearch.Researched = true;
             upgradeToResearch.Unlocked = false;
+
 
             switch (upgradeToResearch.Type)
             {
