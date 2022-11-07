@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Gear : Collectable
 {
-    public uint Value
+    public int Value
     {
         get { return value; }
     }
-    private uint value = 10;
+    private int value = 10;
   
 
 

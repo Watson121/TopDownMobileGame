@@ -43,6 +43,7 @@ public class UIManager : MonoBehaviour
     [Header("Upgrade Screen")]
     [SerializeField] private GameObject upgradeScreen_UI;
     [SerializeField] private Button doneBtn_UpgradeScreen;
+    [SerializeField] private TextMeshProUGUI gearUI_UpgradeScreen;
 
     [Header("Debugging")]
     [SerializeField] private bool skipMainMenu = false;
@@ -84,6 +85,7 @@ public class UIManager : MonoBehaviour
             StartGame();
         }else if(scene.name == "UpgradeScreen" && mainMenu_UI == null)
         {
+            FindManagers();
             SettingUpMainMenu();
             SettingUpUpgradeMenuUI();
         }
@@ -149,6 +151,10 @@ public class UIManager : MonoBehaviour
         doneBtn_UpgradeScreen = GameObject.Find("DoneBtn_UpgradeScreen").GetComponent<Button>();
         doneBtn_UpgradeScreen.onClick.AddListener(() => ToggleMenu(upgradeScreen_UI));
 
+        // Find the gear UI in upgrade Screen
+        gearUI_UpgradeScreen = GameObject.Find("Gears_UpgradeScreen").GetComponent<TextMeshProUGUI>();
+        SetGearsUpgradeScreen();
+
         upgradeScreen_UI.SetActive(false);
     }
 
@@ -176,6 +182,11 @@ public class UIManager : MonoBehaviour
     private void FindManagers()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        
+    }
+
+    private void FindPlayer()
+    {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
@@ -193,7 +204,7 @@ public class UIManager : MonoBehaviour
         {
          
             SettingUpInGameUI();
-            FindManagers();
+            FindPlayer();
             SettingUpDeathScreenUI();
             SettingUpPauseMenUI();
         }
@@ -329,6 +340,15 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
+    #region Upgrade Screen
+
+    public void SetGearsUpgradeScreen()
+    {
+        gearUI_UpgradeScreen.text = "Gears: " + gameManager.NumberOfGearsCollected.ToString();
+    }
+
+    #endregion
+
     /// <summary>
     /// A Function that will toggle the menu on or off.
     /// </summary>
@@ -339,10 +359,6 @@ public class UIManager : MonoBehaviour
         menuToClose.SetActive(!menuToClose.activeSelf);
     }
 
-    private void Update()
-    {
-        
-    }
 
 
 }
