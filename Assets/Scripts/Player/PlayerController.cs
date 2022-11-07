@@ -92,6 +92,13 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     #endregion
 
+    #region Shields
+
+    [SerializeField] float shieldLongiviety;
+    bool shieldActive;
+
+    #endregion
+
     private void Start()
     {
         //CalculatingViewportBounds();
@@ -101,6 +108,7 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         FindBullets();
         PlayerSetup();
         WeaponSetup();
+        ShieldSetup();
 
         targettingRay = GetComponent<LineRenderer>();
       
@@ -191,6 +199,28 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
         currentEquipedWeapon = ketchupGun;
         uiManager.UpdateCurrentWeapon(SauceType.Ketchup);
+    }
+
+    private void ShieldSetup()
+    {
+        int shieldLevel = gameManager.ShieldLevel;
+
+        switch (shieldLevel)
+        {
+            case 1:
+                shieldLongiviety = 4.0f;
+                break;
+            case 2:
+                shieldLongiviety = 5.0f;
+                break;
+            case 3:
+                shieldLongiviety = 6.0f;
+                break;
+            case 0:
+                shieldLongiviety = 3.0f;
+                break;
+        }
+
     }
 
     /// <summary>
