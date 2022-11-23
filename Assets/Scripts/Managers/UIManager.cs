@@ -6,8 +6,32 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEditor;
 
+[DisallowMultipleComponent]
 public class UIManager : MonoBehaviour
 {
+
+    #region Stopping Multiple Instances of UI Manager
+
+    public static UIManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+        set
+        {
+            if(instance != null)
+            {
+                Destroy(value.gameObject);
+                return;
+            }
+
+            instance = value;
+        }
+    }
+    private static UIManager instance;
+
+    #endregion
 
     [Header("Game Managers")]
     [SerializeField] private GameManager gameManager;
@@ -24,10 +48,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreUI_GameUI;
     [SerializeField] private TextMeshProUGUI gearUI_GameUI;
     [SerializeField] private Image currentWeaponUI;
+    [SerializeField] private Slider playerHealth_UI;
+    [SerializeField] private TextMeshProUGUI playerHealthText_UI;
+
     private Sprite kethcupBottle_Texture;
     private Sprite mustardBottle_Texture;
     private Sprite mayoBottle_Texture;
-    [SerializeField] private Slider playerHealth_UI;
 
     [Header("Death Screen UI")]
     [SerializeField] private GameObject deathScreen_UI;
@@ -48,13 +74,19 @@ public class UIManager : MonoBehaviour
     [Header("Debugging")]
     [SerializeField] private bool skipMainMenu = false;
 
-   
-    
+
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(this);
+        
 
         FindResources();
 
@@ -83,7 +115,7 @@ public class UIManager : MonoBehaviour
         if (scene.name == "MainScene")
         {
             StartGame();
-        }else if(scene.name == "UpgradeScreen" && mainMenu_UI == null)
+        }else if(scene.name == "UpgradeScreen")
         {
             FindManagers();
             SettingUpMainMenu();
@@ -103,6 +135,7 @@ public class UIManager : MonoBehaviour
 
         currentWeaponUI = GameObject.Find("Current_Weapon_Image").GetComponent<Image>();
         playerHealth_UI = GameObject.Find("PlayerHealth").GetComponent<Slider>();
+        playerHealthText_UI = GameObject.Find("PlayerHealth_Text").GetComponent<TextMeshProUGUI>();
     }
 
     // Find the Death Screen elements. 
@@ -203,8 +236,9 @@ public class UIManager : MonoBehaviour
         if (!restart)
         {
          
-            SettingUpInGameUI();
+           
             FindPlayer();
+            SettingUpInGameUI();
             SettingUpDeathScreenUI();
             SettingUpPauseMenUI();
         }
@@ -234,6 +268,7 @@ public class UIManager : MonoBehaviour
         {
             playerHealth_UI.maxValue = playerController.Health;
             playerHealth_UI.value = playerHealth_UI.maxValue;
+            playerHealthText_UI.text = playerController.MaxHealth.ToString();
         }
 
         UpdateCurrentPoints(0);
@@ -246,6 +281,7 @@ public class UIManager : MonoBehaviour
     {   
        playerHealth_UI.value = playerController.Health;
        playerHealth_UI.value = Mathf.Clamp(playerHealth_UI.value, newHealth, playerHealth_UI.maxValue);
+       playerHealthText_UI.text = newHealth.ToString();
     }
 
     // Updating the current points text
@@ -324,7 +360,9 @@ public class UIManager : MonoBehaviour
     public void QuitToMainMenu()
     {
         Debug.Log("Loading Main Menu");
+        gameManager.ResetLevel(true);
         SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2, LoadSceneMode.Additive);
     }
 
     public void OpenDeathScreen()

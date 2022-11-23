@@ -6,8 +6,32 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[DisallowMultipleComponent]
 public class GameManager : MonoBehaviour
 {
+
+    #region Stopping Multiple Instances Upgrade Manager
+
+    public static GameManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+        set
+        {
+            if (instance != null)
+            {
+                Destroy(value.gameObject);
+                return;
+            }
+
+            instance = value;
+        }
+    }
+    private static GameManager instance;
+
+    #endregion
 
     #region Managers
 
@@ -141,6 +165,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool unlimitedMoney = false;
 
     #endregion
+
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -288,7 +318,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Reseting the level 
     /// </summary>
-    public void ResetLevel()
+    public void ResetLevel(bool restart = false)
     {
         // Setting the Time Scale back to normal speed
         Time.timeScale = 1;
@@ -301,6 +331,13 @@ public class GameManager : MonoBehaviour
 
         // Reseting the colletables
         spawningManager.ResetCollectables();
+
+        if (restart)
+        {
+            // Clearing the pools
+            playerBulletPool.Clear();
+            enemyBulletPool.Clear();
+        }
 
         // Reseting the active bullets
         foreach (Bullet bullet in activeBullets.ToList())
