@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Viewport;
 
 public class PlayerController : MonoBehaviour, IDamage, ICollectable
@@ -99,20 +100,23 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         //CalculatingViewportBounds();
         ViewportBoundaries.CalculatingViewportBounds(transform);
-        ControlSetup();
+        targettingRay = GetComponent<LineRenderer>();
+
         FindManagers();
         FindBullets();
         PlayerSetup();
         WeaponSetup();
         ShieldSetup();
+        ControlSetup();
 
-        targettingRay = GetComponent<LineRenderer>();
-      
+        
     }
+
+   
 
 
 

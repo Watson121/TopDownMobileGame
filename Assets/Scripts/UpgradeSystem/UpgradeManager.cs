@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+#region Upgrade Structs and Enums
+
 public enum EUpgradeType
 {
     Health,
@@ -82,22 +84,51 @@ public struct Upgrade
 
 }
 
+#endregion
 
+[DisallowMultipleComponent]
 public class UpgradeManager : MonoBehaviour
 {
+
+    #region Stopping Multiple Instances Upgrade Manager
+
+    public static UpgradeManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+        set
+        {
+            if (instance != null)
+            {
+                Destroy(value.gameObject);
+                return;
+            }
+
+            instance = value;
+        }
+    }
+    private static UpgradeManager instance;
+
+    #endregion
+
 
     /// <summary>
     ///  The Game Manager, where which level the player is currently on is going to be stored
     /// </summary>
     private GameManager gameManager;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         DontDestroyOnLoad(this);
     }
-
-   
 
     /// <summary>
     /// Researched an upgrade that the player wants. This also where it will heck if the player has enough resources to research an upgrade or not
@@ -107,8 +138,6 @@ public class UpgradeManager : MonoBehaviour
     /// <param name="btnUsed"> Upgrade Button Pressed </param>
     public Upgrade ResearchAnUpgrade(Upgrade upgradeToResearch)
     {
-    
-
         if(gameManager.NumberOfGearsCollected >= upgradeToResearch.UpgradeCost)
         {
             gameManager.NumberOfGearsCollected -= upgradeToResearch.UpgradeCost;
