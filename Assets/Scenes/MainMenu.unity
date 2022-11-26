@@ -667,6 +667,7 @@ MonoBehaviour:
   gearUI_GameUI: {fileID: 0}
   currentWeaponUI: {fileID: 0}
   playerHealth_UI: {fileID: 0}
+  playerHealthText_UI: {fileID: 0}
   deathScreen_UI: {fileID: 0}
   playAgainBtn_DeathScreen: {fileID: 0}
   quitToMenuBtn_DeathScreen: {fileID: 0}
@@ -676,6 +677,7 @@ MonoBehaviour:
   quitToMenuBtn_PauseMenu: {fileID: 0}
   upgradeScreen_UI: {fileID: 0}
   doneBtn_UpgradeScreen: {fileID: 0}
+  gearUI_UpgradeScreen: {fileID: 0}
   skipMainMenu: 1
 --- !u!4 &1097620399
 Transform:

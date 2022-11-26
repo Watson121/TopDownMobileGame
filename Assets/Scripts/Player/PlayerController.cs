@@ -419,8 +419,6 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         // Setting Current Weapon back to ketchup gun
         currentEquipedWeapon = ketchupGun;
      
-   
-
     }
 
     #region Damage 
@@ -492,7 +490,25 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     private void ActivateShield()
     {
+
+
         Debug.Log("Player has picked up Shield Pickup, Actiavated Shield");
+    }
+
+    private IEnumerator ShieldCountdown()
+    {
+        float elaspedTime = 0;
+    
+
+
+        while((elaspedTime < shieldLongiviety))
+        {
+            elaspedTime += Time.deltaTime;
+            yield return null;
+        }
+
+
+    
     }
 
     private void UseHealthKit()
