@@ -9,7 +9,5 @@ public class Gear : Collectable
         get { return value; }
     }
     private int value = 10;
-  
-
 
 }

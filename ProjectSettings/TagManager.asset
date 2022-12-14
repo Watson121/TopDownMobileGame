@@ -10,6 +10,9 @@ TagManager:
   - Enemy
   - EnemyPool
   - CollectablePool
+  - GearPool
+  - ShieldPool
+  - HealthPool
   layers:
   - Default
   - TransparentFX
