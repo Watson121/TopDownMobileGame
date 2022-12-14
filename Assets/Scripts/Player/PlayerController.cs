@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     #region Weapons
 
     // Weapons
+    [Header("Weapons")]
     private Weapon currentEquipedWeapon;
     private Weapon ketchupGun;
     private Weapon mustardGun;
@@ -95,14 +96,23 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     #region Shields
 
+    [Header("Shields")]
+    [SerializeField] GameObject shieldMesh;
     [SerializeField] float shieldLongiviety;
     bool shieldActive;
 
     #endregion
 
+    #region Debugging
+
+    [Header("Debugging")]
+    [SerializeField] private bool turnShieldsOn = false;
+    [SerializeField] private bool invisible = false;
+
+    #endregion
+
     private void Awake()
     {
-        //CalculatingViewportBounds();
         ViewportBoundaries.CalculatingViewportBounds(transform);
         targettingRay = GetComponent<LineRenderer>();
 
@@ -225,6 +235,18 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
                 break;
         }
 
+        
+#if UNITY_EDITOR
+
+        // If this debugging option is turned on, then it will force shields to always be active
+        if (turnShieldsOn)
+        {
+            shieldMesh.SetActive(true);
+        }
+
+#endif
+
+
     }
 
     /// <summary>
@@ -257,6 +279,9 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         health = MAX_HEALTH;
     }
     
+    /// <summary>
+    /// Finding the game managers
+    /// </summary>
     private void FindManagers()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -279,8 +304,21 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
             Movement();
         }
 
+        TargettingRay();
+    }
+
+    /// <summary>
+    /// Updates the targetting ray that is attached to the player
+    /// </summary>
+    private void TargettingRay()
+    {
+        
+        // Making so that it should only detect objects on the enemy layer
         int layerMask = 1 << 6;
 
+        // Updating the colour of the ray
+        // Red - No Target in Range
+        // Green - Target in Range
         if (Physics.Raycast(transform.position, Vector3.forward * 20, 20, layerMask))
         {
             targettingRay.startColor = Color.green;
@@ -293,7 +331,10 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         }
     }
 
-    // Turning on or off the movement for the player
+
+    /// <summary>
+    /// Turning on or off the movement for the player
+    /// </summary>
     private void OnMovementAction(InputAction.CallbackContext obj)
     {
         if (obj.performed)
@@ -337,6 +378,9 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         }
     }
 
+    /// <summary>
+    /// Player Controls - Switching between the different weapons
+    /// </summary>
     private void SwitchWeapon(InputAction.CallbackContext obj)
     {
 
@@ -393,6 +437,9 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     }
 
+    /// <summary>
+    /// Killing the player, updating the high score and opening the death screen
+    /// </summary>
     private void PlayerDeath()
     {
         Debug.Log("Player Has Died");
@@ -426,16 +473,32 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     // Interface - Applying Damage to the player
     public void ApplyDamage(float damage)
     {
-        health -= damage;
-        health = Mathf.Clamp(health, 0, MAX_HEALTH);
-        //uiManager.UpdatePlayerHealth_UI();
 
-        uiManager.UpdatePlayerHealth_UI(health);
+        // If the shield mesh is active, no damage should be taken
+        if (!shieldMesh.activeSelf)
+        {
+
+            health -= damage;
+            health = Mathf.Clamp(health, 0, MAX_HEALTH);
+            uiManager.UpdatePlayerHealth_UI(health);
+
+        }
+
+#if UNITY_EDITOR
+
+        // Debugging - If set invisible set to true, then the player cannot be killed
+        if (invisible)
+        {
+            health = MAX_HEALTH;
+        }
+
+#endif
 
         if (health == 0)
         {
             PlayerDeath();
         }
+        
         
     }
 
@@ -490,6 +553,8 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     private void ActivateShield()
     {
+        
+        StartCoroutine(ShieldCountdown());
 
 
         Debug.Log("Player has picked up Shield Pickup, Actiavated Shield");
@@ -498,17 +563,20 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     private IEnumerator ShieldCountdown()
     {
         float elaspedTime = 0;
-    
 
 
-        while((elaspedTime < shieldLongiviety))
+        shieldMesh.SetActive(true);
+        while ((elaspedTime < shieldLongiviety))
         {
             elaspedTime += Time.deltaTime;
             yield return null;
         }
+        shieldMesh.SetActive(false);
+
+        // Cleanup
+        StopCoroutine(ShieldCountdown());
 
 
-    
     }
 
     private void UseHealthKit()

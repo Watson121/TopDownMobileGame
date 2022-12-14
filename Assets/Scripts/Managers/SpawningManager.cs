@@ -22,6 +22,11 @@ public class SpawningManager : MonoBehaviour
     private static int shieldIndex = 0;
     private static int healthIndex = 0;
 
+    [Header("Debugging")]
+    [SerializeField] private bool dropOnlyHealth = false;
+    [SerializeField] private bool dropOnlyShields = false;
+    [SerializeField] private bool dropOnlyGears = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -116,12 +121,8 @@ public class SpawningManager : MonoBehaviour
     /// <param name="spawnPoint"> The Position that the collectable will spawn at </param>
     public void SpawnCollectable(Vector3 spawnPoint)
     {
-        //collectableToSpawn = gearsCollectables[collectableIndex].AddComponent<Gear>();
 
-        CollectableType collectableType = (CollectableType)Random.Range(0, 2);
-        //collectableToSpawn = shieldCollectables[shieldIndex].GetComponent<Shield>();
-
-        Debug.Log(collectableType);
+        CollectableType collectableType = GetACollectable();
 
         switch (collectableType)
         {
@@ -173,6 +174,38 @@ public class SpawningManager : MonoBehaviour
         }
 
        
+    }
+
+    /// <summary>
+    /// Function works out which collectable that will spawn
+    /// </summary>
+    /// <returns> Collectable to Spawn </returns>
+    private CollectableType GetACollectable()
+    {
+   
+    // For Debugging, should only run while in editor
+#if UNITY_EDITOR
+
+        if (dropOnlyShields)
+        {
+            return CollectableType.EShield;
+        }
+
+        if (dropOnlyGears)
+        {
+            return CollectableType.EMoney;
+        }
+
+        if (dropOnlyHealth)
+        {
+            return CollectableType.EHealth;
+        }
+
+        return (CollectableType)Random.Range(0, 2);
+#else
+        return (CollectableType)Random.Range(0, 2);
+#endif
+
     }
 
     #endregion

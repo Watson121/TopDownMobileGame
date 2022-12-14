@@ -6493,6 +6493,9 @@ MonoBehaviour:
   shieldCollectables: []
   healthCollectables: []
   collectableToSpawn: {fileID: 0}
+  dropOnlyHealth: 0
+  dropOnlyShields: 1
+  dropOnlyGears: 0
 --- !u!4 &1412703640
 Transform:
   m_ObjectHideFlags: 0
@@ -9808,6 +9811,11 @@ PrefabInstance:
         type: 3}
       propertyPath: gameManager
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2808823369759421764, guid: 437467d9a7709ed45be08a72ac8f8e3e,
+        type: 3}
+      propertyPath: turnShieldsOn
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2808823369759421764, guid: 437467d9a7709ed45be08a72ac8f8e3e,
         type: 3}
