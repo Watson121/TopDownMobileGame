@@ -14,9 +14,18 @@ public class SpawningManager : MonoBehaviour
     private static int enemyIndex = 0;
 
     [Header("Collectable Spawning Settings")]
-    [SerializeField] private List<GameObject> baseCollectables;
+    [SerializeField] private List<GameObject> gearsCollectables;
+    [SerializeField] private List<GameObject> shieldCollectables;
+    [SerializeField] private List<GameObject> healthCollectables;
     [SerializeField] private Collectable collectableToSpawn;
-    private static int collectableIndex = 0;
+    private static int gearIndex = 0;
+    private static int shieldIndex = 0;
+    private static int healthIndex = 0;
+
+    [Header("Debugging")]
+    [SerializeField] private bool dropOnlyHealth = false;
+    [SerializeField] private bool dropOnlyShields = false;
+    [SerializeField] private bool dropOnlyGears = false;
 
     // Start is called before the first frame update
     void Start()
@@ -41,14 +50,26 @@ public class SpawningManager : MonoBehaviour
 
     private void FindCollectables()
     {
-        // Finding the pool of Collectables
-        Transform collectablePool = GameObject.FindGameObjectWithTag("CollectablePool").transform;
+        // Finding the pool of Gears
+        Transform gearPool = GameObject.FindGameObjectWithTag("GearPool").transform;
 
-        // Putting the collectables into the collectable pool
-        foreach (Transform collectable in collectablePool)
+        // Putting the gears into the gear pool
+        foreach (Transform gear in gearPool)
         {
-            baseCollectables.Add(collectable.gameObject);
+            gearsCollectables.Add(gear.gameObject);
         }
+
+        //Finding the pool of Shields
+        Transform shieldPool = GameObject.FindGameObjectWithTag("ShieldPool").transform;
+
+        // Putting the shields into the shield pool
+        foreach (Transform shield in shieldPool)
+        {
+            shieldCollectables.Add(shield.gameObject);
+        }
+
+
+
     }
 
     #region Enemy Spawning
@@ -100,20 +121,91 @@ public class SpawningManager : MonoBehaviour
     /// <param name="spawnPoint"> The Position that the collectable will spawn at </param>
     public void SpawnCollectable(Vector3 spawnPoint)
     {
-        collectableToSpawn = baseCollectables[collectableIndex].AddComponent<Gear>();
 
-        if(collectableToSpawn.IsActive != true)
+        CollectableType collectableType = GetACollectable();
+
+        switch (collectableType)
+        {
+            case CollectableType.EMoney:
+                collectableToSpawn = gearsCollectables[gearIndex].GetComponent<Gear>();
+                break;
+            case CollectableType.EShield:
+                collectableToSpawn = shieldCollectables[shieldIndex].GetComponent<Shield>();
+                break;
+            case CollectableType.EHealth:
+                collectableToSpawn = shieldCollectables[healthIndex].GetComponent<Shield>();
+                break;
+        }
+
+
+        if (collectableToSpawn.IsActive != true)
         {
             collectableToSpawn.gameObject.transform.position = spawnPoint + new Vector3(0, 1, 0);
             StartCoroutine(collectableToSpawn.CollectableMovement());
         }
 
-        collectableIndex++;
-
-        if (collectableIndex >= baseCollectables.Count)
+        switch (collectableType)
         {
-            collectableIndex = 0;
+            case CollectableType.EMoney:
+                gearIndex++;
+
+                if (gearIndex >= gearsCollectables.Count)
+                {
+                    gearIndex = 0;
+                }
+
+                return;
+            case CollectableType.EShield:
+                shieldIndex++;
+
+                if(shieldIndex >= shieldCollectables.Count)
+                {
+                    shieldIndex = 0;
+                }
+
+                return;
+            case CollectableType.EHealth:
+                if(healthIndex >= healthCollectables.Count)
+                {
+                    healthIndex = 0;
+                }
+
+                return;
         }
+
+       
+    }
+
+    /// <summary>
+    /// Function works out which collectable that will spawn
+    /// </summary>
+    /// <returns> Collectable to Spawn </returns>
+    private CollectableType GetACollectable()
+    {
+   
+    // For Debugging, should only run while in editor
+#if UNITY_EDITOR
+
+        if (dropOnlyShields)
+        {
+            return CollectableType.EShield;
+        }
+
+        if (dropOnlyGears)
+        {
+            return CollectableType.EMoney;
+        }
+
+        if (dropOnlyHealth)
+        {
+            return CollectableType.EHealth;
+        }
+
+        return (CollectableType)Random.Range(0, 2);
+#else
+        return (CollectableType)Random.Range(0, 2);
+#endif
+
     }
 
     #endregion
@@ -141,7 +233,7 @@ public class SpawningManager : MonoBehaviour
     /// </summary>
     public void ResetCollectables()
     {
-        foreach (GameObject collectable in baseCollectables)
+        foreach (GameObject collectable in gearsCollectables)
         {
             Collectable c = collectable.GetComponent<Collectable>();
 

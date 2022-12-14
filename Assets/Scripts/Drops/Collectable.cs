@@ -38,7 +38,7 @@ public class Collectable : MonoBehaviour
     {
         get { return typeOfCollectable; }
     }
-    protected CollectableType typeOfCollectable;
+    [SerializeField] protected CollectableType typeOfCollectable;
 
 
     protected virtual void CollectableReaction()
