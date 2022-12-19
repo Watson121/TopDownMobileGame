@@ -68,8 +68,14 @@ public class SpawningManager : MonoBehaviour
             shieldCollectables.Add(shield.gameObject);
         }
 
+        // Finding the pool of Healths Packages
+        Transform healthPool = GameObject.FindGameObjectWithTag("HealthPool").transform;
 
-
+        // Adding the health packages to the health pool
+        foreach (Transform health in healthPool)
+        {
+            healthCollectables.Add(health.gameObject);
+        }
     }
 
     #region Enemy Spawning
@@ -133,7 +139,7 @@ public class SpawningManager : MonoBehaviour
                 collectableToSpawn = shieldCollectables[shieldIndex].GetComponent<Shield>();
                 break;
             case CollectableType.EHealth:
-                collectableToSpawn = shieldCollectables[healthIndex].GetComponent<Shield>();
+                collectableToSpawn = healthCollectables[healthIndex].GetComponent<HealthPackage>();
                 break;
         }
 
@@ -165,6 +171,8 @@ public class SpawningManager : MonoBehaviour
 
                 return;
             case CollectableType.EHealth:
+                healthIndex++;
+
                 if(healthIndex >= healthCollectables.Count)
                 {
                     healthIndex = 0;
@@ -200,12 +208,9 @@ public class SpawningManager : MonoBehaviour
         {
             return CollectableType.EHealth;
         }
-
-        return (CollectableType)Random.Range(0, 2);
-#else
-        return (CollectableType)Random.Range(0, 2);
 #endif
 
+        return (CollectableType)Random.Range(0, 2);
     }
 
     #endregion
