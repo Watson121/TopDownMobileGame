@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 70988139}
   - component: {fileID: 70988138}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: LevelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,8 +155,22 @@ MonoBehaviour:
   levels:
   - name: Test Level
     description: This is a test level
+    bossLevel: 0
+    enemiesToSpawn:
+    - enemyType: 0
+      numberToSpawn: 3
+    - enemyType: 1
+      numberToSpawn: 4
+    bossToSpawn: 0
+    levelBackground: 0
   - name: Garbage
     description: This is trash
+    bossLevel: 0
+    enemiesToSpawn:
+    - enemyType: 0
+      numberToSpawn: 3
+    bossToSpawn: 0
+    levelBackground: 0
 --- !u!4 &70988139
 Transform:
   m_ObjectHideFlags: 0

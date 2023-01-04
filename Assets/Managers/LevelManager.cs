@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using JetBrains.Annotations;
+using System;
 
 public enum ELevelBackground
 {
@@ -22,20 +23,48 @@ public enum EBossType
 }
 
 [System.Serializable]
+public struct EnemySetting {
+    public EEnemyType enemyType;
+    public int numberToSpawn;
+
+    public EnemySetting(EEnemyType _enemyType, int _numberToSpawn)
+    {
+        enemyType = _enemyType;
+        numberToSpawn = _numberToSpawn;
+    }
+
+    public string GetName()
+    {
+        switch(enemyType)
+        {
+            case EEnemyType.CroutonShip:
+                return "Crouton Ship";
+            case EEnemyType.ColourChangingShip:
+                return "Colour Changing Ship";
+            default:
+                return "";
+        }
+    }
+}
+
+
+[System.Serializable]
 public struct Level
 {
     public string name;
     public string description;
     public bool bossLevel;
-    public Dictionary<EEnemyType, int> enemiesToSpawn;
+    public List<EnemySetting> enemiesToSpawn;
     public EBossType bossToSpawn;
+    public ELevelBackground levelBackground;
 
-    public Level(string _name, string _description, bool _bossLevel, Dictionary<EEnemyType, int> _enemiesToSpawn, EBossType _bossToSpawn)
+    public Level(string _name, string _description, bool _bossLevel, List<EnemySetting> _enemiesToSpawn, EBossType _bossToSpawn, ELevelBackground _levelBackground)
     {
         name = _name;
         description = _description;
         bossLevel = _bossLevel;
         enemiesToSpawn = _enemiesToSpawn;
+        levelBackground = _levelBackground;
 
         if (bossLevel)
         {
@@ -46,6 +75,8 @@ public struct Level
             bossToSpawn = EBossType.None;
         }
     }
+
+    
 }
 
 
