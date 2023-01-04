@@ -1,11 +1,10 @@
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEditor.UIElements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using log4net.Core;
+using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class LevelCreator : EditorWindow
 {
@@ -44,7 +43,7 @@ public class LevelCreator : EditorWindow
         levelListView = new ListView();
         splitView.Add(levelListView);
         PopulateLevelList();
-        
+        NewLevelButton();
 
 
         m_RightPane = new VisualElement();
@@ -69,7 +68,7 @@ public class LevelCreator : EditorWindow
         levelListView.itemsSource = levels;
         levelListView.onSelectionChange += OnLevelChange;
 
-        //NewLevelButton();
+        
     }
 
     private void LoadLevel(Level selectedLevel, bool edit = false)
@@ -91,6 +90,8 @@ public class LevelCreator : EditorWindow
             SaveButton(selectedLevel);
             CancelButton(selectedLevel);
         }
+
+        DeleteLevel(selectedLevel);
     }
 
 
@@ -184,12 +185,9 @@ public class LevelCreator : EditorWindow
     {
         Action saveLevel = () =>
         {
-            List<Level> levels = levelManager.levels;
+           
 
-            if (levels.Contains(selectedLevel))
-            {
-                int index = levelManager.levels.FindIndex(level => level.name == selectedLevel.name);
-                Debug.Log("Level Index is: " + index);
+          
 
                 string newName = levelName.value;
                 string newDescription = levelDescription.value;
@@ -211,14 +209,21 @@ public class LevelCreator : EditorWindow
                     newBackground
                 );
 
+            List<Level> levels = levelManager.levels;
+
+            if (FindLevel(selectedLevel))
+            {
+                int index = levelManager.levels.FindIndex(level => level.name == selectedLevel.name);
+                Debug.Log("Level Index is: " + index);
                 levelManager.levels[index] = updatedLevel;
-
-
-                PopulateLevelList();
-                LoadLevel(updatedLevel, false);
-              
             }
-
+            else
+            {
+                levelManager.levels.Add(updatedLevel);
+          
+            }
+            PopulateLevelList();
+            LoadLevel(selectedLevel, false);
         };
 
 
@@ -230,11 +235,34 @@ public class LevelCreator : EditorWindow
     {
         Action cancelEdit = () =>
         {
-            LoadLevel(selectedLevel, false);
+            if (FindLevel(selectedLevel))
+            {
+                LoadLevel(selectedLevel, false);
+            }
+            else
+            {
+                m_RightPane.Clear();
+            }
         };
 
         var cancelButton = new Button(cancelEdit) { text = "Cancel Edit" };
         m_RightPane.Add(cancelButton);
+    }
+
+    private void DeleteLevel(Level selectedLevel)
+    {
+        Action deleteLevel = () =>
+        {
+            if (FindLevel(selectedLevel))
+            {
+                levelManager.levels.Remove(selectedLevel);          
+            }
+            m_RightPane.Clear();
+            PopulateLevelList();
+        };
+
+        var deleteButton = new Button(deleteLevel) { text = "Delete Level" };
+        m_RightPane.Add(deleteButton);
     }
 
     private void NewLevelButton()
@@ -242,12 +270,24 @@ public class LevelCreator : EditorWindow
 
         Action newLevel = () =>
         {
-            Debug.Log("New Level Created!");
+            Level newLevel = new Level(
+                "NEW LEVEL",
+                "DESCRIPTION",
+                false,
+                new List<EnemySetting> { new EnemySetting(EEnemyType.CroutonShip, 0), new EnemySetting(EEnemyType.ColourChangingShip, 0) },
+                EBossType.None,
+                ELevelBackground.City);
+
+            LoadLevel(newLevel, true);
         };
 
         var AddNewLevel = new Button(newLevel) { text = "Create New Level! " };
-        splitView.Add(AddNewLevel);
+        rootVisualElement.Add(AddNewLevel);
     }
 
-
+    private bool FindLevel(Level selectedLevel)
+    {
+        List<Level> levels = levelManager.levels;
+        return levels.Contains(selectedLevel);
+    }
 }
