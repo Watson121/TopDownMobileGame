@@ -79,6 +79,12 @@ public class LevelCreator : EditorWindow
         LevelDescirption(selectedLevel, edit);
         LevelBackground(selectedLevel, edit);
         IsBossLevel(selectedLevel, edit);
+
+        if (bossToggle.value)
+        {
+            BossToSpawn(selectedLevel, edit);
+        }
+        
         EniemesToSpawn(selectedLevel, edit);
 
         if (!edit)
@@ -131,12 +137,7 @@ public class LevelCreator : EditorWindow
     private void IsBossLevel(Level selectedLevel, bool edit = false)
     {
         bossToggle = new Toggle("Boss Level?");
-        
-        if (edit == false)
-        {
-            bossToggle.value = selectedLevel.bossLevel;
-        }
-
+        bossToggle.value = selectedLevel.bossLevel;
         bossToggle.SetEnabled(edit);
         bossToggle.RegisterCallback<ChangeEvent<bool>>((evt) =>
         {
@@ -250,7 +251,7 @@ public class LevelCreator : EditorWindow
           
             }
             PopulateLevelList();
-            LoadLevel(selectedLevel, false);
+            LoadLevel(updatedLevel, false);
 
             
         };
