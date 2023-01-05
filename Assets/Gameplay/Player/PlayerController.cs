@@ -126,10 +126,6 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         
     }
 
-   
-
-
-
     /// <summary>
     /// Setting up the controls
     /// </summary>
@@ -167,22 +163,6 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
         // Pausing Game
         playerControls.Player.Pause.performed -= PausingGame;
-    }
-
-    /// <summary>
-    /// Getting the camera bounds so that player is clamp to stay within the viewport
-    /// </summary>
-    private void CalculatingViewportBounds()
-    {
-        playerCamera = Camera.main;
-
-        // Setting the Viewport Bounds
-        cameraDistance = Vector3.Distance(this.transform.position, Camera.main.transform.position);
-        frustumHeight = (2.0f * cameraDistance * Mathf.Tan(Camera.main.fieldOfView * 0.5f * Mathf.Deg2Rad)) / 2;
-        frustumWidth = (frustumHeight * Camera.main.aspect);
-
-        // Setting Camera Location
-        playerCamera.transform.position = new Vector3(0, frustumHeight / 2, playerCamera.transform.position.z);
     }
 
     /// <summary>
@@ -468,6 +448,17 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
      
     }
 
+    /// <summary>
+    /// Updating Player Health when either taking damage or picking up a health package
+    /// </summary>
+    /// <param name="healthChange"></param>
+    private void UpdatePlayerHealth(float healthChange)
+    {
+        health += healthChange;
+        health = Mathf.Clamp(health, 0, MAX_HEALTH);
+        uiManager.UpdatePlayerHealth_UI(health);
+    }
+
     #region Damage 
 
     // Interface - Applying Damage to the player
@@ -478,9 +469,11 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         if (!shieldMesh.activeSelf)
         {
 
-            health -= damage;
+            UpdatePlayerHealth(-damage);
+
+            /*health -= damage;
             health = Mathf.Clamp(health, 0, MAX_HEALTH);
-            uiManager.UpdatePlayerHealth_UI(health);
+            uiManager.UpdatePlayerHealth_UI(health);*/
 
         }
 
@@ -509,6 +502,9 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     #endregion
 
+    /// <summary>
+    /// Open up the pause menu, when hitting the pause button
+    /// </summary>
     private void PausingGame(InputAction.CallbackContext obj)
     {
         if(Time.timeScale == 1)
@@ -526,6 +522,7 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     #region Collectables
 
+    // Interface - Reacting to the different collectables
     public void Collect(Collectable collectable)
     {
         CollectableType collectableType = collectable.TypeOfCollectable;
@@ -539,18 +536,25 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
                 ActivateShield();
                 break;
             case CollectableType.EHealth:
-                UseHealthKit();
+                UseHealthKit(collectable as HealthPackage);
                 break;
         }
 
     }
 
-    private void IncreaseGears(Gear moneyCoin)
+    /// <summary>
+    /// Increase Number of Gears that you have collected
+    /// </summary>
+    /// <param name="gear">The Gear Drop that the player has picked up</param>
+    private void IncreaseGears(Gear gear)
     {
         Debug.Log("Have Collected Money Coin, now increasing monies");
-        gameManager.GearUpdateHandler(moneyCoin.Value);
+        gameManager.GearUpdateHandler(gear.Value);
     }
 
+    /// <summary>
+    /// Activate the shield after picking up a shield pickup
+    /// </summary>
     private void ActivateShield()
     {
         
@@ -560,6 +564,9 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         Debug.Log("Player has picked up Shield Pickup, Actiavated Shield");
     }
 
+    /// <summary>
+    /// The Shield is only active for a short amount of time
+    /// </summary>
     private IEnumerator ShieldCountdown()
     {
         float elaspedTime = 0;
@@ -579,9 +586,23 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     }
 
-    private void UseHealthKit()
+    /// <summary>
+    /// Increase the player health after they have picked up a health package
+    /// </summary>
+    /// <param name="healthPackage">Health Package that the player has picked up</param>
+    private void UseHealthKit(HealthPackage healthPackage)
     {
-        Debug.Log("Player has collected Health Kit, Using it to help player");
+
+        if(health != MAX_HEALTH)
+        {
+            UpdatePlayerHealth(healthPackage.HealthToGive);
+        }
+
+#if UNITY_EDITOR
+
+        Debug.Log("Health Pack picked up");
+
+#endif
     }
 
     #endregion
