@@ -82,10 +82,10 @@ public struct Level
 
     
 
-[ExecuteInEditMode]
+[ExecuteInEditMode, Serializable]
 public class LevelManager : MonoBehaviour
 {
-
+    [SerializeField]
     public List<Level> levels;
 
     // Start is called before the first frame update

@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels:
-  - name: Test Level
+  - name: asdasdadass Level
     description: This is a test level
     bossLevel: 0
     enemiesToSpawn:
@@ -161,15 +161,7 @@ MonoBehaviour:
       numberToSpawn: 3
     - enemyType: 1
       numberToSpawn: 4
-    bossToSpawn: 0
-    levelBackground: 0
-  - name: Garbage
-    description: This is trash
-    bossLevel: 0
-    enemiesToSpawn:
-    - enemyType: 0
-      numberToSpawn: 3
-    bossToSpawn: 0
+    bossToSpawn: 1
     levelBackground: 0
 --- !u!4 &70988139
 Transform:
