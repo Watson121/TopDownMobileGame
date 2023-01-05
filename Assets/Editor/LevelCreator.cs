@@ -131,8 +131,29 @@ public class LevelCreator : EditorWindow
     private void IsBossLevel(Level selectedLevel, bool edit = false)
     {
         bossToggle = new Toggle("Boss Level?");
-        bossToggle.value = false;
+        
+        if (edit == false)
+        {
+            bossToggle.value = selectedLevel.bossLevel;
+        }
+
         bossToggle.SetEnabled(edit);
+        bossToggle.RegisterCallback<ChangeEvent<bool>>((evt) =>
+        {
+
+
+            if (evt.newValue)
+            {
+                BossToSpawn(selectedLevel, true);
+            }
+            else
+            {
+                m_RightPane.RemoveAt(4);
+            }
+            
+
+        }
+        );
 
         m_RightPane.Add(bossToggle);
     }
@@ -170,6 +191,17 @@ public class LevelCreator : EditorWindow
         }     
     }
 
+
+    private EnumField bossSelection;
+
+    private void BossToSpawn(Level selectedLevel, bool edit = false)
+    {
+        bossSelection = new EnumField("Boss", selectedLevel.bossToSpawn);
+        bossSelection.value = selectedLevel.bossToSpawn;
+        bossSelection.SetEnabled(edit);
+        m_RightPane.Insert(4, bossSelection);
+    }
+
     private void EditButton(Level selectedLevel)
     {
         Action startEdit = () =>
@@ -185,29 +217,24 @@ public class LevelCreator : EditorWindow
     {
         Action saveLevel = () =>
         {
-           
+            string newName = levelName.value;
+            string newDescription = levelDescription.value;
+            ELevelBackground newBackground = (ELevelBackground)levelBackgroundField.value;
+            bool isBoss = bossToggle.value;
+            List<EnemySetting> newEnemySettings = new List<EnemySetting>();
+            newEnemySettings.Add(new EnemySetting(EEnemyType.CroutonShip, croutonShipValue.value));
+            newEnemySettings.Add(new EnemySetting(EEnemyType.ColourChangingShip, colourChaningShipValue.value));
 
-          
+         
 
-                string newName = levelName.value;
-                string newDescription = levelDescription.value;
-                ELevelBackground newBackground = (ELevelBackground)levelBackgroundField.value;
-                bool isBoss = bossToggle.value;
-                List<EnemySetting> newEnemySettings = new List<EnemySetting>();
-                newEnemySettings.Add(new EnemySetting(EEnemyType.CroutonShip, croutonShipValue.value));
-                newEnemySettings.Add(new EnemySetting(EEnemyType.ColourChangingShip, colourChaningShipValue.value));
-
-                Debug.Log("New Enemy Settings at index 0 is " + newEnemySettings[0].numberToSpawn
-                    );
-
-                Level updatedLevel = new Level(
+            Level updatedLevel = new Level(
                     newName,
                     newDescription,
                     isBoss,
                     newEnemySettings,
                     EBossType.None,
                     newBackground
-                );
+            );
 
             List<Level> levels = levelManager.levels;
 
