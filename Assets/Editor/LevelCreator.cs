@@ -1,3 +1,10 @@
+/// Level Creator - Allows me to quickly create levels on the fly without having to do it all manually. 
+/// Also allows me to easily edit and delete levels. 
+/// 
+///
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +22,19 @@ public class LevelCreator : EditorWindow
     public static void ShowExample()
     {
         LevelCreator wnd = GetWindow<LevelCreator>();
-        wnd.titleContent = new GUIContent("LevelCreator");
+        wnd.titleContent = new GUIContent("Level Creator");
     }
+
+    #region Level Creator UI Elements
 
     private TwoPaneSplitView splitView;
     private ListView levelListView;
     private VisualElement m_leftPane;
     private VisualElement m_RightPane;
     private bool edit;
+
+    #endregion
+
 
     private LevelManager levelManager;
 
@@ -31,11 +43,10 @@ public class LevelCreator : EditorWindow
         // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
 
+        // Finding the level manager
         levelManager = GameObject.FindObjectOfType<LevelManager>();
 
-        
-
-        Debug.Log(levelManager);
+       
 
         splitView = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
         root.Add(splitView);
@@ -51,12 +62,18 @@ public class LevelCreator : EditorWindow
 
     }
 
+    /// <summary>
+    /// Called when you change the level that you're looking at
+    /// </summary>
     private void OnLevelChange(IEnumerable<object> selectedItems)
     {
         Level selectedLevel = (Level)selectedItems.First();
         LoadLevel(selectedLevel);
     }
 
+    /// <summary>
+    /// Populates the level list with all of the different levels currently in the game
+    /// </summary>
     private void PopulateLevelList()
     {
         levelListView.Clear();
@@ -71,6 +88,10 @@ public class LevelCreator : EditorWindow
         
     }
 
+    /// <summary>
+    /// When a level is selected, it's parameters are loaded in the right pane so that you can view them.
+    /// If you have selected edit mode you will be able to edit them.
+    /// </summary>
     private void LoadLevel(Level selectedLevel, bool edit = false)
     {
         m_RightPane.Clear();
@@ -102,7 +123,6 @@ public class LevelCreator : EditorWindow
 
 
     private TextField levelName;
-
     private void LevelName(Level selectedLevel, bool edit = false)
     {
         levelName = new TextField("Level Name");
@@ -113,7 +133,6 @@ public class LevelCreator : EditorWindow
     }
 
     private TextField levelDescription;
-
     private void LevelDescirption(Level selectedLevel, bool edit = false)
     {
         levelDescription = new TextField("Level Description");
