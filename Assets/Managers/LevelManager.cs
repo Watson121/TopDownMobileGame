@@ -58,6 +58,18 @@ public struct Level
     public EBossType bossToSpawn;
     public ELevelBackground levelBackground;
 
+
+    public Level(List<EnemySetting> _enemiesToSpawn)
+    {
+        name = "NEW LEVEL";
+        description = "LEVEL DESCRIPTION";
+        bossLevel = false;
+        enemiesToSpawn = _enemiesToSpawn;
+        bossToSpawn = EBossType.None;
+        levelBackground = ELevelBackground.City;
+
+    }
+
     public Level(string _name, string _description, bool _bossLevel, List<EnemySetting> _enemiesToSpawn, EBossType _bossToSpawn, ELevelBackground _levelBackground)
     {
         name = _name;
