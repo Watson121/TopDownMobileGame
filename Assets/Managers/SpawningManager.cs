@@ -8,7 +8,7 @@ public class SpawningManager : MonoBehaviour
     [Header("Enemy Spawning Settings")]
     [SerializeField] private int minX, maxX;
     [SerializeField] private int minY, maxY;
-    [SerializeField] private float spawnTimer = 4.0f;
+    [SerializeField] private float spawnTimer = 6.0f;
     [SerializeField] private List<GameObject> baseEnemies;
     [SerializeField] BaseEnemy enemyToSpawn;
     private static int enemyIndex = 0;
@@ -94,7 +94,7 @@ public class SpawningManager : MonoBehaviour
 
     private void SpawnEnemy(Vector3 spawnPoint)
     {
-        enemyToSpawn = baseEnemies[enemyIndex].AddComponent<CroutonShip>();
+        enemyToSpawn = baseEnemies[enemyIndex].AddComponent<ColourChaningEnemy>();
 
         if(enemyToSpawn.IsActive != true)
         {

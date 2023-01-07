@@ -169,7 +169,7 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
     }
 
     // Setting up the enemy material, depending on their type
-    private void SettingTheEnemyMaterial()
+    protected void SettingTheEnemyMaterial()
     {
         switch (enemyType)
         {
@@ -246,6 +246,9 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
 
         return root;
     }
+
+    
+
 
     /// <summary>
     /// Applies damage to the enemy
