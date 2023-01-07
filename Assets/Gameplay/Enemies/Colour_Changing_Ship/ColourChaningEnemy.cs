@@ -2,18 +2,18 @@ using BehaviourTree;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
-public class CroutonShip : BaseEnemy
+public class ColourChaningEnemy : BaseEnemy, IDamage
 {
-
-   
-
     protected override Node SetupTree()
     {
 
 
         displayHealthBar = true;
-        health = 1;
+        health = 2;
+        moveSpeed = 1.5f;
+        firingSpeed = 0.8f;
         isActive = true;
         pointsValue = 100;
         UpdateHealthBar();
@@ -34,5 +34,26 @@ public class CroutonShip : BaseEnemy
         return root;
     }
 
-   
+    public new void ApplyDamageEnemy(float damage, SauceType bullet)
+    {
+        Debug.Log("Apply Damage to Enemy!!!");
+
+        if (bullet == enemyType)
+        {
+            health -= damage;
+            health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);
+
+            enemyType++;
+
+            if(enemyType > SauceType.Mayo)
+            {
+                enemyType = SauceType.Ketchup;
+            }
+
+
+            SettingTheEnemyMaterial();
+            UpdateHealthBar();
+        }
+    }
+
 }
