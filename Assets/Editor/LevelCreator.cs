@@ -96,6 +96,7 @@ public class LevelCreator : EditorWindow
         levelListView.itemsSource = levels;
         levelListView.onSelectionChange += OnLevelChange;
 
+   
         
     }
 
@@ -263,7 +264,15 @@ public class LevelCreator : EditorWindow
             string newDescription = levelDescription.value;
             ELevelBackground newBackground = (ELevelBackground)levelBackgroundField.value;
             bool isBoss = bossToggle.value;
-            EBossType newBoss = (EBossType)bossSelection.value;
+
+            EBossType newBoss = EBossType.None;
+
+            if (isBoss)
+            {
+
+                newBoss = (EBossType)bossSelection.value;
+            }
+            
             List<EnemySetting> newEnemySettings = new List<EnemySetting>();
             newEnemySettings.Add(new EnemySetting(EEnemyType.CroutonShip, croutonShipValue.value));
             newEnemySettings.Add(new EnemySetting(EEnemyType.ColourChangingShip, colourChaningShipValue.value));
