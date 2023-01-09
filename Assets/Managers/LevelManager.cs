@@ -96,7 +96,7 @@ public struct Level
 
     
 
-[ExecuteInEditMode, Serializable]
+[ExecuteAlways, Serializable]
 public class LevelManager : MonoBehaviour
 {
     [SerializeField]
@@ -107,6 +107,18 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField]
     private GameObject levelButton;
+
+    #region Level Selection Panel
+
+
+    [SerializeField] private TextMeshProUGUI levelTitle;
+    [SerializeField] private Image levelImage;
+    [SerializeField] private TextMeshProUGUI levelDescription;
+
+
+    #endregion
+
+
 
     public void UpdateLevelList_UI()
     {
@@ -119,6 +131,8 @@ public class LevelManager : MonoBehaviour
 
             //newLevelButton.transform.parent = levelList_ui.content;
         }
+
+        SelectedLevelPanel(levels[0]);
     }
 
     public void ClearLevelList()
@@ -134,6 +148,12 @@ public class LevelManager : MonoBehaviour
         {
             DestroyImmediate(child);
         }
+    }
+
+    public void SelectedLevelPanel(Level level)
+    {
+        levelTitle.text = level.name;
+        levelDescription.text = level.description; 
     }
     
 }
