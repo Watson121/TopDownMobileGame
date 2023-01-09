@@ -335,6 +335,11 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void LevelSelection()
+    {
+        Debug.Log("Level Selection Opened");
+    }
+
     public void ExitGame()
     {
         Application.Quit();

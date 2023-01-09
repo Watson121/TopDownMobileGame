@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using JetBrains.Annotations;
+using UnityEngine.UI;
+using TMPro;
 using System;
 
 public enum ELevelBackground
@@ -94,21 +96,64 @@ public struct Level
 
     
 
-[ExecuteInEditMode, Serializable]
+[ExecuteAlways, Serializable]
 public class LevelManager : MonoBehaviour
 {
     [SerializeField]
     public List<Level> levels;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private ScrollRect levelList_ui;
+
+    [SerializeField]
+    private GameObject levelButton;
+
+    #region Level Selection Panel
+
+
+    [SerializeField] private TextMeshProUGUI levelTitle;
+    [SerializeField] private Image levelImage;
+    [SerializeField] private TextMeshProUGUI levelDescription;
+
+
+    #endregion
+
+
+
+    public void UpdateLevelList_UI()
     {
-        
+
+
+        foreach (Level level in levels)
+        {
+            GameObject newLevelButton = Instantiate(levelButton, levelList_ui.content);
+            newLevelButton.GetComponent<LevelSelectionBtn>().UpdateLevelButton(level);
+
+            //newLevelButton.transform.parent = levelList_ui.content;
+        }
+
+        SelectedLevelPanel(levels[0]);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ClearLevelList()
     {
-        
+        var tempArray = new GameObject[levelList_ui.content.childCount];
+
+        for (int i = 0; i < tempArray.Length; i++)
+        {
+            tempArray[i] = levelList_ui.content.transform.GetChild(i).gameObject;
+        }
+
+        foreach (var child in tempArray)
+        {
+            DestroyImmediate(child);
+        }
     }
+
+    public void SelectedLevelPanel(Level level)
+    {
+        levelTitle.text = level.name;
+        levelDescription.text = level.description; 
+    }
+    
 }
