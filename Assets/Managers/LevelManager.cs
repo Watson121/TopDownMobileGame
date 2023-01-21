@@ -128,7 +128,6 @@ public class LevelManager : MonoBehaviour
         {
             GameObject newLevelButton = Instantiate(levelButton, levelList_ui.content);
             newLevelButton.GetComponent<LevelSelectionBtn>().UpdateLevelButton(level);
-
             //newLevelButton.transform.parent = levelList_ui.content;
         }
 
@@ -148,6 +147,18 @@ public class LevelManager : MonoBehaviour
         {
             DestroyImmediate(child);
         }
+    }
+
+    public GameObject[] GetListOfContents()
+    {
+        var tempArray = new GameObject[levelList_ui.content.childCount];
+
+        for (int i = 0; i < tempArray.Length; i++)
+        {
+            tempArray[i] = levelList_ui.content.transform.GetChild(i).gameObject;
+        }
+
+        return tempArray;
     }
 
     public void SelectedLevelPanel(Level level)

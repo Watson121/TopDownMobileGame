@@ -39,6 +39,12 @@ public class GameManager : MonoBehaviour
     private PlayerController player;
     private SpawningManager spawningManager;
 
+    public LevelManager LevelManager
+    {
+        get { return levelManager; }
+    }
+    private LevelManager levelManager;
+
     #endregion
 
     #region Points
@@ -182,7 +188,8 @@ public class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        
+        // Finding the level manager
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 
         DontDestroyOnLoad(this);
     }
@@ -197,6 +204,8 @@ public class GameManager : MonoBehaviour
         {
             // Finding UI Manager
             uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+            
+        
         }
     }
 
@@ -214,6 +223,8 @@ public class GameManager : MonoBehaviour
 
         // Finding the spawning manager
         spawningManager = GameObject.Find("SpawningManager").GetComponent<SpawningManager>();
+
+      
 
     }
 
