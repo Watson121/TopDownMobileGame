@@ -40,8 +40,15 @@ public class UIManager : MonoBehaviour
     [Header("Main Menu")]
     [SerializeField] private GameObject mainMenu_UI;
     [SerializeField] private Button startGameBtn_MainMenu;
+    [SerializeField] private Button levelSelection_MainMenu;
     [SerializeField] private Button upgradeBtn_MainMenu;
     [SerializeField] private Button quitBtn_MainMenu;
+
+    #region Level Selection
+    private GameObject levelSelection_UI;
+    private Button backButton_LevelSelection;
+    private Button playButton_LevelSelection;
+    #endregion
 
     [Header("In Game UI")]
     [SerializeField] private TextMeshProUGUI pointsUI_GameUI;
@@ -108,9 +115,6 @@ public class UIManager : MonoBehaviour
     // When a scene is loaded, make sure that the approriate functions are called
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
-       
-
         Debug.Log("On Scene Loaded: " + scene.name);
         if (scene.name == "MainScene")
         {
@@ -118,6 +122,7 @@ public class UIManager : MonoBehaviour
         }else if(scene.name == "UpgradeScreen")
         {
             FindManagers();
+            SettingUpLevelSelection();
             SettingUpMainMenu();
             SettingUpUpgradeMenuUI();
         }
@@ -201,6 +206,11 @@ public class UIManager : MonoBehaviour
         startGameBtn_MainMenu = GameObject.Find("PlayBtn_MainMenu").GetComponent<Button>();
         startGameBtn_MainMenu.onClick.AddListener(PlayGame);
 
+        // Setting up Level Selection Button in the main menu
+        levelSelection_MainMenu = GameObject.Find("LevelSelection_MainMenu").GetComponent<Button>();
+        levelSelection_MainMenu.onClick.AddListener(() => ToggleMenu(levelSelection_UI));
+        levelSelection_MainMenu.onClick.AddListener(() => ToggleMenu(mainMenu_UI));
+
         // Setting up the upgrade button in the main menu, so that it can open the upgrade menu
         upgradeBtn_MainMenu = GameObject.Find("UpgradeBtn_MainMenu").GetComponent<Button>();
         upgradeBtn_MainMenu.onClick.AddListener(() => ToggleMenu(upgradeScreen_UI));
@@ -209,6 +219,38 @@ public class UIManager : MonoBehaviour
         quitBtn_MainMenu = GameObject.Find("ExitBtn_MainMenu").GetComponent<Button>();
         quitBtn_MainMenu.onClick.AddListener(ExitGame);
 
+    }
+
+    private void SettingUpLevelSelection()
+    {
+        // Getting the Level Selection Menu Object
+        levelSelection_UI = GameObject.Find("LevelSelectionUI");
+
+        // Setting up the Play Button in the Level Selection Menu
+        playButton_LevelSelection = GameObject.Find("PlayButton_LevelSelectionUI").GetComponent<Button>();
+        playButton_LevelSelection.onClick.AddListener(PlayGame);
+
+        // Setting up the Back Button in the Level Selection Menu
+        backButton_LevelSelection = GameObject.Find("BackButton_LevelSelectionUI").GetComponent<Button>();
+        backButton_LevelSelection.onClick.AddListener(() => ToggleMenu(levelSelection_UI));
+        backButton_LevelSelection.onClick.AddListener(() => ToggleMenu(mainMenu_UI));
+
+        #region Setting Up Level Selection Buttons
+
+        GameObject[] levelButtons = gameManager.LevelManager.GetListOfContents();
+
+        foreach(GameObject levelButton in levelButtons)
+        {
+            Button button = levelButton.GetComponent<Button>();
+            LevelSelectionBtn levelSelectionBtn = levelButton.GetComponent<LevelSelectionBtn>();
+
+            button.onClick.AddListener(() => gameManager.LevelManager.SelectedLevelPanel(levelSelectionBtn.CurrentLevel));
+        }
+
+        #endregion
+
+
+        levelSelection_UI.SetActive(false);
     }
 
     // Find the in game managers
@@ -234,9 +276,7 @@ public class UIManager : MonoBehaviour
     private void StartGame(bool restart = false)
     {
         if (!restart)
-        {
-         
-           
+        { 
             FindPlayer();
             SettingUpInGameUI();
             SettingUpDeathScreenUI();

@@ -9,6 +9,11 @@ using UnityEngine.UI;
 public class LevelSelectionBtn : MonoBehaviour
 {
 
+    public Level CurrentLevel
+    {
+        get { return currentLevel; }
+    }
+
     [SerializeField]
     private Level currentLevel;
 
