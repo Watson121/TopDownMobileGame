@@ -257,7 +257,6 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
     public void ApplyDamage(float damage)
     {
         health -= damage;
-        health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);
     }
 
     public void ApplyDamageEnemy(float damage, SauceType bullet)
@@ -265,8 +264,11 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
         if(bullet == enemyType)
         {
             health -= damage;
-            health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);
-            UpdateHealthBar();
+
+            if (health != 0)
+            {
+                UpdateHealthBar();
+            }
         }
-    }
+     }
 }

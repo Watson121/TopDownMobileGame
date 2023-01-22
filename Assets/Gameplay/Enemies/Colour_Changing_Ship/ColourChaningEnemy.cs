@@ -41,7 +41,6 @@ public class ColourChaningEnemy : BaseEnemy, IDamage
         if (bullet == enemyType)
         {
             health -= damage;
-            health = UnityEngine.Mathf.Clamp(health, 0, MAX_HEALTH);
 
             enemyType++;
 

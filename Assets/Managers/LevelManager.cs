@@ -7,23 +7,39 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
+#region Level Settings
+
+/// <summary>
+/// The background that the level will have
+/// </summary>
 public enum ELevelBackground
 {
     City
 }
 
+/// <summary>
+/// Enemy To Spawn in the level. Multiple enemies can be choosen for the level
+/// </summary>
 public enum EEnemyType
 {
     CroutonShip,
     ColourChangingShip
 }
 
+/// <summary>
+/// Boss to Spawn in the level
+/// </summary>
 public enum EBossType
 {
     GeneralLoaf,
     None
 }
 
+#endregion
+
+/// <summary>
+/// Enemy Setting Data Type that is used by the level creator when deciding what enemies you want to be in a level
+/// </summary>
 [System.Serializable]
 public struct EnemySetting {
     public EEnemyType enemyType;
@@ -50,6 +66,9 @@ public struct EnemySetting {
 }
 
 
+/// <summary>
+/// This is a new data type that holds all of the info for the current level
+/// </summary>
 [System.Serializable]
 public struct Level
 {
@@ -61,6 +80,9 @@ public struct Level
     public ELevelBackground levelBackground;
 
 
+    /// <summary>
+    /// Base Contstructor For a Level
+    /// </summary>
     public Level(List<EnemySetting> _enemiesToSpawn)
     {
         name = "NEW LEVEL";
@@ -72,6 +94,9 @@ public struct Level
 
     }
 
+    /// <summary>
+    /// Constructor that is used to create a brand new level
+    /// </summary>
     public Level(string _name, string _description, bool _bossLevel, List<EnemySetting> _enemiesToSpawn, EBossType _bossToSpawn, ELevelBackground _levelBackground)
     {
         name = _name;
@@ -96,11 +121,47 @@ public struct Level
 
     
 
-[ExecuteAlways, Serializable]
+[ExecuteAlways, Serializable, DisallowMultipleComponent]
 public class LevelManager : MonoBehaviour
 {
+
+    #region Stopping Multiple Instances of the Game Manager
+
+    public static LevelManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+
+        set
+        {
+            if(instance != null)
+            {
+                Destroy(value.gameObject);
+                return;
+            }
+
+            instance = value;
+        }
+    }
+    private static LevelManager instance;
+
+    #endregion
+
     [SerializeField]
     public List<Level> levels;
+
+    public Level CurrentLevel
+    {
+        set { currentLevel = value; }
+        get { return currentLevel; }
+    }
+    /// <summary>
+    /// Current Level being played
+    /// </summary>
+    private Level currentLevel;
+
 
     [SerializeField]
     private ScrollRect levelList_ui;
@@ -119,21 +180,25 @@ public class LevelManager : MonoBehaviour
     #endregion
 
 
+  
 
+    /// <summary>
+    /// Updating the level list of the buttons
+    /// </summary>
     public void UpdateLevelList_UI()
     {
-
-
         foreach (Level level in levels)
         {
             GameObject newLevelButton = Instantiate(levelButton, levelList_ui.content);
             newLevelButton.GetComponent<LevelSelectionBtn>().UpdateLevelButton(level);
-            //newLevelButton.transform.parent = levelList_ui.content;
         }
 
         SelectedLevelPanel(levels[0]);
     }
 
+    /// <summary>
+    /// Clearing the Level List, and destroying the buttons
+    /// </summary>
     public void ClearLevelList()
     {
         var tempArray = new GameObject[levelList_ui.content.childCount];
@@ -149,6 +214,9 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Getting the List of Buttons
+    /// </summary>
     public GameObject[] GetListOfContents()
     {
         var tempArray = new GameObject[levelList_ui.content.childCount];
@@ -161,6 +229,9 @@ public class LevelManager : MonoBehaviour
         return tempArray;
     }
 
+    /// <summary>
+    /// Updating the Level Panel, with the currently selected level
+    /// </summary>
     public void SelectedLevelPanel(Level level)
     {
         levelTitle.text = level.name;

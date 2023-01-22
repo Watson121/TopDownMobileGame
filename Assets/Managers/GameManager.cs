@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    #region Stopping Multiple Instances Upgrade Manager
+    #region Stopping Multiple Instances of the Game Manager
 
     public static GameManager Instance
     {
@@ -172,6 +172,16 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    public Level CurrentLevel
+    {
+        get { return currentLevel; }
+        set
+        {
+            currentLevel = value;
+        }
+    }
+    [SerializeField] private Level currentLevel;
+
 
     private void Awake()
     {
@@ -190,6 +200,9 @@ public class GameManager : MonoBehaviour
 
         // Finding the level manager
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+
+        // Find the first level
+        currentLevel = levelManager.levels[0];
 
         DontDestroyOnLoad(this);
     }
