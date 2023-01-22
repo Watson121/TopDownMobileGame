@@ -201,6 +201,9 @@ public class GameManager : MonoBehaviour
         // Finding the level manager
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 
+        // Find the first level
+        currentLevel = levelManager.levels[0];
+
         DontDestroyOnLoad(this);
     }
 
