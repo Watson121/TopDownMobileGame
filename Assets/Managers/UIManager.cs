@@ -229,6 +229,7 @@ public class UIManager : MonoBehaviour
         // Setting up the Play Button in the Level Selection Menu
         playButton_LevelSelection = GameObject.Find("PlayButton_LevelSelectionUI").GetComponent<Button>();
         playButton_LevelSelection.onClick.AddListener(PlayGame);
+        
 
         // Setting up the Back Button in the Level Selection Menu
         backButton_LevelSelection = GameObject.Find("BackButton_LevelSelectionUI").GetComponent<Button>();
@@ -245,6 +246,7 @@ public class UIManager : MonoBehaviour
             LevelSelectionBtn levelSelectionBtn = levelButton.GetComponent<LevelSelectionBtn>();
 
             button.onClick.AddListener(() => gameManager.LevelManager.SelectedLevelPanel(levelSelectionBtn.CurrentLevel));
+            button.onClick.AddListener(() => gameManager.CurrentLevel = levelSelectionBtn.CurrentLevel);
         }
 
         #endregion

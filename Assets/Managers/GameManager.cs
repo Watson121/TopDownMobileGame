@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    #region Stopping Multiple Instances Upgrade Manager
+    #region Stopping Multiple Instances of the Game Manager
 
     public static GameManager Instance
     {
@@ -171,6 +171,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool unlimitedMoney = false;
 
     #endregion
+
+    public Level CurrentLevel
+    {
+        get { return currentLevel; }
+        set
+        {
+            currentLevel = value;
+        }
+    }
+    [SerializeField] private Level currentLevel;
 
 
     private void Awake()
