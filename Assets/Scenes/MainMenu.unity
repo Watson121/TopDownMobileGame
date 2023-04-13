@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 4f41c46e41ef1e64cb55e1f829f608dc,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -2659,6 +2660,13 @@ MonoBehaviour:
   enemyBulletPool: []
   activeBullets: []
   unlimitedMoney: 1
+  currentLevel:
+    name: 
+    description: 
+    bossLevel: 0
+    enemiesToSpawn: []
+    bossToSpawn: 0
+    levelBackground: 0
 --- !u!4 &1598510408
 Transform:
   m_ObjectHideFlags: 0
