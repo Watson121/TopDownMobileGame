@@ -146,7 +146,7 @@ public class SpawningManager : MonoBehaviour
         int newX = (int)Random.Range(minX, maxX);
         int newY = (int)Random.Range(minY, maxY);
 
-        newSpawnPoint = new Vector3(newX, newY, 13);
+        newSpawnPoint = new Vector3(newX, newY, 30);
 
         return newSpawnPoint;
     }
