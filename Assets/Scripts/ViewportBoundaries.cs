@@ -15,7 +15,7 @@ namespace Viewport
 
         public static void CalculatingViewportBounds(Transform player)
         {
-            cameraDistance = Vector3.Distance(player.position, Camera.main.transform.position);
+            cameraDistance = Vector3.Distance(player.position, new Vector3(0, 3, -11.0f));
             frustumHeight = (2.0f * cameraDistance * Mathf.Tan(Camera.main.fieldOfView * 0.5f * Mathf.Deg2Rad)) / 2;
             frustumWidth = (frustumHeight * Camera.main.aspect);
 
