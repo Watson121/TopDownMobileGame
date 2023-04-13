@@ -111,10 +111,14 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     #endregion
 
+
+
     private void Awake()
     {
         ViewportBoundaries.CalculatingViewportBounds(transform);
         targettingRay = GetComponent<LineRenderer>();
+
+        playerCamera = Camera.main;
 
         FindManagers();
         FindBullets();
@@ -414,6 +418,9 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
         // Setting Targetting Ray Starting Location
         targettingRay.SetPosition(0, transform.position);
         targettingRay.SetPosition(1, transform.position + (Vector3.forward * 20));
+
+        // Setting Player Camera
+        playerCamera.gameObject.transform.position = new Vector3(playerPostion.x, playerPostion.y + 3.0f, -8);
 
     }
 
