@@ -67,7 +67,7 @@ public class Collectable : MonoBehaviour
 
         while ((elaspedTime < collectableLifetime) && collectableMoving)
         {
-            collectablePosition += new Vector3(0, 0, (3 * Time.deltaTime) * -1);
+            collectablePosition += new Vector3(0, 0, (6 * Time.deltaTime) * -1);
             transform.position = collectablePosition;
             elaspedTime += Time.deltaTime;
 

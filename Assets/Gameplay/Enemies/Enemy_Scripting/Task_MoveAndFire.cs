@@ -32,7 +32,7 @@ public class Task_MoveAndFire : Node
             horinzontalSpeed = 0;
         }else
         {
-            horinzontalSpeed = 4;
+            horinzontalSpeed = 6;
         }
 
     }

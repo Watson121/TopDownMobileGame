@@ -20,7 +20,7 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
     {
         get { return moveSpeed; }
     }  
-    protected static float moveSpeed = 3.0f;
+    protected static float moveSpeed = 8.0f;
     
     // The Firing Speed of the enemy
     public float FiringSpeed

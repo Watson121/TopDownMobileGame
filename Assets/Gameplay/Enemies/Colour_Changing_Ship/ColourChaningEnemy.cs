@@ -12,7 +12,7 @@ public class ColourChaningEnemy : BaseEnemy, IDamage
 
         displayHealthBar = true;
         health = 2;
-        moveSpeed = 1.5f;
+        //moveSpeed = 1.5f;
         firingSpeed = 0.8f;
         isActive = true;
         pointsValue = 100;

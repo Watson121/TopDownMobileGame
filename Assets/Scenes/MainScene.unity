@@ -7133,7 +7133,7 @@ MonoBehaviour:
   shieldCollectables: []
   healthCollectables: []
   collectableToSpawn: {fileID: 0}
-  dropOnlyHealth: 1
+  dropOnlyHealth: 0
   dropOnlyShields: 0
   dropOnlyGears: 0
   onlySpawnCroutonShip: 0
@@ -10528,6 +10528,11 @@ PrefabInstance:
         type: 3}
       propertyPath: gameManager
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2808823369759421764, guid: 437467d9a7709ed45be08a72ac8f8e3e,
+        type: 3}
+      propertyPath: playerSpeed
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2808823369759421764, guid: 437467d9a7709ed45be08a72ac8f8e3e,
         type: 3}

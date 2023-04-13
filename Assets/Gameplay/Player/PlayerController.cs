@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     private float horizontalScreenOffset = 2.0f;
 
     [Header("Player Settings")]
-    [SerializeField] private float playerSpeed = 5f;
+    [SerializeField] private float playerSpeed = 9.0f;
     [SerializeField] private float playerRotationSpeed = 3.0f;
     [SerializeField] private float horitontalRotation = 15.0f;
     [SerializeField] private float verticalRotation = 15.0f;
@@ -452,7 +452,9 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
         // Setting Current Weapon back to ketchup gun
         currentEquipedWeapon = ketchupGun;
-     
+
+        // Reseting the Player Camera
+        playerCamera.gameObject.transform.position = new Vector3(playerPostion.x, playerPostion.y + 3.0f, -8);
     }
 
     /// <summary>
