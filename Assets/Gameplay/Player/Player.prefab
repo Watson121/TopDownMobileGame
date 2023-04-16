@@ -108,10 +108,14 @@ GameObject:
   - component: {fileID: 2808823369759421769}
   - component: {fileID: 2808823369759421768}
   - component: {fileID: 2065342787517960255}
+  - component: {fileID: 8215890118505608447}
   - component: {fileID: 708575852147130383}
   - component: {fileID: 7614712378472333765}
-  - component: {fileID: 8215890118505608447}
   - component: {fileID: 3806894592096599973}
+  - component: {fileID: 7558618486294383380}
+  - component: {fileID: 3728351685231699512}
+  - component: {fileID: 5261679297765554879}
+  - component: {fileID: 4239369050925860868}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -295,6 +299,18 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &8215890118505608447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3c781743ec71043b1b0a55796fbbea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &708575852147130383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,18 +340,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpawnPoint: {fileID: 2808823369396050867}
---- !u!114 &8215890118505608447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2808823369759421775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3c781743ec71043b1b0a55796fbbea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3806894592096599973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,6 +350,99 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e8821b9c6003414e9cc5246e504fed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7558618486294383380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b8d0f78d8ea3bf4fa2770844b6509a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldMesh: {fileID: 3736879389770369571}
+  shieldLongiviety: 0
+  turnShieldsOn: 0
+--- !u!114 &3728351685231699512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7e1d7899990bb41aa8c926d52bb7ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  health: 0
+  invicible: 0
+  m_PlayerDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerHealthUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5261679297765554879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf50d3e318551b4c85798df587927d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HealthKitCollected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3728351685231699512}
+        m_TargetAssemblyTypeName: HealthComponent, Assembly-CSharp
+        m_MethodName: UseHealthKit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_ShieldCollected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7558618486294383380}
+        m_TargetAssemblyTypeName: ShieldComponent, Assembly-CSharp
+        m_MethodName: ActivateShield
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_GearCollected:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4239369050925860868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3bd3601b3a01ec43bf7a5c51bea28e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3736879389770369571

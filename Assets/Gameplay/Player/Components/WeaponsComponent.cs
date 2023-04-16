@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Controls the weapony including firing and changing weapons
 /// </summary>
-public class WeaponsComponent : MonoBehaviour
+public class WeaponsComponent : MonoBehaviour, IComponent
 {
     
     // Weapon Settings
@@ -135,4 +135,11 @@ public class WeaponsComponent : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Reseting the Weapons  back to the starting weapon
+    /// </summary>
+    public void ResetComponent()
+    {
+        currentEquipedWeapon = ketchupGun;
+    }
 }

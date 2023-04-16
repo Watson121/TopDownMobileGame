@@ -7134,7 +7134,7 @@ MonoBehaviour:
   healthCollectables: []
   collectableToSpawn: {fileID: 0}
   dropOnlyHealth: 0
-  dropOnlyShields: 0
+  dropOnlyShields: 1
   dropOnlyGears: 0
   onlySpawnCroutonShip: 0
   onlySpawnColourSwitching: 0

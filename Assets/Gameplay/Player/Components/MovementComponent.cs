@@ -8,7 +8,7 @@ using Viewport;
 /// Controls the player movement, including positon and rotation
 /// </summary>
 [RequireComponent(typeof(PlayerInputComponent))]
-public class MovementComponent : MonoBehaviour
+public class MovementComponent : MonoBehaviour, IComponent
 {
 
     public PlayerControls PlayerControls
@@ -91,5 +91,13 @@ public class MovementComponent : MonoBehaviour
         // Applying the position and rotation to the player
         transform.position = playerPostion;
         transform.rotation = Quaternion.Euler(playerRotation);
+    }
+
+    /// <summary>
+    /// Reseting the Player to their starting position
+    /// </summary>
+    public void ResetComponent()
+    {
+        transform.position = playerStartingPostion;
     }
 }

@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Game Managers")]
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private PlayerController playerController;
+    [SerializeField] private HealthComponent playerHealth;
 
     [Header("Main Menu")]
     [SerializeField] private GameObject mainMenu_UI;
@@ -266,7 +266,7 @@ public class UIManager : MonoBehaviour
 
     private void FindPlayer()
     {
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerHealth = GameObject.Find("Player").GetComponent<HealthComponent>();
     }
 
     // Finding the textures within the resources folder
@@ -308,11 +308,11 @@ public class UIManager : MonoBehaviour
     // Reseting the Game HUD
     private void ResetHUD()
     {
-        if (playerHealth_UI && playerController)
+        if (playerHealth_UI && playerHealth)
         {
-            playerHealth_UI.maxValue = playerController.Health;
+            playerHealth_UI.maxValue = playerHealth.Health;
             playerHealth_UI.value = playerHealth_UI.maxValue;
-            playerHealthText_UI.text = playerController.MaxHealth.ToString();
+            playerHealthText_UI.text = playerHealth.MaxHealth.ToString();
         }
 
         UpdateCurrentPoints(0);
@@ -323,7 +323,7 @@ public class UIManager : MonoBehaviour
     // Updating Player Health Radial
     public void UpdatePlayerHealth_UI(float newHealth)
     {   
-       playerHealth_UI.value = playerController.Health;
+       playerHealth_UI.value = playerHealth.Health;
        playerHealth_UI.value = Mathf.Clamp(playerHealth_UI.value, newHealth, playerHealth_UI.maxValue);
        playerHealthText_UI.text = newHealth.ToString();
     }
