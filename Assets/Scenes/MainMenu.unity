@@ -1751,7 +1751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
-  playerController: {fileID: 0}
+  playerHealth: {fileID: 0}
   mainMenu_UI: {fileID: 0}
   startGameBtn_MainMenu: {fileID: 0}
   levelSelection_MainMenu: {fileID: 0}
@@ -2659,7 +2659,10 @@ MonoBehaviour:
   playerBulletPool: []
   enemyBulletPool: []
   activeBullets: []
-  unlimitedMoney: 1
+  unlimitedMoney: 0
+  m_OnRestart:
+    m_PersistentCalls:
+      m_Calls: []
   currentLevel:
     name: 
     description: 
@@ -2974,7 +2977,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 505753602}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
