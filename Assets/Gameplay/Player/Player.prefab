@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2808823369396050861}
   - component: {fileID: 2808823369396050860}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: FiringPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,8 +107,16 @@ GameObject:
   - component: {fileID: 2808823369759421770}
   - component: {fileID: 2808823369759421769}
   - component: {fileID: 2808823369759421768}
-  - component: {fileID: 2808823369759421764}
   - component: {fileID: 2065342787517960255}
+  - component: {fileID: 8215890118505608447}
+  - component: {fileID: 708575852147130383}
+  - component: {fileID: 7614712378472333765}
+  - component: {fileID: 3806894592096599973}
+  - component: {fileID: 7558618486294383380}
+  - component: {fileID: 3728351685231699512}
+  - component: {fileID: 5261679297765554879}
+  - component: {fileID: 4239369050925860868}
+  - component: {fileID: -5579073996015308956}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -194,31 +202,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2808823369759421764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2808823369759421775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de0d0e56d62ea1c42b1567d3e791a2d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MAX_HEALTH: 0
-  health: 0
-  gameManager: {fileID: 0}
-  uiManager: {fileID: 0}
-  playerSpeed: 5
-  playerRotationSpeed: 6
-  horitontalRotation: 20
-  verticalRotation: 15
-  weaponDamage: 0
-  bullets: []
-  bulletSpawnPoint: {fileID: 0}
-  shieldMesh: {fileID: 3736879389770369571}
-  shieldLongiviety: 0
 --- !u!120 &2065342787517960255
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -317,6 +300,176 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &8215890118505608447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3c781743ec71043b1b0a55796fbbea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &708575852147130383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdfc57c82c8cdd647a2dc5f45c76e9d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSpeed: 9
+  playerRotationSpeed: 3
+  horitontalRotation: 15
+  verticalRotation: 15
+--- !u!114 &7614712378472333765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9191399105be20c4fa95d2a0a5faf655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpawnPoint: {fileID: 2808823369396050867}
+--- !u!114 &3806894592096599973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e8821b9c6003414e9cc5246e504fed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7558618486294383380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b8d0f78d8ea3bf4fa2770844b6509a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldMesh: {fileID: 3736879389770369571}
+  shieldLongiviety: 0
+  turnShieldsOn: 0
+--- !u!114 &3728351685231699512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7e1d7899990bb41aa8c926d52bb7ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  health: 0
+  invicible: 0
+  m_PlayerDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerHealthUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5261679297765554879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf50d3e318551b4c85798df587927d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HealthKitCollected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3728351685231699512}
+        m_TargetAssemblyTypeName: HealthComponent, Assembly-CSharp
+        m_MethodName: UseHealthKit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_ShieldCollected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7558618486294383380}
+        m_TargetAssemblyTypeName: ShieldComponent, Assembly-CSharp
+        m_MethodName: ActivateShield
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_GearCollected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5579073996015308956}
+        m_TargetAssemblyTypeName: GearComponent, Assembly-CSharp
+        m_MethodName: IncreaseGears
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4239369050925860868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3bd3601b3a01ec43bf7a5c51bea28e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5579073996015308956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808823369759421775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee2dade7b597c2144a0cb3c530fe442c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3736879389770369571
 GameObject:
   m_ObjectHideFlags: 0

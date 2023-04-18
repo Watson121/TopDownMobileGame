@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 [DisallowMultipleComponent]
 public class GameManager : MonoBehaviour
@@ -33,10 +34,15 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Player
+
+    [SerializeField] private IComponent[] playerComponents;
+
+    #endregion
+
     #region Managers
 
     private UIManager uiManager;
-    private PlayerController player;
     private SpawningManager spawningManager;
 
     public LevelManager LevelManager
@@ -172,6 +178,8 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    public UnityEvent m_OnRestart;
+
     public Level CurrentLevel
     {
         get { return currentLevel; }
@@ -207,6 +215,16 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+    private void UnityEventSetup()
+    {
+        m_OnRestart = new UnityEvent();
+
+        for(int i = 0; i < playerComponents.Length; i++)
+        {
+            m_OnRestart.AddListener(playerComponents[i].ResetComponent);
+        }
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "MainScene")
@@ -226,13 +244,17 @@ public class GameManager : MonoBehaviour
     {
         GetBullets();
         FindManagers();
+        UnityEventSetup();
     }
 
     private void FindManagers()
     {
 
         // Finding the player Controller
-        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        //player = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        GameObject player = GameObject.Find("Player");
+        playerComponents = player.GetComponents<IComponent>();
 
         // Finding the spawning manager
         spawningManager = GameObject.Find("SpawningManager").GetComponent<SpawningManager>();
@@ -337,6 +359,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+
     #region Reseting Level & Saving
 
     /// <summary>
@@ -347,8 +370,8 @@ public class GameManager : MonoBehaviour
         // Setting the Time Scale back to normal speed
         Time.timeScale = 1;
 
-        // Reseting the player
-        player.PlayerReset();
+        // Reseting the level
+        m_OnRestart.Invoke();
 
         // Reseting the enemies
         spawningManager.ResetEnemies();

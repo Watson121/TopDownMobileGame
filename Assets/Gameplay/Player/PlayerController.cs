@@ -66,9 +66,9 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
 
     // Player Camera & Viewport Bounds
     private Camera playerCamera;
-    private float frustumHeight;
-    private float frustumWidth;
-    private float cameraDistance = 3.0f;
+/*    private float frustumHeight;
+    private float frustumWidth;*/
+/*    private float cameraDistance = 3.0f;*/
 
     #endregion
 

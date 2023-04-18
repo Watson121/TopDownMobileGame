@@ -7,10 +7,4 @@ public class HealthPackage : Collectable
     public float HealthToGive { get { return healthToGive; } }
     private float healthToGive = 10.0f;
 
-    public void SetHealthToGive()
-    {
-        healthToGive = Random.Range(10, 30);
-    }
-
-
 }
