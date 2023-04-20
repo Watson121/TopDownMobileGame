@@ -26,7 +26,7 @@ public class CameraComponent : MonoBehaviour, IComponent
     /// </summary>
     private void UpdateCameraPos()
     {
-        playerCamera.gameObject.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 3.0f, -8);
+        playerCamera.gameObject.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 3.0f, -11);
     }
 
     /// <summary>
