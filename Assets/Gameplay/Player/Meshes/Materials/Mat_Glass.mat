@@ -22,15 +22,16 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Glass
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _SPECULAR_SETUP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2050
+  m_CustomRenderQueue: 3050
   stringTagMap:
-    RenderType: Opaque
+    RenderType: Transparent
   disabledShaderPasses:
   - SRPDEFAULTUNLIT
+  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -172,7 +173,7 @@ Material:
     - _DitherThreshold: 1
     - _DotSize: 0.7
     - _DotTilling: 30
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _EnabledHairSpec: 0
     - _EnvironmentReflections: 1
     - _FaceShadowMapEnabled: 0
@@ -274,11 +275,11 @@ Material:
     - _SpecularSmoothness: 1
     - _SpecularStepThreshold: 0.013
     - _SpherizeNormalEnabled: 0
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _StencilComp: 0
     - _StencilRef: 0
     - _StepViaRampTexture: 1
-    - _Surface: 0
+    - _Surface: 1
     - _TOON_SHADING: 1
     - _TextureBlendingMode: 0
     - _TextureImpact: 1
@@ -292,11 +293,11 @@ Material:
     - _UseRampColor: 0
     - _UseRampTextureColor: 0
     - _VertexColorsEnabled: 0
-    - _WorkflowMode: 1
-    - _ZWrite: 1
+    - _WorkflowMode: 0
+    - _ZWrite: 0
     - _brushScale: 8
     m_Colors:
-    - _BaseColor: {r: 1, g: 0, b: 0.085289, a: 1}
+    - _BaseColor: {r: 0, g: 0.7255683, b: 1, a: 0.42745098}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorDim: {r: 0.5660378, g: 0.258989, b: 0.258989, a: 1}
     - _ColorDimCurve: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
