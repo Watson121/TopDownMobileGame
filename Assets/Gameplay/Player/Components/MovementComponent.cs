@@ -91,6 +91,8 @@ public class MovementComponent : MonoBehaviour, IComponent
         // Applying the position and rotation to the player
         transform.position = playerPostion;
         transform.rotation = Quaternion.Euler(playerRotation);
+
+      
     }
 
     /// <summary>

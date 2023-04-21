@@ -29,6 +29,8 @@ public class PlayerInputComponent : MonoBehaviour
         ControlSetup();
         MovementSetup();
         WeaponSetup();
+        UIControls();
+
     }
 
     /// <summary>
@@ -72,6 +74,12 @@ public class PlayerInputComponent : MonoBehaviour
         playerControls.Player.Mayo.performed += playerWeapons.SwitchWeapon;
     }
 
+    private void UIControls()
+    {
+        // Pausing Game
+        playerControls.Player.Pause.performed += playerWeapons.PausingGame;
+    }
+
     private void OnDisable()
     {
         // Movement
@@ -84,6 +92,10 @@ public class PlayerInputComponent : MonoBehaviour
         playerControls.Player.Mustard.performed -= playerWeapons.SwitchWeapon;
         playerControls.Player.Mayo.performed -= playerWeapons.SwitchWeapon;
 
+
+        // Pausing Game
+        playerControls.Player.Pause.performed -= playerWeapons.PausingGame;
     }
+
 
 }

@@ -131,7 +131,7 @@ public class UpgradeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Researched an upgrade that the player wants. This also where it will heck if the player has enough resources to research an upgrade or not
+    /// Researched an upgrade that the player wants. This also where it will check if the player has enough resources to research an upgrade or not
     /// </summary>
     /// <param name="upgradeIndex"> The Level that this upgrade is at </param>
     /// <param name="type"> Type of upgrade </param>

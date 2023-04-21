@@ -194,6 +194,7 @@ public class UIManager : MonoBehaviour
         doneBtn_UpgradeScreen = GameObject.Find("DoneBtn_UpgradeScreen").GetComponent<Button>();
         doneBtn_UpgradeScreen.onClick.AddListener(() => ToggleMenu(upgradeScreen_UI));
         doneBtn_UpgradeScreen.onClick.AddListener(() => ToggleMenu(mainMenu_UI));
+        doneBtn_UpgradeScreen.onClick.AddListener(() => eventSystem.SetSelectedGameObject(upgradeBtn_MainMenu.gameObject));
 
         // Find the gear UI in upgrade Screen
         gearUI_UpgradeScreen = GameObject.Find("Gears_UpgradeScreen").GetComponent<TextMeshProUGUI>();
@@ -422,15 +423,18 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(2, LoadSceneMode.Additive);
     }
 
+    // Open up the Death Screen
     public void OpenDeathScreen()
     {
         deathScreen_UI.SetActive(true);
+        eventSystem.SetSelectedGameObject(playAgainBtn_DeathScreen.gameObject);
     }
 
     // Opening or closing the pause menu
     public void OpenPauseMenu()
     {
         pauseMenu_UI.SetActive(!pauseMenu_UI.activeSelf);
+        eventSystem.SetSelectedGameObject(restartBtn_PauseMenu.gameObject);
     }
 
     #endregion

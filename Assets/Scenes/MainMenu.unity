@@ -124,6 +124,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &3676129 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1432243634}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &70988137
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,6 +451,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1418263261}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 3676129}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4195823a08e31640b766d1fbc28841d, type: 3}
 --- !u!224 &127728860 stripped
@@ -739,10 +766,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1418263261}
+    m_SelectOnDown: {fileID: 1967694404}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -2184,10 +2211,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 2014804335}
+    m_SelectOnDown: {fileID: 3676129}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -2291,7 +2318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -2524,6 +2551,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
         type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1418263261}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 1557594702}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -2735,6 +2777,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526086810}
   m_CullTransparentMesh: 1
+--- !u!114 &1557594702 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+    type: 3}
+  m_PrefabInstance: {fileID: 127728859}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1598510406
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,7 +3113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -3620,6 +3674,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
         type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 837137347}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1312453258}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -3743,10 +3812,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 272562319}
+    m_SelectOnDown: {fileID: 2014804335}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -4024,10 +4093,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 1967694404}
+    m_SelectOnDown: {fileID: 1418263261}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -4354,6 +4423,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1347284696}
+    - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1369089102}
     - target: {fileID: 9099900712698223068, guid: c4195823a08e31640b766d1fbc28841d,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

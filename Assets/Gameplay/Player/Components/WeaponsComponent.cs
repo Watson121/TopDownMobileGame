@@ -136,6 +136,25 @@ public class WeaponsComponent : MonoBehaviour, IComponent
     }
 
     /// <summary>
+    /// Pausing the game
+    /// </summary>
+    /// <param name="obj"></param>
+    public void PausingGame(InputAction.CallbackContext obj)
+    {
+        if (Time.timeScale == 1)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+
+
+        uiManager.OpenPauseMenu();
+    }
+
+    /// <summary>
     /// Reseting the Weapons  back to the starting weapon
     /// </summary>
     public void ResetComponent()
