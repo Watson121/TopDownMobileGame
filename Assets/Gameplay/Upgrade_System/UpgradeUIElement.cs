@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UpgradeUIElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UpgradeUIElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
 
     [Header("Upgrade Settings")]
@@ -50,8 +50,7 @@ public class UpgradeUIElement : MonoBehaviour, IPointerEnterHandler, IPointerExi
         // Setting up button clicks
         UIButton.onClick.AddListener(() => upgrade = upgradeManager.ResearchAnUpgrade(upgrade));
         UIButton.onClick.AddListener(InteractionUpdate);
-        UIButton.onClick.AddListener(() => upgradeStat.ConfirmUpgade(upgradeValue));
-
+        
         // Updating Button Text
         UI_ButtonText.text = upgradeCost.ToString();
 
@@ -64,8 +63,12 @@ public class UpgradeUIElement : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if (upgrade.Researched && nextButton != null)
         {
             nextButton.interactable = true;
+            upgradeStat.ConfirmUpgade(upgradeValue);
         }
     }
+
+
+
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -73,6 +76,24 @@ public class UpgradeUIElement : MonoBehaviour, IPointerEnterHandler, IPointerExi
     }
 
     public void OnPointerExit(PointerEventData eventData)
+    {
+        upgradeStat.HideUpgrade();
+    }
+
+    /// <summary>
+    /// Selected the Current Upgrade with a controller
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnSelect(BaseEventData eventData)
+    {
+        upgradeStat.ShowUpgrade(upgradeValue);
+    }
+    
+    /// <summary>
+    /// Deselected the Current Upgrade with a controllre
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnDeselect(BaseEventData eventData)
     {
         upgradeStat.HideUpgrade();
     }

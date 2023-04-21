@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEditor;
+using UnityEngine.EventSystems;
 
 [DisallowMultipleComponent]
 public class UIManager : MonoBehaviour
@@ -81,6 +82,7 @@ public class UIManager : MonoBehaviour
     [Header("Debugging")]
     [SerializeField] private bool skipMainMenu = false;
 
+    [SerializeField] private EventSystem eventSystem;
 
 
     private void Awake()
@@ -123,9 +125,12 @@ public class UIManager : MonoBehaviour
         {
             FindManagers();
             SettingUpLevelSelection();
-            SettingUpMainMenu();
             SettingUpUpgradeMenuUI();
+            SettingUpMainMenu();
+            
         }
+
+        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
 
     }
 
@@ -188,6 +193,8 @@ public class UIManager : MonoBehaviour
         // Finding the setting up button so that the menu can be closed
         doneBtn_UpgradeScreen = GameObject.Find("DoneBtn_UpgradeScreen").GetComponent<Button>();
         doneBtn_UpgradeScreen.onClick.AddListener(() => ToggleMenu(upgradeScreen_UI));
+        doneBtn_UpgradeScreen.onClick.AddListener(() => ToggleMenu(mainMenu_UI));
+        doneBtn_UpgradeScreen.onClick.AddListener(() => eventSystem.SetSelectedGameObject(upgradeBtn_MainMenu.gameObject));
 
         // Find the gear UI in upgrade Screen
         gearUI_UpgradeScreen = GameObject.Find("Gears_UpgradeScreen").GetComponent<TextMeshProUGUI>();
@@ -214,6 +221,8 @@ public class UIManager : MonoBehaviour
         // Setting up the upgrade button in the main menu, so that it can open the upgrade menu
         upgradeBtn_MainMenu = GameObject.Find("UpgradeBtn_MainMenu").GetComponent<Button>();
         upgradeBtn_MainMenu.onClick.AddListener(() => ToggleMenu(upgradeScreen_UI));
+        upgradeBtn_MainMenu.onClick.AddListener(() => ToggleMenu(mainMenu_UI));
+        upgradeBtn_MainMenu.onClick.AddListener(() => eventSystem.SetSelectedGameObject(doneBtn_UpgradeScreen.gameObject));
 
         // Setting up the Quit Button in the main menu
         quitBtn_MainMenu = GameObject.Find("ExitBtn_MainMenu").GetComponent<Button>();
@@ -414,15 +423,18 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(2, LoadSceneMode.Additive);
     }
 
+    // Open up the Death Screen
     public void OpenDeathScreen()
     {
         deathScreen_UI.SetActive(true);
+        eventSystem.SetSelectedGameObject(playAgainBtn_DeathScreen.gameObject);
     }
 
     // Opening or closing the pause menu
     public void OpenPauseMenu()
     {
         pauseMenu_UI.SetActive(!pauseMenu_UI.activeSelf);
+        eventSystem.SetSelectedGameObject(restartBtn_PauseMenu.gameObject);
     }
 
     #endregion
