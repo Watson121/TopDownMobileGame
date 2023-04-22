@@ -82,7 +82,11 @@ public class UIManager : MonoBehaviour
     [Header("Debugging")]
     [SerializeField] private bool skipMainMenu = false;
 
-    [SerializeField] private EventSystem eventSystem;
+    public EventSystem EventSystem
+    {
+        get { return eventSystem; }
+    }
+    private EventSystem eventSystem;
 
 
     private void Awake()
@@ -100,8 +104,8 @@ public class UIManager : MonoBehaviour
         FindResources();
 
        
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        //SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.LoadScene(2, LoadSceneMode.Additive);
      
         // If skip menu is true, then just load the level straight away
         if (skipMainMenu)
@@ -458,6 +462,9 @@ public class UIManager : MonoBehaviour
         menuToClose.SetActive(!menuToClose.activeSelf);
     }
 
-
+    public void SetSelectedButton(GameObject selectedButton)
+    {
+        eventSystem.SetSelectedGameObject(selectedButton);
+    }
 
 }
