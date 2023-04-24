@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
     private UIManager uiManager;
     private SpawningManager spawningManager;
+    private SaveManager saveManager;
 
     public LevelManager LevelManager
     {
@@ -167,6 +168,12 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Saves
+
+    public SaveData playerSave;
+
+    #endregion
+
     #region Debugging
 
     public bool UnlimitedMoney
@@ -178,7 +185,13 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Unity Events
+
     public UnityEvent m_OnRestart;
+
+
+
+    #endregion
 
     public Level CurrentLevel
     {
@@ -199,6 +212,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+  
+
         OnPointChange += PointUpdateHandler;
         OnGearCollection += GearUpdateHandler;
 
@@ -359,7 +375,6 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-
     #region Reseting Level & Saving
 
     /// <summary>
@@ -399,4 +414,11 @@ public class GameManager : MonoBehaviour
 
 
     #endregion
+
+    #region Saving & Loading Game 
+
+
+
+    #endregion
+
 }

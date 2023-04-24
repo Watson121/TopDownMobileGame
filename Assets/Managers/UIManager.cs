@@ -39,14 +39,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HealthComponent playerHealth;
 
     [Header("Main Menu")]
-    [SerializeField] private GameObject mainMenu_UI;
+
     [SerializeField] private Button startGameBtn_MainMenu;
     [SerializeField] private Button levelSelection_MainMenu;
     [SerializeField] private Button upgradeBtn_MainMenu;
     [SerializeField] private Button quitBtn_MainMenu;
 
     #region Level Selection
-    private GameObject levelSelection_UI;
     private Button backButton_LevelSelection;
     private Button playButton_LevelSelection;
     #endregion
@@ -75,7 +74,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button quitToMenuBtn_PauseMenu;
 
     [Header("Upgrade Screen")]
-    [SerializeField] private GameObject upgradeScreen_UI;
     [SerializeField] private Button doneBtn_UpgradeScreen;
     [SerializeField] private TextMeshProUGUI gearUI_UpgradeScreen;
 
@@ -83,6 +81,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private bool skipMainMenu = false;
 
     [SerializeField] private EventSystem eventSystem;
+
+    [Header("Menus")]
+    [SerializeField] private GameObject createNewProfile_UI;
+    [SerializeField] private GameObject mainMenu_UI;
+    [SerializeField] private GameObject levelSelection_UI;
+    [SerializeField] private GameObject upgradeScreen_UI;
+
 
 
     private void Awake()
@@ -100,8 +105,8 @@ public class UIManager : MonoBehaviour
         FindResources();
 
        
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        //SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.LoadScene(2, LoadSceneMode.Additive);
      
         // If skip menu is true, then just load the level straight away
         if (skipMainMenu)
@@ -457,6 +462,18 @@ public class UIManager : MonoBehaviour
         Debug.Log("Pressed Toggle Menu");
         menuToClose.SetActive(!menuToClose.activeSelf);
     }
+
+    /// <summary>
+    /// This is called when a new game is started without a save
+    /// </summary>
+    public void NewGame()
+    {
+        createNewProfile_UI.SetActive(true);
+        mainMenu_UI.SetActive(false);
+        levelSelection_UI.SetActive(false);
+        //upgradeScreen_UI.SetActive(false);
+    }
+
 
 
 
