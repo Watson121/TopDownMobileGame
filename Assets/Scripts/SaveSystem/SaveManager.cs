@@ -43,6 +43,8 @@ public class SaveManager : MonoBehaviour
 
     [Header("Events")]
     public UnityEvent NewSave;
+    public UnityEvent NormalStartup;
+    public UnityEvent GameSaved;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +56,10 @@ public class SaveManager : MonoBehaviour
             NewSave.Invoke();
             CreateSave();
         }
+        else
+        {
+            NormalStartup.Invoke();
+        }
     }
 
     /// <summary>
@@ -62,6 +68,7 @@ public class SaveManager : MonoBehaviour
     public void SaveGame()
     {
         SerialisationManager.Save(playerSave);
+        GameSaved.Invoke();
     }
 
 

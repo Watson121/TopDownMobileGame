@@ -18,10 +18,13 @@ public class ProfileCreator : BaseUserInterface
     {
         Debug.Log("Setup UI in Profile Creator Called!");
 
-  
-
-        saveManager.NewSave.RemoveListener(ToggleButton);
+ 
         saveManager.NewSave.AddListener(ToggleButton);
+    }
+
+    private void OnDestroy()
+    {
+        saveManager.NewSave.RemoveListener(ToggleButton);
     }
 
     /// <summary>
