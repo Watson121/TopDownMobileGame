@@ -72,7 +72,7 @@ public class HealthComponent : MonoBehaviour, IDamage, IComponent
 
         // Setting up Player Death Events
         m_PlayerDeath.AddListener(delegate { gameManager.HighScoreUpdateHandler(gameManager.HighScore); });
-        m_PlayerDeath.AddListener(hudManager.OpenDeathScreen);
+        //m_PlayerDeath.AddListener(hudManager.OpenDeathScreen);
     }
 
     /// <summary>

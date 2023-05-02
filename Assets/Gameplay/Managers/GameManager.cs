@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
 
            
                 
-                uiManager.SetGearsUpgradeScreen();
+                //uiManager.SetGearsUpgradeScreen();
 
         }
         get 

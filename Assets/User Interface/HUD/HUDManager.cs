@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
@@ -16,10 +17,17 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private Slider playerHealthRadialUI;
     [SerializeField] private TextMeshProUGUI playerHealthTextUI;
 
+    [Header("Menus")]
+    [SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private GameObject deathMenu;
+
     [Header("Weapon Sprites")]
     [SerializeField] private Sprite kethcupBottle_Texture;
     [SerializeField] private Sprite mustardBottle_Texture;
     [SerializeField] private Sprite mayoBottle_Texture;
+
+    [Header("Event System")]
+    [SerializeField] private EventSystem eventSystem;
 
     #region Health
 
@@ -98,6 +106,22 @@ public class HUDManager : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region Menus
+
+    /// <summary>
+    /// Toggling the Pause Menu open or close
+    /// </summary>
+    public void TogglePauseMenu()
+    {
+        pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
+        eventSystem.SetSelectedGameObject(pauseMenu.ResumeBtn.gameObject);
+    }
+
+
+
 
     #endregion
 
