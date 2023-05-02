@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 #region Level Settings
 
@@ -237,5 +238,14 @@ public class LevelManager : MonoBehaviour
         levelTitle.text = level.name;
         levelDescription.text = level.description; 
     }
+
+    /// <summary>
+    /// Load a new scene
+    /// </summary>
+    public void PlayScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
     
 }

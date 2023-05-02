@@ -8,12 +8,15 @@ public class BaseUserInterface : MonoBehaviour
     [Header("Managers ")]
     [SerializeField] protected GameManager gameManager;
     [SerializeField] protected SaveManager saveManager;
+    [SerializeField] protected LevelManager levelManager;
 
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         GetGameManager();
         GetSaveManager();
+        GetLevelManager();   
+        SetupUI();
     }
 
     /// <summary>
@@ -32,9 +35,17 @@ public class BaseUserInterface : MonoBehaviour
         saveManager = GameObject.Find("SaveManager").GetComponent<SaveManager>();
     }
 
-    protected void SetupUI()
+    /// <summary>
+    /// Getting the Level Manager
+    /// </summary>
+    private void GetLevelManager()
     {
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+    }
 
+    protected virtual void SetupUI()
+    {
+        Debug.Log("Base Setup UI method called");
     }
 
 }
