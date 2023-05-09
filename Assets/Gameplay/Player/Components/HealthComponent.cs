@@ -50,6 +50,8 @@ public class HealthComponent : MonoBehaviour, IDamage, IComponent
         UnityEventSetup();
         FindShield();
         HealthSetup();
+
+        m_PlayerHealthUpdate.Invoke();
     }
 
     /// <summary>
@@ -71,8 +73,8 @@ public class HealthComponent : MonoBehaviour, IDamage, IComponent
         m_PlayerHealthUpdate.AddListener(delegate { hudManager.UpdatePlayerHealth(health); });
 
         // Setting up Player Death Events
-        m_PlayerDeath.AddListener(delegate { gameManager.HighScoreUpdateHandler(gameManager.HighScore); });
-        //m_PlayerDeath.AddListener(hudManager.OpenDeathScreen);
+        m_PlayerDeath.AddListener(() => hudManager.UpdateHighScore(gameManager.HighScore));
+        m_PlayerDeath.AddListener(() => hudManager.ToggleDeathMenu());
     }
 
     /// <summary>
@@ -122,7 +124,6 @@ public class HealthComponent : MonoBehaviour, IDamage, IComponent
         health += healthChange;
         health = Mathf.Clamp(health, 0, maxHealth);
         m_PlayerHealthUpdate.Invoke();
-        //uiManager.UpdatePlayerHealth_UI(health);
     }
 
     /// <summary>

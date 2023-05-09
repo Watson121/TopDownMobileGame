@@ -74,7 +74,6 @@ public class GameManager : MonoBehaviour
     {
         set { 
             currentPoints = value;
-            OnPointChange(currentPoints);
         }
         get { 
             return currentPoints; 
@@ -215,7 +214,6 @@ public class GameManager : MonoBehaviour
 
   
 
-        OnPointChange += PointUpdateHandler;
         OnGearCollection += GearUpdateHandler;
 
         Time.timeScale = 1.0f;
@@ -346,7 +344,7 @@ public class GameManager : MonoBehaviour
     public void PointUpdateHandler(uint newVal)
     {
         currentPoints += newVal;
-        uiManager.UpdateCurrentPoints(currentPoints);
+        //uiManager.UpdateCurrentPoints(currentPoints);
         
     }
 
@@ -356,7 +354,7 @@ public class GameManager : MonoBehaviour
         {
           
             highScore = currentPoints;
-            uiManager.UpdateHighScore(highScore);
+            //uiManager.UpdateHighScore(highScore);
         }
 
     }
@@ -368,7 +366,6 @@ public class GameManager : MonoBehaviour
     public void GearUpdateHandler(int newVal)
     {
         NumberOfGearsCollected += newVal;
-        uiManager.UpdateGearCollection(NumberOfGearsCollected);
     }
 
  
@@ -415,10 +412,6 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region Saving & Loading Game 
-
-
-
-    #endregion
+   
 
 }

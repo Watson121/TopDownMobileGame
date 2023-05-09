@@ -18,6 +18,30 @@ public class CollectableComponent : MonoBehaviour, ICollectable
     [Header("Gear Collection Events")]
     public UnityEvent m_GearCollected;
 
+    private HUDManager hudManager;
+    private GameManager gameManager;
+    private HealthComponent healthComponent;
+
+    private void Start()
+    {
+        FindManagers();
+        UnityEventSetup();
+    }
+
+    private void FindManagers()
+    {
+        hudManager = GameObject.Find("HUDManager").GetComponent<HUDManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        healthComponent = GetComponent<HealthComponent>();
+    }
+
+    private void UnityEventSetup()
+    {
+        m_GearCollected = new UnityEvent();
+        m_GearCollected.AddListener(() => gameManager.NumberOfGearsCollected += 10);
+        m_GearCollected.AddListener(() => hudManager.UpdateGearCollection(gameManager.NumberOfGearsCollected));
+    }
+
 
 
     /// <summary>

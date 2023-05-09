@@ -19,7 +19,7 @@ public class HUDManager : MonoBehaviour
 
     [Header("Menus")]
     [SerializeField] private PauseMenu pauseMenu;
-    [SerializeField] private GameObject deathMenu;
+    [SerializeField] private DeathMenu deathMenu;
 
     [Header("Weapon Sprites")]
     [SerializeField] private Sprite kethcupBottle_Texture;
@@ -120,7 +120,11 @@ public class HUDManager : MonoBehaviour
         eventSystem.SetSelectedGameObject(pauseMenu.ResumeBtn.gameObject);
     }
 
-
+    public void ToggleDeathMenu()
+    {
+        deathMenu.gameObject.SetActive(!deathMenu.gameObject.activeSelf);
+        eventSystem.SetSelectedGameObject(deathMenu.RestartBtn.gameObject);
+    }
 
 
     #endregion

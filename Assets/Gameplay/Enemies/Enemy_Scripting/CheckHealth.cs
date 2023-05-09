@@ -14,6 +14,7 @@ public class CheckHealth : Node
     {
         _controller = controller;
         _spawningManager = GameObject.Find("SpawningManager").GetComponent<SpawningManager>();
+        _controller.m_OnDeath.AddListener(() => _spawningManager.SpawnCollectable(_controller.gameObject.transform.position));
     }
 
     public override NodeState Evaluate()
@@ -24,8 +25,7 @@ public class CheckHealth : Node
 
             if (_controller.Health == 0)
             {
-                _controller.GameManager.PointUpdateHandler((uint)_controller.PointsValue);
-                _spawningManager.SpawnCollectable(_controller.gameObject.transform.position);
+                _controller.m_OnDeath.Invoke();
                 state = NodeState.FAILURE;
                 return state;
             }
