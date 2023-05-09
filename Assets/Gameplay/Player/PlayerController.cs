@@ -557,7 +557,7 @@ public class PlayerController : MonoBehaviour, IDamage, ICollectable
     private void IncreaseGears(Gear gear)
     {
         Debug.Log("Have Collected Money Coin, now increasing monies");
-        gameManager.GearUpdateHandler(gear.Value);
+        //gameManager.GearUpdateHandler(gear.Value);
     }
 
     /// <summary>

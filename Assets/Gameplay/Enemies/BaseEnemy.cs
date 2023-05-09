@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using BehaviourTree;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 // TODO
@@ -88,6 +90,7 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
         get { return gameManager; }
     }
     [UnityEngine.SerializeField] private GameManager gameManager;
+    [UnityEngine.SerializeField] private HUDManager hudManager;
 
     #endregion
 
@@ -117,12 +120,19 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
 
     #endregion
 
+    #region Unity Events
 
+    public UnityEvent m_OnDeath;
+
+    #endregion
 
     private new void Start()
     {
         // Finding the Game Manager
         gameManager = UnityEngine.GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        // Finding the HUD Manager
+        hudManager = UnityEngine.GameObject.Find("HUDManager").GetComponent<HUDManager>();
 
         // Finding the firing position
         firingPosition = gameObject.transform.GetChild(0);
@@ -153,9 +163,20 @@ public class BaseEnemy : BehaviourTree.Tree, IDamage
             
         }
 
+        UnityEventSetup();
 
 
         base.Start();
+    }
+
+    /// <summary>
+    /// Setting up the Unity Events on the Enemy
+    /// </summary>
+    private void UnityEventSetup()
+    {
+        m_OnDeath = new UnityEvent();
+        m_OnDeath.AddListener(() => gameManager.Points += 100);
+        m_OnDeath.AddListener(() => hudManager.UpdateCurrentPoints(gameManager.Points));
     }
 
     // Finding and loading the materials

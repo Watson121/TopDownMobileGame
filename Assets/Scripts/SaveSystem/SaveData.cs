@@ -7,6 +7,7 @@ public class SaveData
 {
     public string playerName;
     public int totalGears;
+    public int highScore;
     public int currentHealthLevel;
     public int currentWeaponLevel;
     public int currentShieldLevel;

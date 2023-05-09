@@ -49,6 +49,9 @@ public class SaveManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(this);
+
+
         // When opening up the game, it should check if there is a save or not.
         // If there is no save, then create a new save and open up the profile creation menu
         if(LoadGame() == false)

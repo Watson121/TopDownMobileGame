@@ -180,8 +180,15 @@ public class LevelManager : MonoBehaviour
 
     #endregion
 
+    private void Start()
+    {
 
-  
+        if (Application.isPlaying)
+        {
+            DontDestroyOnLoad(this);
+        }
+    }
+
 
     /// <summary>
     /// Updating the level list of the buttons

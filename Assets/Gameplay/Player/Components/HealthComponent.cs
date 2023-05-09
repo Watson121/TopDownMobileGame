@@ -31,7 +31,7 @@ public class HealthComponent : MonoBehaviour, IDamage, IComponent
 
     // Managers
     private GameManager gameManager;
-    private UIManager uiManager;
+    private HUDManager hudManager;
 
     [Header("Debugging")]
     [SerializeField] private bool invicible = false;
@@ -50,6 +50,8 @@ public class HealthComponent : MonoBehaviour, IDamage, IComponent
         UnityEventSetup();
         FindShield();
         HealthSetup();
+
+        m_PlayerHealthUpdate.Invoke();
     }
 
     /// <summary>
@@ -58,7 +60,7 @@ public class HealthComponent : MonoBehaviour, IDamage, IComponent
     private void FindManagers()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        hudManager = GameObject.Find("HUDManager").GetComponent<HUDManager>();
     }
 
     /// <summary>
@@ -68,11 +70,11 @@ public class HealthComponent : MonoBehaviour, IDamage, IComponent
     {
         // Setting up Player Damage Events
         m_PlayerHealthUpdate = new UnityEvent();
-        m_PlayerHealthUpdate.AddListener(delegate { uiManager.UpdatePlayerHealth_UI(health); });
+        m_PlayerHealthUpdate.AddListener(delegate { hudManager.UpdatePlayerHealth(health); });
 
         // Setting up Player Death Events
-        m_PlayerDeath.AddListener(delegate { gameManager.HighScoreUpdateHandler(gameManager.HighScore); });
-        m_PlayerDeath.AddListener(uiManager.OpenDeathScreen);
+        m_PlayerDeath.AddListener(() => hudManager.UpdateHighScore(gameManager.HighScore));
+        m_PlayerDeath.AddListener(() => hudManager.ToggleDeathMenu());
     }
 
     /// <summary>
@@ -122,7 +124,6 @@ public class HealthComponent : MonoBehaviour, IDamage, IComponent
         health += healthChange;
         health = Mathf.Clamp(health, 0, maxHealth);
         m_PlayerHealthUpdate.Invoke();
-        //uiManager.UpdatePlayerHealth_UI(health);
     }
 
     /// <summary>

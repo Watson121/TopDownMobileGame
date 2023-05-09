@@ -24,7 +24,7 @@ public class WeaponsComponent : MonoBehaviour, IComponent
 
     // Game Manager - holds important gameplay information
     private GameManager gameManager;
-    private UIManager uiManager;
+    private HUDManager hudManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -40,7 +40,7 @@ public class WeaponsComponent : MonoBehaviour, IComponent
     private void FindManagers()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        hudManager = GameObject.Find("HUDManager").GetComponent<HUDManager>();
     }
 
     /// <summary>
@@ -78,7 +78,7 @@ public class WeaponsComponent : MonoBehaviour, IComponent
 
 
         currentEquipedWeapon = ketchupGun;
-        uiManager.UpdateCurrentWeapon(SauceType.Ketchup);
+        hudManager.UpdateCurrentWeapon(SauceType.Ketchup);
     }
 
     /// <summary>
@@ -118,17 +118,17 @@ public class WeaponsComponent : MonoBehaviour, IComponent
             case "Ketchup":
                 Debug.Log("Ketchup Gun Equiped");
                 currentEquipedWeapon = ketchupGun;
-                uiManager.UpdateCurrentWeapon(SauceType.Ketchup);
+                hudManager.UpdateCurrentWeapon(SauceType.Ketchup);
                 break;
             case "Mustard":
                 Debug.Log("Mustard Gun Equiped");
                 currentEquipedWeapon = mustardGun;
-                uiManager.UpdateCurrentWeapon(SauceType.Musturd);
+                hudManager.UpdateCurrentWeapon(SauceType.Musturd);
                 break;
             case "Mayo":
                 Debug.Log("Mayo Gun Equiped");
                 currentEquipedWeapon = mayoGun;
-                uiManager.UpdateCurrentWeapon(SauceType.Mayo);
+                hudManager.UpdateCurrentWeapon(SauceType.Mayo);
                 break;
         }
 
@@ -151,7 +151,7 @@ public class WeaponsComponent : MonoBehaviour, IComponent
         }
 
 
-        uiManager.OpenPauseMenu();
+        hudManager.TogglePauseMenu();
     }
 
     /// <summary>
