@@ -14,17 +14,21 @@ public class ProfileCreator : BaseUserInterface
 
     UnityAction ToggleButton;
 
-    protected void SetupUI()
+    protected override void SetupUI()
     {
         Debug.Log("Setup UI in Profile Creator Called!");
 
  
         saveManager.NewSave.AddListener(ToggleButton);
+        saveManager.NewSave.AddListener(() => this.gameObject.SetActive(true));
+
+
+        this.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
-        saveManager.NewSave.RemoveListener(ToggleButton);
+        //saveManager.NewSave.RemoveListener(ToggleButton);
     }
 
     /// <summary>

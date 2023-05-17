@@ -15,5 +15,6 @@ public class UpgradeMenu : BaseUserInterface
     protected override void SetupUI()
     {
         gearUI.text = "Gears: " + gameManager.NumberOfGearsCollected.ToString();
+        this.gameObject.SetActive(false);
     }
 }

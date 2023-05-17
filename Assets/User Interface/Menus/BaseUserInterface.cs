@@ -11,7 +11,7 @@ public class BaseUserInterface : MonoBehaviour
     [SerializeField] protected LevelManager levelManager;
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         GetGameManager();
         GetSaveManager();

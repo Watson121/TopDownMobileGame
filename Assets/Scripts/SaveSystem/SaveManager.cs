@@ -80,6 +80,8 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public bool LoadGame()
     {
+        Debug.Log("Load Game Called");
+
         playerSave = (SaveData)SerialisationManager.Load();
 
         if (playerSave != null)

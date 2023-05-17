@@ -15,6 +15,8 @@ public class LevelSelection : BaseUserInterface
     protected override void SetupUI()
     {
         CreatingLevelButtons();
+
+        this.gameObject.SetActive(false);
     }
 
     /// <summary>
