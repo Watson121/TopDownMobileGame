@@ -24,12 +24,19 @@ public class MainMenu : BaseUserInterface
         
         // When a normal setup is called make sure to update the player profile text
         saveManager.NormalStartup.AddListener(UpdatePlayerProfileText);
-        
+
+        // Open up the main menu on normal startup
+        saveManager.NormalStartup.AddListener(() => this.gameObject.SetActive(true));
+
         // Setting up play button functionality
         playButton.onClick.AddListener(() => levelManager.PlayScene("MainScene"));
 
         // Setting up the quit game button functionality
         quitButton.onClick.AddListener(() => Application.Quit());
+
+        
+
+        this.gameObject.SetActive(false);
     }
 
 
@@ -39,6 +46,8 @@ public class MainMenu : BaseUserInterface
     /// </summary>
     public void UpdatePlayerProfileText()
     {
+        Debug.Log("Update Player Profile Text");
+
         currentPlayerProfileText.text = "Player Name: " + saveManager.PlayerSave.playerName;
     }
 
